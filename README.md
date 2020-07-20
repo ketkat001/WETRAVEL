@@ -156,3 +156,7 @@ Swagger 설정 파일
 
 실행 화면 (localhost/swagger-ui.html)
 ![swagger](/uploads/ed0a4b5d176f43a889a01b2ae84cba74/swagger.png)
+
+## [팀원] 임진섭
+
+### 이미지의 메타데이터를 활용하여 위치데이터를 카카오맵과 연동하여 띄우기
