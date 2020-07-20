@@ -160,3 +160,9 @@ Swagger 설정 파일
 ## [팀원] 임진섭
 
 ### 이미지의 메타데이터를 활용하여 위치데이터를 카카오맵과 연동하여 띄우기
+![image](https://lab.ssafy.com/s03-webmobile1-sub1/s03p11a227/raw/master/src/main/webapp/base.PNG)
+![image](https://lab.ssafy.com/s03-webmobile1-sub1/s03p11a227/raw/master/src/main/webapp/multi.PNG)
+
+#### To do
+- 하나의 지도에 클러스터링으로 나타내기
+- 위치 데이터가 없을 경우의 처리 방안
