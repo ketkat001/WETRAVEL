@@ -85,3 +85,74 @@ CREATE TABLE `article_comment`(
 
 #### * ER 다이어그램
 ![diagram](https://user-images.githubusercontent.com/28215411/87912423-53f36d00-caa8-11ea-8bf6-eae0e586dc40.png)
+
+## [팀장] 윤인하
+1. 팀 미팅 및 회의를 통해 개선 방안 및 세부 개선점 정리 - 세부 내용은 위와 같음
+2. Swagger 사용
+
+Reference
+https://jojoldu.tistory.com/31
+http://tech.javacafe.io/spring%20boot/2019/04/21/Spring-swagger/
+
+Code
+
+Swagger 설정 파일
+
+    // swaggerConfig.java
+    
+    package com.ssafyA205.loginEX.swagger;
+    
+    import org.springframework.context.annotation.Bean;
+    import org.springframework.context.annotation.Configuration;
+    import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+    import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+    
+    import springfox.documentation.builders.PathSelectors;
+    import springfox.documentation.builders.RequestHandlerSelectors;
+    import springfox.documentation.spi.DocumentationType;
+    import springfox.documentation.spring.web.plugins.Docket;
+    import springfox.documentation.swagger2.annotations.EnableSwagger2;
+    
+    @Configuration
+    @EnableSwagger2
+    public class swaggerConfig extends WebMvcConfigurationSupport {
+    	@Override
+    	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    		registry.addResourceHandler("swagger-ui.html")
+    		.addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
+    		
+    		registry.addResourceHandler("/webjars/**")
+    		.addResourceLocations("classpath:/META-INF/resources/webjars/");
+    	}
+    	
+    	@Bean
+    	public Docket api() {
+    		return new Docket(DocumentationType.SWAGGER_2)
+    				.select()
+    				.apis(RequestHandlerSelectors.any())
+    				.paths(PathSelectors.any())
+    				.build();
+    	}
+    }
+
+라이브러리 추가
+
+    // pom.xml
+    ...
+    
+    <dependency>
+    	<groupId>io.springfox</groupId>
+    	<artifactId>springfox-swagger2</artifactId>
+    	<version>2.9.2</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>io.springfox</groupId>
+    	<artifactId>springfox-swagger-ui</artifactId>
+    	<version>2.9.2</version>
+    </dependency>
+    
+    ...
+
+실행 화면 (localhost/swagger-ui.html)
+![swagger](/uploads/ed0a4b5d176f43a889a01b2ae84cba74/swagger.png)
