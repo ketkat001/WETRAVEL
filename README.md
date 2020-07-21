@@ -166,3 +166,34 @@ Swagger 설정 파일
 #### To do
 - 하나의 지도에 클러스터링으로 나타내기
 - 위치 데이터가 없을 경우의 처리 방안
+
+
+
+## [팀원] 강용준
+
+### Front - 로그인 창 구상
+
+![KakaoTalk_20200720_105308856](README.assets/KakaoTalk_20200720_105308856.png)
+
+## [팀원] 이규민
+
+### 와이어 프레임워크 구상
+
+main 페이지
+
+![KakaoTalk_20200720_013458559](README.assets/KakaoTalk_20200720_013458559.jpg)
+
+![KakaoTalk_20200720_013513869](README.assets/KakaoTalk_20200720_013513869.jpg)
+
+![KakaoTalk_20200720_013530704](README.assets/KakaoTalk_20200720_013530704.jpg)
+
+![KakaoTalk_20200720_013541095](README.assets/KakaoTalk_20200720_013541095.jpg)
+
+![KakaoTalk_20200720_013549014](README.assets/KakaoTalk_20200720_013549014.jpg)
+
+![KakaoTalk_20200720_013558348](README.assets/KakaoTalk_20200720_013558348.jpg)
+
+
+
+
+
