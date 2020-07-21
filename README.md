@@ -235,3 +235,11 @@ main 페이지
 
 - Frontend와 Backend를 통합하여 하나의 서버로 연동해 보았으나 빌드나 페이지를 읽는 데 문제 발생
 - Skeleton Project처럼 Frontend와 Backend 각각 다른 서버에서 실행 후 Axios로 연동 테스트 예정 
+
+
+## [팀원] 임진섭
+
+### geojson을 이용한 맵 폴리곤 개발중
+
+- 행정구역 정보를 geoJosn으로 변경하여 폴리곤 형태로 맵으로 띄워 이벤트 효과를 구현할 예정
+- geoJson에서 값을 받아오는 부분에 문제가 발생하여 문제 해결중
