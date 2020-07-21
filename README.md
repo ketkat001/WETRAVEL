@@ -229,4 +229,9 @@ main 페이지
 - 틀만 생성 => 생성해둔 틀에 맞춰 파일 생성시 이름 양식 맞추면 좋을 듯!
 - Article에 대한 dto 코드 약간 작성!
 
+## [팀장] 윤인하
 
+### Vue.js + Spring 연동 테스트
+
+- Frontend와 Backend를 통합하여 하나의 서버로 연동해 보았으나 빌드나 페이지를 읽는 데 문제 발생
+- Skeleton Project처럼 Frontend와 Backend 각각 다른 서버에서 실행 후 Axios로 연동 테스트 예정 
