@@ -267,6 +267,7 @@ https://ckeditor.com/docs/ckeditor4/latest/guide/dev_vue.html#editor-instance
 2. CKEditor 4 CDN으로 간단 테스트
 https://cdn.ckeditor.com/
 
+![test](https://user-images.githubusercontent.com/28215411/88154027-30175f00-cc41-11ea-8351-2febd174fa98.png)
 
 ## [팀장] 윤인하
 
