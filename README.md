@@ -259,8 +259,14 @@ main 페이지
 - 
 
 ## [팀원] 박윤정
+- Article관련 Rest API 관련 개발 진행중 => Book이 우선적으로 필요하여 아직 완성 못함
+- 에디터 활용해보기, 실제 데이터 어떤식인지 살펴보기
+1. CKEditor 4 Vue 사용코드 
+https://ckeditor.com/docs/ckeditor4/latest/guide/dev_vue.html#editor-instance
 
-- 
+2. CKEditor 4 CDN으로 간단 테스트
+https://cdn.ckeditor.com/
+
 
 ## [팀장] 윤인하
 
