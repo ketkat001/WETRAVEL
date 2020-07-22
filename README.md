@@ -287,5 +287,7 @@ https://cdn.ckeditor.com/
 
 
 ## [팀원] 임진섭
+- 카카오맵에 폴리곤 기능 추가하여 클릭하면 해당지역으로 확대되는 이벤트 적용
 
-- 
+![image](https://lab.ssafy.com/s03-webmobile1-sub1/s03p11a227/raw/master/src/main/resources/static/%EB%8B%A4%EA%B0%81%ED%98%95%20%ED%9A%A8%EA%B3%BC.png)
+![image](https://lab.ssafy.com/s03-webmobile1-sub1/s03p11a227/raw/master/src/main/resources/static/%EB%8B%A4%EA%B0%81%ED%98%95%20%ED%9A%A8%EA%B3%BC2.png)
