@@ -2,5 +2,28 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">         
 <mapper namespace="m_article">
-
+   <insert id="registArticle">
+	   	insert into article (userid, subject, content, regtime)
+	   	values(#{userid}, #{subject}, #{content}, now())
+   </insert>
+   
+   <select id="getArticleList" resultType="article">
+   		select articleno, userid, subject, content, regtime from guestbook
+   </select>
+   
+   <select id="getArticle" resultType="article">
+   		select articleno, userid, subject, content, regtime from guestbook
+   		where articleno = #{no}
+   </select>
+   
+   <delete id="deleteArticle">
+   		delete from guestbook 
+   		where articleno = #{no}
+   </delete>
+   
+   <update id="modifyArticle">
+	   	Update guestbook 
+	   	set userid = #{userid}, subject=#{subject}, content=#{content}
+	   	where articleno = #{articleno}
+   </update>
 </mapper>
