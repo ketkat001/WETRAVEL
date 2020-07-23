@@ -302,7 +302,7 @@ https://cdn.ckeditor.com/
 ## [팀원] 박윤정
 - Article에 대한 Spring REST API 설계 및 개발
 
-![article-swagger](https://user-images.githubusercontent.com/28215411/88260723-eb063200-ccff-11ea-846e-1a73d88fea07.png)
+![article-swagger](https://user-images.githubusercontent.com/28215411/88263020-49351400-cd04-11ea-95f9-4154c973f2aa.png)
 
 
 - 개발 중 직면한 문제 해결
