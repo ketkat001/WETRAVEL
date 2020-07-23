@@ -283,8 +283,11 @@ https://cdn.ckeditor.com/
 
 ## [팀장] 윤인하
 
-- 
-
+- Frontend에서 Axios로 REST API 사용하여 Backend와 통신
+- Frontend에서는 FormData로 보낼 데이터를 묶은 후 application/json 형식으로 전송
+![front](/uploads/36a9dec2ff2de5b8b0afc017b43f8b6e/front.PNG)
+- Backend에서는 @RequestBody를 이용해 json 데이터를 VO에 매칭시켜줘야 함
+![back](/uploads/e79f2b704297e2cbb9bfcc62f632f9ed/back.PNG)
 
 ## [팀원] 임진섭
 - 카카오맵에 폴리곤 기능 추가하여 클릭하면 해당지역으로 확대되는 이벤트 적용
