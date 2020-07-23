@@ -346,4 +346,8 @@ https://cdn.ckeditor.com/
 
 ## [팀장] 윤인하
 
+- Gitlab 내 공유 프로젝트로 기능 옮기기
+- 연동 부분에서 CORS 문제 다시 발생 -> proxy 이용하여 연동
+- 내일 AWS로 server 올려서 정상 동작하는지 테스트 예정
+
 ## [팀원] 임진섭
