@@ -294,3 +294,45 @@ https://cdn.ckeditor.com/
 
 ![image](https://lab.ssafy.com/s03-webmobile1-sub1/s03p11a227/raw/master/src/main/resources/static/%EB%8B%A4%EA%B0%81%ED%98%95%20%ED%9A%A8%EA%B3%BC.png)
 ![image](https://lab.ssafy.com/s03-webmobile1-sub1/s03p11a227/raw/master/src/main/resources/static/%EB%8B%A4%EA%B0%81%ED%98%95%20%ED%9A%A8%EA%B3%BC2.png)
+
+
+
+# 07/23
+
+## [팀원] 박윤정
+- Article에 대한 Spring REST API 설계 및 개발
+
+![article-swagger](https://user-images.githubusercontent.com/28215411/88260723-eb063200-ccff-11ea-846e-1a73d88fea07.png)
+
+
+- 개발 중 직면한 문제 해결
+
+#### Q. Book1개 만들때 Article1개 무조건 생성할 것인가?
+
+##### A. NO, 개별적으로 생각하는 거이 편할 듯!
+
+#### Q. Book에 관련된 검색 옵션 무엇이 필요한가 ????
+
+##### A. 일단 조회순, 평점순만 생각하고 진행하자!!
+
+#### Q. Article에 관련된 검색 옵션 무엇이 필요한가 ????
+
+##### A. Article에 대한 검색 옵션은 없는 걸로 생각하자!!
+
+#### Q. 특정 데이터 리스트 전달 시 정렬해야 하는 데이터를 정렬하는 것은 backend에서, frontend에서 ????
+
+##### A. backend에서 미리 정리된 채로 주는 것이 frontend입장에서 편할 것 같다.
+
+- Book에 대한 Spring REST API 설계 및 개발을 위한 파일 생성
+
+
+
+## [팀원] 강용준
+
+
+## [팀원] 이규민
+
+
+## [팀장] 윤인하
+
+## [팀원] 임진섭
