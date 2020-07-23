@@ -355,3 +355,67 @@ https://cdn.ckeditor.com/
 - 내일 AWS로 server 올려서 정상 동작하는지 테스트 예정
 
 ## [팀원] 임진섭
+
+- branch 관리하기
+
+
+
+현재 우리의 branch 구조
+
+             master
+	   	   ㅣ
+	         develop
+             |    |
+          front    back
+	         |        |  => 각자 branch 추가할 부분
+
+##### 0.내 로컬의 브랜치 확인하기
+git branch : 현재 로컬에 있는 브랜치 확인하는 명령어
+
+##### 1.remote의 브랜치 가져오기
+git remote update : 원격 브랜치에 접근하기 위해 갱신하는 명령
+
+##### 2.내 로컬에 없는 branch가 있다면 아래의 명령어로 내 로컬에 브랜치 추가
+
+ex) git checkout -t origin/develop
+     git checkout -t origin/front
+     git checkout -t origin/back
+     ...
+
+##### 3.내 로컬에 모든 branch 추가 되었으면 각자 자신의 포지션으로 이동(백엔드는 back, 프론트는 front)
+ex) git checkout back
+     git checkout front
+
+##### 4.자신의 포지션에서 알맞은 이름의 branch를 생성
+ex) git branch article
+
+##### 5.4번에서 만든 branch에서 add와 commit을 실시
+
+##### 6.상위 branch로 이동하여(front, back) merge를 실시
+ex) git merge --no-ff article
+
+##### 7.그 다음 상위 branch인 develop으로 이동하여 merge 실시
+ex) git merge --no-ff front or back(자신의 포지션)
+
+##### 8.develop branch를 remote에 push 하고 싶다면 명령어 실시
+ex) git push origin develop
+
+![image](https://user-images.githubusercontent.com/22046757/88297804-56212a00-cd3b-11ea-96ef-48ab878bf822.png)
+
+Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
+디폴트 master일텐데 master로 되어 있으면 develop에서 push한 내용이 보이지 않는 듯!!
+
+##### 9. 가장 상위 branch인 master에 push하고 싶다면 master로 이동 후 merge -> push 실시
+ex) git checkout master
+ex) git merge --no-ff develop
+ex) git push origin master
+
+![image](https://user-images.githubusercontent.com/22046757/88297811-59b4b100-cd3b-11ea-9402-110485796885.png)
+
+Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
+
+##### 참고사이트
+- https://mylko72.gitbooks.io/git/content/branch/branch_type.html
+- https://blog.outsider.ne.kr/572
+- https://trustyoo86.github.io/git/2017/11/28/git-remote-branch-create.html
+- https://trustyoo86.github.io/git/2017/11/28/git-remote-branch-create.html
