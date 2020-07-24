@@ -427,3 +427,9 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 - jar 파일로 build하여 내장 tomcat으로 실행, local의 frontend와 REST API 연동 확인
 - SpringBoot는 jsp를 지원하지 않아 webapp 내의 페이지는 404 error 발생, war로 바꾸면 jsp 사용 가능하다고 함
 - 현재는 내장 tomcat을 쓰고 있는데 이를 docker image로 만들어서 docker에서 배포하는 것도 생각 중
+
+
+## [팀원] 박윤정
+- Book에 대한 Spring REST API 설계 및 개발
+- 
+![book-api](https://user-images.githubusercontent.com/28215411/88400503-6d2b4f00-ce03-11ea-9530-8c4c69daca29.PNG)
