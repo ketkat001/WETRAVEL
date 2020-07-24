@@ -433,3 +433,12 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 - Book에 대한 Spring REST API 설계 및 개발
 - 
 ![book-api](https://user-images.githubusercontent.com/28215411/88400503-6d2b4f00-ce03-11ea-9530-8c4c69daca29.PNG)
+
+## [팀원] 임진섭
+
+- 카카오맵 기능 재정의 및 활용도 재구성
+
+![image](https://user-images.githubusercontent.com/22046757/88404989-98b13800-ce09-11ea-9795-4632ff083b48.png)
+
+지역별 여행문 조회를 위한 기능으로
+
