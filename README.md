@@ -420,7 +420,7 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 - https://trustyoo86.github.io/git/2017/11/28/git-remote-branch-create.html
 - https://trustyoo86.github.io/git/2017/11/28/git-remote-branch-create.html
 
-# 07/20
+# 07/24
 
 ## [팀장]윤인하
 ##### 1. AWS에 Backend Server 올리고 동작 확인
