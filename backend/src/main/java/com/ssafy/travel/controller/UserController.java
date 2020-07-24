@@ -15,12 +15,12 @@ import com.ssafy.travel.dto.User;
 import com.ssafy.travel.service.UserService;
 
 @RestController
-@RequestMapping("user/*")
+@RequestMapping("api/user/*")
 public class UserController {
 	@Autowired
 	UserService userService;
 
-	@PostMapping("user/login")
+	@PostMapping("api/user/login")
 	@ResponseBody
 	public int login(@RequestBody User user, HttpSession session) {
 		int result = 0;
@@ -45,7 +45,7 @@ public class UserController {
 		
 		return result;
 	}
-	@PostMapping("user/signUp")
+	@PostMapping("api/user/signUp")
 	@ResponseBody
 	public int signUp(@RequestBody User user) {
 		int result = 0;
