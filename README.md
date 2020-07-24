@@ -294,3 +294,128 @@ https://cdn.ckeditor.com/
 
 ![image](https://lab.ssafy.com/s03-webmobile1-sub1/s03p11a227/raw/master/src/main/resources/static/%EB%8B%A4%EA%B0%81%ED%98%95%20%ED%9A%A8%EA%B3%BC.png)
 ![image](https://lab.ssafy.com/s03-webmobile1-sub1/s03p11a227/raw/master/src/main/resources/static/%EB%8B%A4%EA%B0%81%ED%98%95%20%ED%9A%A8%EA%B3%BC2.png)
+
+
+
+# 07/23
+
+## [팀원] 박윤정
+- Article에 대한 Spring REST API 설계 및 개발
+
+![article-swagger](https://user-images.githubusercontent.com/28215411/88263020-49351400-cd04-11ea-95f9-4154c973f2aa.png)
+
+
+- 개발 중 직면한 문제 해결
+
+#### Q. Book1개 만들때 Article1개 무조건 생성할 것인가?
+
+##### A. NO, 개별적으로 생각하는 거이 편할 듯!
+
+#### Q. Book에 관련된 검색 옵션 무엇이 필요한가 ????
+
+##### A. 일단 조회순, 평점순만 생각하고 진행하자!!
+
+#### Q. Article에 관련된 검색 옵션 무엇이 필요한가 ????
+
+##### A. Article에 대한 검색 옵션은 없는 걸로 생각하자!!
+
+#### Q. 특정 데이터 리스트 전달 시 정렬해야 하는 데이터를 정렬하는 것은 backend에서, frontend에서 ????
+
+##### A. backend에서 미리 정리된 채로 주는 것이 frontend입장에서 편할 것 같다.
+
+- Book에 대한 Spring REST API 설계 및 개발을 위한 파일 생성
+
+
+
+## [팀원] 강용준
+
+- 사용자들이 쉽게 접근 할 수 있도록 기존의 메인페이지에서 더 간결하게 정보를 전달 (기존 웹사이트들의 형태를 모방)
+- keyframe과 vue-carousel 3d opensource를 활용하여 동적인 애니메이션 효과를 유저에게 전달
+- 목적에 맞는 브랜드 컬러 설정 
+
+## [팀원] 이규민
+
+![[수정본 모음집] 인기기행문 탑5 (3)](README.assets/[수정본 모음집] 인기기행문 탑5 (3)-1595494574994.jpg)
+
+### 1. 와이어프레임워크 전부 수정
+
+- 전체적인 색감 통일하기 -> 남색
+
+- Top5페이지 누르면 top5만 나오도록수정
+- 검색옵션 모든페이지 `옵션검색`으로 수정!
+- Book 생성, Article 생성 나눠야함
+
+### 2. 지역별 대표 사진 선별
+
+
+## [팀장] 윤인하
+
+- Gitlab 내 공유 프로젝트로 기능 옮기기
+- 연동 부분에서 CORS 문제 다시 발생 -> proxy 이용하여 연동
+- 내일 AWS로 server 올려서 정상 동작하는지 테스트 예정
+
+## [팀원] 임진섭
+
+- branch 관리하기
+
+
+
+현재 우리의 branch 구조
+
+             master
+	   	   ㅣ
+	         develop
+             |    |
+          front    back
+	         |        |  => 각자 branch 추가할 부분
+
+##### 0.내 로컬의 브랜치 확인하기
+git branch : 현재 로컬에 있는 브랜치 확인하는 명령어
+
+##### 1.remote의 브랜치 가져오기
+git remote update : 원격 브랜치에 접근하기 위해 갱신하는 명령
+
+##### 2.내 로컬에 없는 branch가 있다면 아래의 명령어로 내 로컬에 브랜치 추가
+
+ex) git checkout -t origin/develop
+     git checkout -t origin/front
+     git checkout -t origin/back
+     ...
+
+##### 3.내 로컬에 모든 branch 추가 되었으면 각자 자신의 포지션으로 이동(백엔드는 back, 프론트는 front)
+ex) git checkout back
+     git checkout front
+
+##### 4.자신의 포지션에서 알맞은 이름의 branch를 생성
+ex) git branch article
+
+##### 5.4번에서 만든 branch에서 add와 commit을 실시
+
+##### 6.상위 branch로 이동하여(front, back) merge를 실시
+ex) git merge --no-ff article
+
+##### 7.그 다음 상위 branch인 develop으로 이동하여 merge 실시
+ex) git merge --no-ff front or back(자신의 포지션)
+
+##### 8.develop branch를 remote에 push 하고 싶다면 명령어 실시
+ex) git push origin develop
+
+![image](https://user-images.githubusercontent.com/22046757/88297804-56212a00-cd3b-11ea-96ef-48ab878bf822.png)
+
+Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
+디폴트 master일텐데 master로 되어 있으면 develop에서 push한 내용이 보이지 않는 듯!!
+
+##### 9. 가장 상위 branch인 master에 push하고 싶다면 master로 이동 후 merge -> push 실시
+ex) git checkout master
+ex) git merge --no-ff develop
+ex) git push origin master
+
+![image](https://user-images.githubusercontent.com/22046757/88297811-59b4b100-cd3b-11ea-9402-110485796885.png)
+
+Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
+
+##### 참고사이트
+- https://mylko72.gitbooks.io/git/content/branch/branch_type.html
+- https://blog.outsider.ne.kr/572
+- https://trustyoo86.github.io/git/2017/11/28/git-remote-branch-create.html
+- https://trustyoo86.github.io/git/2017/11/28/git-remote-branch-create.html
