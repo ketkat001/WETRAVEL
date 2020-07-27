@@ -19,8 +19,11 @@ public class BookDaoImpl implements BookDao{
 	}
 
 	@Override
-	public List<Book> geteBookList() {
-		return sqlSession.selectList("m_book.getBookList");
+	public List<Book> getBookListByScore(String province, String city) {
+		Book b = new Book();
+		b.setProvince(province);
+		b.setCity(city);
+		return sqlSession.selectList("m_book.getBookListByScore", b);
 	}
 
 	@Override
@@ -38,5 +41,12 @@ public class BookDaoImpl implements BookDao{
 		return sqlSession.selectOne("m_book.getBookDetail", bookno);
 	}
 
-
+	@Override
+	public List<Book> getBookList(String province, String city, int month) {
+		Book b = new Book();
+		b.setProvince(province);
+		b.setCity(city);
+		b.setStartdate(month+"");
+		return sqlSession.selectList("m_book.getBookList", b);
+	}
 }
