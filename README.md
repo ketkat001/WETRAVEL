@@ -363,11 +363,11 @@ https://cdn.ckeditor.com/
 현재 우리의 branch 구조
 
              master
-	   	   ㅣ
-	         develop
+       	   ㅣ
+             develop
              |    |
           front    back
-	         |        |  => 각자 branch 추가할 부분
+             |        |  => 각자 branch 추가할 부분
 
 ##### 0.내 로컬의 브랜치 확인하기
 git branch : 현재 로컬에 있는 브랜치 확인하는 명령어
@@ -442,7 +442,7 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 
 지역별 여행문 조회를 위한 기능으로
 
-# 07/24
+# 07/27
 
 ## [팀원] 박윤정
 - Book에 대한 Spring REST API 설계 및 개발
@@ -454,3 +454,11 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 ## [팀장] 윤인하
 - Vue-router, Vuex 공부 및 프론트 내 로그인 정보 저장 구현 중
 - 출처: https://lovemewithoutall.github.io/it/vue-login-demo/
+
+
+
+## [팀원] 강용준
+
+- vue-router, vuex 공부
+- 동적인 화면 구현을 위해 JavaScript 공부
+- 메인페이지 틀 코딩완료 후 다른 페이지 작업 시작
