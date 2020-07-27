@@ -450,3 +450,7 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 #### 검색방식 변경 => 옵션(대분류, 소분류, 월) [ 가능한 경우 : default+default, 대분류+default, 대분류+소분류 / month(필수x) ]
 #### 역대베스트 기행문 => 평점순으로
 #### Book에 대한 정보 불러올 때 최신순(default) / 평점순 API 추가
+
+## [팀장] 윤인하
+- Vue-router, Vuex 공부 및 프론트 내 로그인 정보 저장 구현 중
+- 출처: https://lovemewithoutall.github.io/it/vue-login-demo/
