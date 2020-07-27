@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>다각형에 이벤트 등록하기2</title>
-    <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 <style>
 .area {
     position: absolute;
@@ -26,62 +26,102 @@
 </style>
 </head>
 <body>
-<div id="map" style="width:100%;height:350px;"></div>
+<div id="map" style="width:100%;height:800px;"></div>
      <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=776912931a8aaae4ed347b072ac46ca2"></script>
-	<script>
-	$(document).ready(function () {
-	    $.getJSON('seoul.geojson', function(geojson){
-	    	
-	    	var data = geojson.features;
-	    	var coordinates = [];
-	    	var name = '';
-	    	
-	    	$.each(data, function(index, val){
-	    		
-	    		coordinates = val.geometry.coordinates;
-	    		name = val.properties.SIG_KOR_NM;
-	    		
-	    		displayArea(coordinates, name);
-	    	})
-	    });
-	});
-	
-	
-	    var polygons=[];
-	    
-	    function displayArea(coordinates, name){
-	    	
-	    	var path = [];
-	    	var points = [];
-	    	
-	    	$.each(coordinates[0], function(index, coordinate){
-	    		var point = new Object();
-	    		point.x = coordinate[1];
-	    		point.y = coordinate[0];
-	    		points.push(point);
-	    		path.push(new kakao.maps.LatLng(coordinate[1],coordinate[0]));
-	    	})
-	    	
-	    	
-	    	 var polygon = new kakao.maps.Polygon({
-	             map: map, // 그려질 다각형의 좌표 배열입니다
-	             path : path,
-	             strokeWeight: 3, // 선의 두께입니다
-	             strokeColor: '#39DE2A', // 선의 색깔입니다
-	             strokeOpacity: 0.8, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-	             strokeStyle: 'longdash', // 선의 스타일입니다
-	             fillColor: '#A2FF99', // 채우기 색깔입니다
-	             fillOpacity: 0.7 // 채우기 불투명도 입니다
-	         });
-        
+   <script>
+   $(document).ready(function () {
+       $.getJSON('b.geojson', function(geojson){
+            
+          var data = geojson.features;
+          var coordinates = [];
+          var name = '';
+          
+          $.each(data, function(index, val){
+        	  //if(val.properties.SIG_CD.substring(0,2) == '45') {
+                coordinates = val.geometry.coordinates;
+                name = val.properties.SIG_KOR_NM;
+                console.log(name);
+                displayArea(coordinates, name);        		  
+        	  //}
+             
+             
+             /*console.log(coordinates[0]); // ?
+             console.log(coordinates[0][0]); // 여러개
+             console.log(coordinates[0][0][0]); // 여러개 중 첫번째 배열
+             console.log(coordinates[0][0][0][0]); // 여러개 중 첫번째 배열의 첫번째 값 */
+             
+          })
+       });
+   });
+   
+   
+       var polygons=[];
+       
+       var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+      mapOption = { 
+          center: new kakao.maps.LatLng(37.566826, 126.9786567), // 지도의 중심좌표
+          level: 13 // 지도의 확대 레벨
+       };
+       
+       var map = new kakao.maps.Map(mapContainer, mapOption),
+            customOverlay = new kakao.maps.CustomOverlay({}),
+            infowindow = new kakao.maps.InfoWindow({removable: false});
+       
+       function centroid(points){
+         var i,j, len, p1, p2, f, area, x, y;
+         
+         area = x = y = 0;
+         
+         for(i=0, len = points.length, j = len - 1; i < len; j = i++){
+            p1 = points[i];
+            p2 = points[j];
+            
+            f = p1.y * p2.x - p2.y * p1.x;
+            x += (p1.x + p2.x) * f;
+            y += (p1.y + p2.y) * f;
+            area += f * 3;
+         }
+         return new kakao.maps.LatLng(x/area, y/area);
+      }
+      
+      function deletePolygon(polygons){
+         for(var i=0; i<polygons.length; i++){
+            polygons[i].setMap(null);
+         }
+         polygons = [];
+      }
+       
+       function displayArea(coordinates, name){
+          var path = [];
+          var points = [];
+          //console.log(coordinates[0]);
+          $.each(coordinates[0], function(index, coordinate){     
+             var point = new Object();
+             point.x = coordinate[1];
+             point.y = coordinate[0];
+             points.push(point);
+             path.push(new kakao.maps.LatLng(point.x,point.y));
+          })
+          
+
+          var polygon = new kakao.maps.Polygon({
+                map : map, // 그려질 다각형의 좌표 배열입니다
+                path : path,
+                strokeWeight: 2,
+                strokeColor: '#004c80',
+                strokeOpacity: 0.1,
+                fillColor: '#fff',
+                fillOpacity: 0.7
+            });
+       
         polygons.push(polygon);
         
-     // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
+    // 다각형에 mouseover 이벤트를 등록하고 이벤트가 발생하면 폴리곤의 채움색을 변경합니다 
         // 지역명을 표시하는 커스텀오버레이를 지도위에 표시합니다
         kakao.maps.event.addListener(polygon, 'mouseover', function(mouseEvent) {
             polygon.setOptions({fillColor: '#09f'});
 
-            customOverlay.setContent('<div class="area">' + area.name + '</div>');
+            customOverlay.setContent('<div class="area">' + name + '</div>');
             
             customOverlay.setPosition(mouseEvent.latLng); 
             customOverlay.setMap(map);
@@ -104,14 +144,24 @@
         kakao.maps.event.addListener(polygon, 'click', function() {
             var level = map.getLevel()-2;
             
-            map.setLevel(level, {anchor: centroid(points), animate :{
-            	duration: 350}
+                map.setLevel(level, {anchor: centroid(points), animate :{
+               duration: 350}
             });
-            
-            deletePolygon(polygons);
+             
+            //deletePolygon(polygons);
+        }); 
+     
+        kakao.maps.event.addListener(polygon, 'click', function(mouseEvent) {
+            var content = '<div class="info">' + 
+                        '   <a href="http://localhost:9990/ssafy/index.html">총 면적 : 약 ' + Math.floor(polygon.getArea()) + ' m<sup>3</sup></a>' +
+                        '</div>';
+
+            infowindow.setContent(content); 
+            infowindow.setPosition(mouseEvent.latLng); 
+            infowindow.setMap(map);
         });
-	}
+   }
  </script>
-	   
+      
 </body>
 </html>
