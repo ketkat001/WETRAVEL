@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.travel.dto.Book;
@@ -21,7 +22,7 @@ import com.ssafy.travel.service.BookService;
 
 import io.swagger.annotations.ApiOperation;
 
-// http://localhost:9999/travel/swagger-ui.html
+// http://localhost:8999/travel/swagger-ui.html
 @RestController
 @RequestMapping("/api/book")
 public class BookController {
@@ -32,13 +33,20 @@ public class BookController {
 	@Autowired
 	private BookService bookService;
 	
-	@ApiOperation(value = "모든 book의 정보를 반환한다.", response = List.class)
-	@GetMapping
-	public ResponseEntity<List<Book>> getBookList() throws Exception {
+	@ApiOperation(value = "전체 or 특정 province와 city, month에 관한 모든 book의 정보를 최신순으로 반환한다.", response = List.class)
+	@GetMapping("all/date")
+	public ResponseEntity<List<Book>> getBookList(@RequestParam("province") String province, @RequestParam("city") String city, @RequestParam("month") int month) throws Exception {
 		logger.debug("getBookList - 호출");
-		return new ResponseEntity<List<Book>>(bookService.getBookList(), HttpStatus.OK);
+		return new ResponseEntity<List<Book>>(bookService.getBookList(province, city, month), HttpStatus.OK);
 	}
-
+	
+	@ApiOperation(value = "전체 or 특정 province와 city에 관한 모든 book의 정보를 평점순으로 반환한다.", response = List.class)
+	@GetMapping("all/score")
+	public ResponseEntity<List<Book>> getBookListByScore(@RequestParam("province") String province, @RequestParam("city") String city) throws Exception {
+		logger.debug("getBookListByScore - 호출");
+		return new ResponseEntity<List<Book>>(bookService.getBookListByScore(province, city), HttpStatus.OK);
+	}
+	
     @ApiOperation(value = "book번호에 해당하는 book의 정보를 반환한다.", response = Book.class)    
 	@GetMapping("{bookno}")
 	public ResponseEntity<Book> getBookDetail(@PathVariable int bookno) {

@@ -21,7 +21,7 @@ import com.ssafy.travel.service.ArticleService;
 
 import io.swagger.annotations.ApiOperation;
 
-// http://localhost:9999/travel/swagger-ui.html
+// http://localhost:8999/travel/swagger-ui.html
 @RestController
 @RequestMapping("/api/article")
 public class ArticleController {
@@ -33,7 +33,7 @@ public class ArticleController {
 	private ArticleService articleService;
 	
 	@ApiOperation(value = "Book번호에 해당하는 모든 article의 정보를 반환한다.", response = List.class)
-	@GetMapping("{bookno}")
+	@GetMapping("all/{bookno}")
 	public ResponseEntity<List<Article>> getArticleList(@PathVariable int bookno) throws Exception {
 		logger.debug("getArticleList - 호출");
 		return new ResponseEntity<List<Article>>(articleService.getArticleList(bookno), HttpStatus.OK);

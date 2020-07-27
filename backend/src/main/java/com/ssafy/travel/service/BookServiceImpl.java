@@ -20,8 +20,8 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public List<Book> getBookList() {
-		return dao.geteBookList();
+	public List<Book> getBookListByScore(String province, String city) {
+		return dao.getBookListByScore(province, city);
 	}
 
 	@Override
@@ -37,5 +37,10 @@ public class BookServiceImpl implements BookService{
 	@Override
 	public boolean modifyBook(Book book) {
 		return dao.modifyBook(book) == 1;
+	}
+
+	@Override
+	public List<Book> getBookList(String province, String city, int month) {
+		return dao.getBookList(province, city, month);
 	}
 }
