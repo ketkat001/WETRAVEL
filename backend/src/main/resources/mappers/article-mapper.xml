@@ -11,6 +11,7 @@
    		select articleno, bookno, title, writedate, score, weather, text, traveldate, day 
    		from article
    		where bookno = #{bookno} 
+   		order by writedate
    </select>
    
    <delete id="deleteArticle">
@@ -27,7 +28,7 @@
 	<select id="getArticleDetail" resultType="article">
 		select articleno, bookno, title, writedate, score, weather, text, traveldate, day 
 		from article
-		 where articleno = #{articleno}
+		where articleno = #{articleno}
 	</select>
    
 </mapper>

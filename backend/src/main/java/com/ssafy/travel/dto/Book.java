@@ -9,6 +9,10 @@ public class Book {
 	private String city;
 	private String startdate;
 	
+	public Book() {
+		super();
+	}
+
 	public Book(int bookno, String title, String writer, String writedate, String province, String city,
 			String startdate) {
 		super();
