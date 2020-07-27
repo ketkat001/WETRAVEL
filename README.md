@@ -442,3 +442,10 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 
 지역별 여행문 조회를 위한 기능으로
 
+# 07/24
+
+## [팀원] 박윤정
+- Book에 대한 Spring REST API 설계 및 개발
+
+### 검색방식 변경 => 옵션(대분류, 소분류, 월) [ 가능한 경우 : default+default, 대분류+default, 대분류+소분류 / month(필수x) ]
+### Book에 대한 정보 불러올 때 최신순(default) / 평점순 API 추가
