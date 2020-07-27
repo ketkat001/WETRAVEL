@@ -447,5 +447,6 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 ## [팀원] 박윤정
 - Book에 대한 Spring REST API 설계 및 개발
 
-### 검색방식 변경 => 옵션(대분류, 소분류, 월) [ 가능한 경우 : default+default, 대분류+default, 대분류+소분류 / month(필수x) ]
-### Book에 대한 정보 불러올 때 최신순(default) / 평점순 API 추가
+#### 검색방식 변경 => 옵션(대분류, 소분류, 월) [ 가능한 경우 : default+default, 대분류+default, 대분류+소분류 / month(필수x) ]
+#### 역대베스트 기행문 => 평점순으로
+#### Book에 대한 정보 불러올 때 최신순(default) / 평점순 API 추가
