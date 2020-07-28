@@ -43,4 +43,9 @@ public class BookServiceImpl implements BookService{
 	public List<Book> getBookList(String province, String city, int month) {
 		return dao.getBookList(province, city, month);
 	}
+
+	@Override
+	public List<Book> getBookListByUser(String email) {
+		return dao.getBookListByUser(email);
+	}
 }
