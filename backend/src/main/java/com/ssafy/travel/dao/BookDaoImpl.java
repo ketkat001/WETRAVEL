@@ -49,4 +49,10 @@ public class BookDaoImpl implements BookDao{
 		b.setStartdate(month+"");
 		return sqlSession.selectList("m_book.getBookList", b);
 	}
+	
+
+	@Override
+	public List<Book> getBookListByUser(String email) {
+		return sqlSession.selectList("m_book.getBookListByUser", email);
+	}
 }

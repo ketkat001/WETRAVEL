@@ -85,4 +85,11 @@ public class BookController {
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
+    
+	@ApiOperation(value = "email에 해당하는 유저의 모든 book정보를 최신순으로 반환한다.", response = List.class)
+	@GetMapping("all/{email}")
+	public ResponseEntity<List<Book>> getBookListByUser(@PathVariable String email) throws Exception {
+		logger.debug("getBookListByUser - 호출");
+		return new ResponseEntity<List<Book>>(bookService.getBookListByUser(email), HttpStatus.OK);
+	}
 }
