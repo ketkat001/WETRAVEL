@@ -31,4 +31,8 @@
 		where articleno = #{articleno}
 	</select>
    
+    <insert id="registScore">
+	   	insert into article_score (score, author, articleno)
+	   	values(#{score}, #{author}, #{articleno})
+    </insert>
 </mapper>

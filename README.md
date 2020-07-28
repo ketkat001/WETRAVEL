@@ -363,11 +363,11 @@ https://cdn.ckeditor.com/
 현재 우리의 branch 구조
 
              master
-	   	   ㅣ
-	         develop
+       	   ㅣ
+             develop
              |    |
           front    back
-	         |        |  => 각자 branch 추가할 부분
+             |        |  => 각자 branch 추가할 부분
 
 ##### 0.내 로컬의 브랜치 확인하기
 git branch : 현재 로컬에 있는 브랜치 확인하는 명령어
@@ -442,15 +442,62 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 
 지역별 여행문 조회를 위한 기능으로
 
-# 07/24
+# 07/27
 
 ## [팀원] 박윤정
 - Book에 대한 Spring REST API 설계 및 개발
 
-#### 검색방식 변경 => 옵션(대분류, 소분류, 월) [ 가능한 경우 : default+default, 대분류+default, 대분류+소분류 / month(필수x) ]
-#### 역대베스트 기행문 => 평점순으로
-#### Book에 대한 정보 불러올 때 최신순(default) / 평점순 API 추가
+###### 검색방식 변경 => 옵션(대분류, 소분류, 월) [ 가능한 경우 : default+default, 대분류+default, 대분류+소분류 / month(필수x) ]
+###### 역대베스트 기행문 => 평점순으로
+###### Book에 대한 정보 불러올 때 최신순(default) / 평점순 API 추가
+###### 특정 User에 대한 Book정보 => 최신순으로
+
+- User에 대한 Spring REST API 설계 및 개발 시작
+
 
 ## [팀장] 윤인하
 - Vue-router, Vuex 공부 및 프론트 내 로그인 정보 저장 구현 중
 - 출처: https://lovemewithoutall.github.io/it/vue-login-demo/
+
+
+
+## [팀원] 강용준
+
+- vue-router, vuex 공부
+- 동적인 화면 구현을 위해 JavaScript 공부
+- 메인페이지 틀 코딩완료 후 다른 페이지 작업 시작
+
+## [팀원] 임진섭
+
+![image](https://user-images.githubusercontent.com/22046757/88578189-1e8be800-d083-11ea-8a93-77a5d4f186c3.png)
+
+- geojson의 유효하지 않은 영역 수정 완료(폴리곤 병합을 통해서)
+
+![image](https://user-images.githubusercontent.com/22046757/88578350-627eed00-d083-11ea-9978-cb826b703f1d.png)
+- map.geojson으로 부터 폴리곤 영역을 받아와 카카오맵에 뿌려줌
+
+- 우리가 원하는 용도로 사용하기 위해서는 각 지역 코드를 매핑해서 보여줘야 함
+
+서울 11
+
+경기도 41
+ - 인천 28
+
+강원도 42
+
+경상도 47 48
+ - 부산 26
+ - 대구 27
+ - 울산 31
+
+충청도 43 44
+ - 대전 30
+ - 세종시 36
+
+전라도 45 46
+ - 광주 29
+
+제주도 50
+
+각 지역코드의 앞자리가 위와 같으므로 val.properties.SIG_CD.substring(0,2) == 'CODE' 를 통해 매핑해야 함! => 카드에서 클릭했을 때 넘겨주는 값을 매칭하는 방식으로
+
