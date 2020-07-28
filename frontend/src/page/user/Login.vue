@@ -10,7 +10,7 @@
   >
     <div class="user" id="login">
       <div class="inner-block">
-        <form name="frm" action="login" method="post">
+        <form name="frm" @submit.prevent="backsubmit">
           <h3 style="text-align:center; padding-bottom: 20px; line-height: 1; margin: 0;">로그인</h3>
           <div class="form-group">
               <label>이메일</label>
@@ -20,7 +20,7 @@
               <label>비밀번호</label>
               <input v-model="password" type="password" id="password" placeholder="영문, 숫자 혼용 8자 이상" class="form-control form-control-lg"/>
           </div>
-          <button style="margin-top: 30px; margin-bottom: 30px;" class="btn btn-lg btn-primary btn-block btn--back btn--login" @click="backsubmit">로그인</button>
+          <button style="margin-top: 30px; margin-bottom: 30px;" class="btn btn-lg btn-primary btn-block btn--back btn--login">로그인</button>
 
           <p class="sub-text text-right mt-2 mb-4">
             <router-link to="/forgotpassword">비밀번호를 잊으셨나요?</router-link>
@@ -76,7 +76,17 @@ export default {
         return;
       }
       this.showAlert = false;
-      document.frm.submit();
+      this.$axios.post("api/user/login",
+        {
+          email: this.email,
+          password: this.password
+        }, {headers: {'Content-Type': 'application/json'}}
+      ).then((response) => {
+        console.log(response);
+        if (response.data.email == "No Match") {
+          
+        }
+      })
     },
   },
   data: () => {

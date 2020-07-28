@@ -22,28 +22,23 @@ public class UserController {
 
 	@PostMapping("api/user/login")
 	@ResponseBody
-	public int login(@RequestBody User user, HttpSession session) {
-		int result = 0;
+	public User login(@RequestBody User user) {
 		String col = "email";
-		System.out.println(user.getEmail());
-		System.out.println("email");
 		User userIdCheck = userService.getUserOne(user.getEmail(), col);
+		User errorState = new User("No Match", "No Match", "No Match", "No Match");
 		if (userIdCheck == null)
-			return 2;
+			return errorState;
 		else {
 			if (user.getEmail().equals(userIdCheck.getEmail())) {
 				if (user.getPassword().equals(userIdCheck.getPassword())) {
-					session.setAttribute("loginUser", userIdCheck);
-					result = 3;
+					return userIdCheck;
 				}
 				else
-					result = 2;
+					return errorState;
 			}
 			else
-				result = 2;
+				return errorState;
 		}
-		
-		return result;
 	}
 	@PostMapping("api/user/signUp")
 	@ResponseBody
