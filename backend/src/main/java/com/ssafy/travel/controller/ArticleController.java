@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.travel.dto.Article;
+import com.ssafy.travel.dto.Score;
 import com.ssafy.travel.service.ArticleService;
 
 import io.swagger.annotations.ApiOperation;
@@ -47,7 +48,7 @@ public class ArticleController {
 	}
 
     @ApiOperation(value = "새로운 article 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PostMapping
+	@PostMapping("article")
 	public ResponseEntity<String> registArticle(@RequestBody Article article) {
 		logger.debug("registArticle - 호출");
 		if (articleService.registArticle(article)) {
@@ -73,6 +74,17 @@ public class ArticleController {
 	public ResponseEntity<String> deleteArticle(@PathVariable int articleno) {
 		logger.debug("deleteArticle - 호출");
 		if (articleService.deleteArticle(articleno)) {
+			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+		}
+		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+    
+    
+    @ApiOperation(value = "새로운 score 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PostMapping("score")
+	public ResponseEntity<String> registScore(@RequestBody Score score) {
+		logger.debug("registScore - 호출");
+		if (articleService.registScore(score)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);

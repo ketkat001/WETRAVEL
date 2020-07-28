@@ -1,12 +1,9 @@
 package com.ssafy.travel.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.travel.dao.UserDaoImpl;
-import com.ssafy.travel.dto.Book;
 import com.ssafy.travel.dto.User;
 
 @Service
