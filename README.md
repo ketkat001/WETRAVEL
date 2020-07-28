@@ -518,4 +518,12 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 - Score에 대한 Spring REST API 설계 및 개발 (진행중!)
 - DB 재설계 필요 & 그에 맞게 spring 코드 수정 필요 ...
 
+## [팀원] 임진섭
+
+![image](https://user-images.githubusercontent.com/22046757/88682016-256f3500-d12d-11ea-8d40-059fcfeb58bc.png)
+
+- Summernote라는 오픈소스 에디터 사용
+- 여행기 작성에 필요한 기능들을 추가할 수 있다는 장점이 있음
+- drag & drop 기능이 가능하므로 이미지를 올렸을 때 메타데이터를 추출할 수 있도록 개발해야 함(진행예정)
+
 
