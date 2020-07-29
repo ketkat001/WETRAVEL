@@ -1,38 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
-							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">         
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="m_article">
-   <insert id="registArticle">
-	   	insert into article (bookno, title, writedate, score, weather, text, traveldate, day)
-	   	values(#{bookno}, #{title}, now(), #{score}, #{weather}, #{text}, #{traveldate}, #{day})
-   </insert>
-   
-   <select id="getArticleList" resultType="article">
-   		select articleno, bookno, title, writedate, score, weather, text, traveldate, day 
-   		from article
-   		where bookno = #{bookno} 
-   		order by writedate
-   </select>
-   
-   <delete id="deleteArticle">
-   		delete from article 
-   		where articleno = #{articleno}
-   </delete>
-   
-   <update id="modifyArticle">
-	   	Update article 
-	   	set title = #{title}, writedate = #{writedate}, weather=#{weather}, text=#{text}, traveldate=#{traveldate}, day=#{day}
-	   	where articleno = #{articleno}
-   </update>
-   
+	<insert id="registArticle">
+		insert into article (bookno, title, writedate, score, weather, text,
+		traveldate, day)
+		values(#{bookno}, #{title}, now(), #{score}, #{weather}, #{text}, #{traveldate},
+		#{day})
+	</insert>
+
+	<select id="getArticleList" resultType="article">
+		select articleno, bookno, title, writedate, score, weather, text,
+		traveldate, day
+		from article
+		where bookno = #{bookno}
+		order by writedate
+	</select>
+
+	<delete id="deleteArticle">
+		delete from article
+		where articleno = #{articleno}
+	</delete>
+
+	<update id="modifyArticle">
+		Update article
+		set title = #{title}, writedate = #{writedate}, weather=#{weather},
+		text=#{text}, traveldate=#{traveldate}, day=#{day}
+		where articleno = #{articleno}
+	</update>
+
 	<select id="getArticleDetail" resultType="article">
-		select articleno, bookno, title, writedate, score, weather, text, traveldate, day 
+		select articleno,
+		bookno, title, writedate, score, weather, text, traveldate, day
 		from article
 		where articleno = #{articleno}
 	</select>
-   
-    <insert id="registScore">
-	   	insert into article_score (score, author, articleno)
-	   	values(#{score}, #{author}, #{articleno})
-    </insert>
+
+	<insert id="registScore">
+		insert into article_score (score, author, articleno)
+		values(#{score}, #{author}, #{articleno})
+	</insert>
+
+	<update id="modifyArticleScore">
+		Update article
+		set score = (select AVG(score) from article_score where articleno = #{articleno})
+		where articleno = #{articleno}
+	</update>
+	
+	<update id="modifyBookScore">
+		Update book
+		set score = (select AVG(score) from article 
+		where bookno = #{bookno})
+		where articleno = #{articleno}
+	</update>
 </mapper>
