@@ -106,7 +106,7 @@ public class UserController {
     @ApiOperation(value = "email에 해당하는 user의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@DeleteMapping("{email}")
 	public ResponseEntity<String> deleteUser(@PathVariable String email) {
-		logger.debug("deleteBook - 호출");
+		logger.debug("deleteUser - 호출");
 		if (userService.deleteUser(email)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
