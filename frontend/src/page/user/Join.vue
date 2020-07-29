@@ -13,7 +13,7 @@
         </div>
         <div class="form-group">
           <label>비밀번호</label>
-          <input v-model="password" id="password" type="passwordType" placeholder="비밀번호를 입력해주세요" class="form-control"/>
+          <input v-model="password" id="password" :type="passwordType" placeholder="비밀번호를 입력해주세요" class="form-control"/>
         </div>
         <div class="form-group">
           <label>비밀번호 확인</label>
@@ -46,21 +46,15 @@ export default {
       event.preventDefault();
       this.message = "";
       this.submitted = true;
-      this.$validator.validate().then((isValid) => {
+      this.$validator.validate().then(async (isValid) => {
         if (isValid) {
-          this.$store.dispatch("register", this.user).then(
-            (data) => {
-              this.message = data.message;
-              this.successful = true;
-            },
-            (error) => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
-            }
-          );
+          this.successful = await this.$store.dispatch("signUp", {email: this.email, password: this.password, nickname: this.nickName})
+        }
+        if (this.successful == true) {
+          this.$router.push('/')
+        }
+        else {
+          alert("회원가입에 실패했습니다")
         }
       });
     },

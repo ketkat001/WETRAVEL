@@ -3,11 +3,11 @@ import axios from 'axios'
 export default {
     async login (store, {email, password}) {
         await axios.post(`${store.state.host}/api/user/login`,
-            {
-                email: email,
-                password: password
-            }, {headers: {'Content-Type': 'application/json'}}
-            ).then((response) => {
+        {
+            email: email,
+            password: password
+        }, {headers: {'Content-Type': 'application/json'}}
+        ).then((response) => {
             if (response.data.email == "No Match") {
                 this.showAlert = true;
                 this.errMsg = "로그인 정보가 올바르지 않습니다"
@@ -20,7 +20,19 @@ export default {
                 store.commit('IS_AUTH', true)
             }
         })
-        console.log(store.getters.getIsAuth)
         return store.getters.getIsAuth
+    },
+
+    async signUp (store, {email, password, nickname}) {
+        await axios.post(`${store.state.host}/api/user/signUp`,
+        {
+            email: email,
+            password: password,
+            nickname: nickname,
+            introduce: "안녕하세요"
+        }, {headers: {'Content-Type': 'application/json'}}
+        ).then((response) => {
+            return response.data.result < 2
+        })
     }
 }

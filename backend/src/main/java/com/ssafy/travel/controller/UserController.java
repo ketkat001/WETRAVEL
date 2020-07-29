@@ -40,8 +40,6 @@ public class UserController {
 	@ResponseBody
 	public User login(@RequestBody User user, HttpSession session) {
 		String col = "email";
-		System.out.println(user.getEmail());
-		System.out.println("email");
 		User userIdCheck = userService.getUserOne(user.getEmail(), col);
 		User errorState = new User("No Match", "No Match", "No Match", "No Match");
 		if (userIdCheck == null)
