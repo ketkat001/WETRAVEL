@@ -501,3 +501,8 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 
 각 지역코드의 앞자리가 위와 같으므로 val.properties.SIG_CD.substring(0,2) == 'CODE' 를 통해 매핑해야 함! => 카드에서 클릭했을 때 넘겨주는 값을 매칭하는 방식으로
 
+# 07/29
+
+## [팀장]윤인하
+- Login 정보 Vuex에 저장 및 초기화 방지 구현: Timeout이 존재하지 않아 완벽하지 않음. JWT 다시 도전
+- 회원가입 기능 연동: 아직 성공 여부에 따라 Redirect나 팝업 띄우는 게 제대로 동작하지 않음. async / await 다시 해 보기
