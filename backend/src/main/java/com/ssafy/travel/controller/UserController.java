@@ -39,27 +39,25 @@ public class UserController {
 	@PostMapping("api/user/login")
 	@ResponseBody
 	public User login(@RequestBody User user, HttpSession session) {
-		int result = 0;
 		String col = "email";
 		System.out.println(user.getEmail());
 		System.out.println("email");
 		User userIdCheck = userService.getUserOne(user.getEmail(), col);
+		User errorState = new User("No Match", "No Match", "No Match", "No Match");
 		if (userIdCheck == null)
 			return userIdCheck;
 		else {
 			if (user.getEmail().equals(userIdCheck.getEmail())) {
 				if (user.getPassword().equals(userIdCheck.getPassword())) {
 					session.setAttribute("loginUser", userIdCheck);
-					result = 3;
+					return userIdCheck;
 				}
 				else
-					result = 2;
+					return errorState;
 			}
 			else
-				result = 2;
+				return errorState;
 		}
-		
-		return userIdCheck;
 	}
 	
 	@PostMapping("api/user/signUp")

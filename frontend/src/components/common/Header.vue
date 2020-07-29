@@ -7,7 +7,11 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
-          <b-button v-b-modal.loginModal @click="handleClickButton" class="text-white mx-3">로그인</b-button>
+          <b-button v-b-modal.loginModal v-if="this.$store.getters.getEmail == ''" @click="handleClickButton" class="text-white mx-3">로그인</b-button>
+          <div v-else>
+            <b-button class="text-white mx-3"><router-link to="/profile/${this.$store.getters.email}">프로필</router-link></b-button>
+            <b-button class="text-white mx-3" @click="userLogout()">로그아웃</b-button>
+          </div>
 
           <b-button class="text-white mx-3"><router-link to="/join">회원가입</router-link></b-button>
         </b-navbar-nav>
@@ -27,16 +31,22 @@ export default {
     appLoginModal: loginmodal,
   },
   props: ["isHeader"],
-  computed: {},
-  watch: {},
+  computed: {
+  },
+  watch: {
+  },
   created() {},
   methods: {
     handleClickButton() {
       this.visible = !this.visible;
     },
+    userLogout() {
+      this.$store.commit('logout');
+    }
   },
   data: function () {
     return {
+      login: false,
       visible: false,
       constants,
       keyword: "",

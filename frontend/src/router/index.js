@@ -15,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 // 유저
 import join from '../page/user/Join.vue'
 import forgotpassword from '../page/user/ForgotPassword.vue'
+import profile from '../page/user/Profile.vue'
 
 // 포스트
 import mainpage from '../page/post/MainPage.vue'
@@ -55,6 +56,10 @@ export default new Router({
     {
       path: '/forgotpassword',
       component: forgotpassword,
+    },
+    {
+      path: '/profile/:nickname',
+      component: profile
     }
   ]
 })
