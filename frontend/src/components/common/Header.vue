@@ -42,6 +42,17 @@ export default {
     },
     userLogout() {
       this.$store.commit('logout');
+    },
+    onScroll() {
+      const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
+      if (currentScrollPosition < 0) {
+        return
+      }
+      if (Math.abs(currentScrollPosition - this.lastScrollPosition) < 60) {
+        return
+      }
+      this.showNavbar = currentScrollPosition < this.lastScrollPosition
+      this.lastScrollPosition = currentScrollPosition
     }
   },
   data: function () {
@@ -50,6 +61,8 @@ export default {
       visible: false,
       constants,
       keyword: "",
+      showNavbar: true,
+      lastScrollPosition: 0,
     };
   },
 };
@@ -66,5 +79,13 @@ button.btn {
 #header {
   border-bottom: 0px;
   background-color: #007bff;
+}
+.header {
+  transform: translate3d(0, 0, 0);
+  transition: 0.1s all ease-out;
+}
+.header.navbar--hidden {
+  box-shadow: none;
+  transform: translate3d(0, -100%, 0);
 }
 </style>
