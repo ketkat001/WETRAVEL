@@ -12,6 +12,9 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faTwitter, faInstagram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+// vue-star-rating
+import StarRating from 'vue-star-rating'
+
 // 유저
 import join from '../page/user/Join.vue'
 import forgotpassword from '../page/user/ForgotPassword.vue'
@@ -19,7 +22,10 @@ import profile from '../page/user/Profile.vue'
 
 // 포스트
 import mainpage from '../page/post/MainPage.vue'
-import besttravelpage from '../page/post/BestTravelPage.vue'
+import bestpage from '../page/post/BestPage.vue'
+import citypage from '../page/post/CityPage.vue'
+import bookpage from '../page/post/BookPage.vue'
+import articlepage from '../page/post/ArticlePage.vue'
 
 library.add(fas)
 library.add(faFacebook)
@@ -34,6 +40,7 @@ Vue.use(VeeValidate)
 Vue.use(Carousel3d)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('star-rating', StarRating)
 
 
 export default new Router({
@@ -45,8 +52,20 @@ export default new Router({
       component: mainpage,
     },
     {
-      path:'/besttravelpage',
-      component: besttravelpage,
+      path:'/best/:city',
+      component: bestpage,
+    },
+    {
+      path: '/posts/:province/:city', 
+      component: citypage,
+    },
+    {
+      path: '/posts/:province/:city/:id',
+      component: bookpage,
+    },
+    {
+      path: '/posts/:province/:city/:id/:id',
+      component: articlepage,
     },
     // 가입
     {
