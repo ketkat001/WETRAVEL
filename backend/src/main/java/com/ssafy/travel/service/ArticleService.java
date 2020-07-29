@@ -3,11 +3,13 @@ package com.ssafy.travel.service;
 import java.util.List;
 
 import com.ssafy.travel.dto.Article;
+import com.ssafy.travel.dto.Score;
 
 public interface ArticleService {
-	public int registArticle(Article article); 
-	public List<Article> getArticleList();
-	public Article getArticle(String articleno);
-	public int deleteArticle(String articleno);
-	public int modifyArticle(Article article);
+	public boolean registArticle(Article article); 
+	public List<Article> getArticleList(int bookno);
+	public boolean deleteArticle(int articleno);
+	public Article getArticleDetail(int articleno);
+	public boolean modifyArticle(Article article);
+	public boolean registScore(Score score);
 }

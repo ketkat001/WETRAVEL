@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.travel.dto.Article;
+import com.ssafy.travel.dto.Score;
 
 @Repository
 public class ArticleDaoImpl implements ArticleDao{
@@ -19,22 +20,27 @@ public class ArticleDaoImpl implements ArticleDao{
 	}
 
 	@Override
-	public List<Article> getArticleList() {
-		return sqlSession.selectList("m_article.getArticleList");
+	public List<Article> getArticleList(int bookno) {
+		return sqlSession.selectList("m_article.getArticleList", bookno);
 	}
 
 	@Override
-	public Article getArticle(String articleno) {
-		return sqlSession.selectOne("m_article.getArticle", articleno);
-	}
-
-	@Override
-	public int deleteArticle(String articleno) {
+	public int deleteArticle(int articleno) {
 		return sqlSession.delete("m_article.deleteArticle",articleno);
 	}
 
 	@Override
 	public int modifyArticle(Article article) {
 		return sqlSession.update("m_article.modifyArticle",article);
+	}
+
+	@Override
+	public Article getArticleDetail(int articleno) {
+		return sqlSession.selectOne("m_article.getArticleDetail", articleno);
+	}
+
+	@Override
+	public int registerScore(Score score) {
+		return sqlSession.insert("m_article.registScore",score);
 	}
 }

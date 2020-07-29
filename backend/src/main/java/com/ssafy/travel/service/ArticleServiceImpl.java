@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.travel.dao.ArticleDao;
 import com.ssafy.travel.dto.Article;
+import com.ssafy.travel.dto.Score;
 
 @Service
 public class ArticleServiceImpl implements ArticleService{
@@ -15,28 +16,33 @@ public class ArticleServiceImpl implements ArticleService{
 	ArticleDao dao;
 
 	@Override
-	public int registArticle(Article article) {
-		return dao.registArticle(article);
+	public boolean registArticle(Article article) {
+		return dao.registArticle(article) == 1;
 	}
 
 	@Override
-	public List<Article> getArticleList() {
-		return dao.getArticleList();
+	public List<Article> getArticleList(int bookno) {
+		return dao.getArticleList(bookno);
 	}
 
 	@Override
-	public Article getArticle(String articleno) {
-		return dao.getArticle(articleno);
+	public boolean deleteArticle(int articleno) {
+		return dao.deleteArticle(articleno) == 1;
 	}
 
 	@Override
-	public int deleteArticle(String articleno) {
-		return dao.deleteArticle(articleno);
+	public boolean modifyArticle(Article article) {
+		return dao.modifyArticle(article) == 1;
 	}
 
 	@Override
-	public int modifyArticle(Article article) {
-		return dao.modifyArticle(article);
+	public Article getArticleDetail(int articleno) {
+		return dao.getArticleDetail(articleno);
+	}
+
+	@Override
+	public boolean registScore(Score score) {
+		return dao.registerScore(score) == 1;
 	}
 	
 }
