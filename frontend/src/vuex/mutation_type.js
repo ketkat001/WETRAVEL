@@ -1,3 +1,4 @@
+export const TOKEN = 'TOKEN'
 export const EMAIL = 'EMAIL'
 export const NICKNAME = 'NICKNAME'
 export const INTRODUCE = 'INTRODUCE'

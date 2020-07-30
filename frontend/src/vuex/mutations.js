@@ -1,6 +1,10 @@
 import * as types from './mutation_type'
+import { _ } from 'core-js'
 
 export default {
+    [types.TOKEN] (state, token) {
+        state.token = token
+    },
     [types.EMAIL] (state, email) {
         state.email = email
     },
@@ -20,13 +24,19 @@ export default {
         state.joinSuccess = joinSuccess
     },
     logout (state) {
-        if (state.email) {
-            state.email = ''
-            state.nickname = ''
-            state.introduce = ''
+        if (localStorage.getItem('jwt-auth-token')) {
+            localStorage.removeItem('jwt-auth-token')
+            localStorage.removeItem('login_email')
+            localStorage.removeItem('login_nickname')
+            localStorage.removeItem('login_introduce')
+            this.commit('TOKEN', '')
+            this.commit('EMAIL', '')
+            this.commit('NICKNAME', '')
+            this.commit('INTRODUCE', '')
+            this.commit('IS_AUTH', false)
         }
     },
     isLogin (state) {
-        return state.email != ''
+        return state.isAuth
     }
 }

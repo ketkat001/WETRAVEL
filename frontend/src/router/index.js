@@ -26,6 +26,7 @@ import bestpage from '../page/post/BestPage.vue'
 import citypage from '../page/post/CityPage.vue'
 import bookpage from '../page/post/BookPage.vue'
 import articlepage from '../page/post/ArticlePage.vue'
+import store from '../vuex/store'
 
 library.add(fas)
 library.add(faFacebook)
@@ -42,6 +43,13 @@ Vue.use(Carousel3d)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('star-rating', StarRating)
 
+const requireAuth = () => (to, from, next) => {
+  if (localStorage.getItem('jwt-auth-token')) {
+    return next();
+  }
+  alert('로그인 후 이용 가능합니다')
+  next('/');
+}
 
 export default new Router({
   mode: 'history',
@@ -78,7 +86,9 @@ export default new Router({
     },
     {
       path: '/profile/:nickname',
-      component: profile
+      name: 'profile',
+      component: profile,
+      beforeEnter: requireAuth()
     }
   ]
 })
