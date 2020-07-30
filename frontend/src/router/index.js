@@ -23,6 +23,7 @@ import profile from '../page/user/Profile.vue'
 // 포스트
 import mainpage from '../page/post/MainPage.vue'
 import bestpage from '../page/post/BestPage.vue'
+import provincepage from '../page/post/ProvincePage.vue'
 import citypage from '../page/post/CityPage.vue'
 import bookpage from '../page/post/BookPage.vue'
 import articlepage from '../page/post/ArticlePage.vue'
@@ -54,6 +55,10 @@ export default new Router({
     {
       path:'/best/:city',
       component: bestpage,
+    },
+    {
+      path:'/posts/:province',
+      component: provincepage,
     },
     {
       path: '/posts/:province/:city', 
