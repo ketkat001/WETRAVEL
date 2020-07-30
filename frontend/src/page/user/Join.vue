@@ -49,12 +49,12 @@ export default {
       this.$validator.validate().then(async (isValid) => {
         if (isValid) {
           this.successful = await this.$store.dispatch("signUp", {email: this.email, password: this.password, nickname: this.nickName})
-        }
-        if (this.successful == true) {
-          this.$router.push('/')
-        }
-        else {
-          alert("회원가입에 실패했습니다")
+          if (this.successful == true) {
+            this.$router.push('/')
+          }
+          else {
+            alert("회원가입에 실패했습니다")
+          }
         }
       });
     },

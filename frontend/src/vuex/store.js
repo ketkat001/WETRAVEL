@@ -14,7 +14,8 @@ const state = {
     nickname: '',
     introduce: '',
     errorState: '',
-    isAuth: false
+    isAuth: false,
+    joinSuccess: false
 }
 
 export default new Vuex.Store({

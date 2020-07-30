@@ -32,7 +32,8 @@ export default {
             introduce: "안녕하세요"
         }, {headers: {'Content-Type': 'application/json'}}
         ).then((response) => {
-            return response.data.result < 2
+            store.commit('JOIN_SUCCESS', response.data < 2)
         })
+        return store.getters.getJoinSuccess
     }
 }

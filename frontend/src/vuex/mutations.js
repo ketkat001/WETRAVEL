@@ -16,6 +16,9 @@ export default {
     [types.IS_AUTH] (state, isAuth) {
         state.isAuth = isAuth
     },
+    [types.JOIN_SUCCESS] (state, joinSuccess) {
+        state.joinSuccess = joinSuccess
+    },
     logout (state) {
         if (state.email) {
             state.email = ''
@@ -24,7 +27,6 @@ export default {
         }
     },
     isLogin (state) {
-        console.log(state.email)
         return state.email != ''
     }
 }

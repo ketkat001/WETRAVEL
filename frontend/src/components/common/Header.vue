@@ -42,6 +42,7 @@ export default {
     },
     userLogout() {
       this.$store.commit('logout');
+      this.$router.push('/');
     },
     onScroll() {
       const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop
