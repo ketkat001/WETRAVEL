@@ -1,6 +1,6 @@
 <template>
   <div id="footer">
-    <footer class="page-footer" style="background-color: #A9A9A9;">
+    <footer class="page-footer" style="background-color: rgb(245, 245, 245);">
       <div class="container">
         <div class="row">
           <div class="col-md-12 py-5">
