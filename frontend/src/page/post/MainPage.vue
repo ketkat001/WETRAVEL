@@ -90,58 +90,70 @@
               </b-link>
             </div>
             <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>경기, 활력 넘치는 도시</b-card-text>
-              </b-card>
+              <b-link to="/posts/경기">
+                <b-card
+                  img-src="https://picsum.photos/600/300/"
+                  style="max-width: 20rem;"
+                  class="mb-2"
+                >
+                  <b-card-text>경기, 활력 넘치는 도시</b-card-text>
+                </b-card>
+              </b-link>
             </div>
             <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>강원, 자연과 힐링</b-card-text>
-              </b-card>
+              <b-link to="/posts/강원">
+                <b-card
+                  img-src="https://picsum.photos/600/300/"
+                  style="max-width: 20rem;"
+                  class="mb-2"
+                >
+                  <b-card-text>강원, 자연과 힐링</b-card-text>
+                </b-card>
+              </b-link>
             </div>
             <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>충청, 교통의 중심</b-card-text>
-              </b-card>
+              <b-link to="/posts/충청">
+                <b-card
+                  img-src="https://picsum.photos/600/300/"
+                  style="max-width: 20rem;"
+                  class="mb-2"
+                >
+                  <b-card-text>충청, 교통의 중심</b-card-text>
+                </b-card>
+              </b-link>
             </div>
             <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>전라, 맛의 중심</b-card-text>
-              </b-card>
+              <b-link to="/posts/전라">
+                <b-card
+                  img-src="https://picsum.photos/600/300/"
+                  style="max-width: 20rem;"
+                  class="mb-2"
+                >
+                  <b-card-text>전라, 맛의 중심</b-card-text>
+                </b-card>
+              </b-link>
             </div>
             <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>경상, 바다의 도시</b-card-text>
-              </b-card>
+              <b-link to="/posts/경상">
+                <b-card
+                  img-src="https://picsum.photos/600/300/"
+                  style="max-width: 20rem;"
+                  class="mb-2"
+                >
+                  <b-card-text>경상, 바다의 도시</b-card-text>
+                </b-card>
+              </b-link>
             </div>
             <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>제주, 추억과 행복</b-card-text>
-              </b-card>
+              <b-link to="posts/제주">
+                <b-card
+                  img-src="https://picsum.photos/600/300/"
+                  style="max-width: 20rem;"
+                  class="mb-2"
+                >
+                  <b-card-text>제주, 추억과 행복</b-card-text>
+                </b-card>
+              </b-link>
             </div>
             <div class="col-3">
               <b-link to="/posts/부산/부산">
@@ -438,6 +450,9 @@ export default {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    color: rgba(0, 0, 0);
+    font-weight: 400;
+
   }
   .travel-card-author {
     font-size: 14px;
