@@ -7,9 +7,9 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
-          <b-button v-b-modal.loginModal v-if="this.$store.getters.getEmail == ''" @click="handleClickButton" class="text-white mx-3">로그인</b-button>
+          <b-button v-b-modal.loginModal v-if="this.$store.getters.getIsAuth == ''" @click="handleClickButton" class="text-white mx-3">로그인</b-button>
           <div v-else>
-            <b-button class="text-white mx-3"><router-link to="/profile/${this.$store.getters.email}">프로필</router-link></b-button>
+            <b-button class="text-white mx-3"><router-link :to="{ name: 'profile', params: { nickname: this.$store.getters.getNickname }}">프로필</router-link></b-button>
             <b-button class="text-white mx-3" @click="userLogout()">로그아웃</b-button>
           </div>
 
@@ -42,7 +42,7 @@ export default {
     },
     userLogout() {
       this.$store.commit('logout');
-      this.$router.push('/');
+      this.$router.push('/').catch(()=>{});
     },
     onScroll() {
       const currentScrollPosition = window.pageYOffset || document.documentElement.scrollTop

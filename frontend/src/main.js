@@ -12,6 +12,9 @@ new Vue({
   el: '#app',
   router, 
   store,
+  beforeCreate() {
+    this.$store.dispatch("checkLogin")
+  },
   components: { App }, 
   template: '<App/>'
 })

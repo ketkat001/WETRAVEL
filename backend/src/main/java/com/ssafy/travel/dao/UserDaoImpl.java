@@ -15,6 +15,7 @@ public class UserDaoImpl implements UserDao{
 	@Autowired
 	public SqlSession sqlSession;
 	
+	@Override
 	public User getUserOne(String common, String col) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		if (col.equals("email")) {
@@ -26,6 +27,13 @@ public class UserDaoImpl implements UserDao{
 		return sqlSession.selectOne("m_user.getUserOne", map);
 	}
 	
+	@Override
+	public User getLogin(String email, String password) {
+		User user = new User(email, password, "foo", "bar");
+		return sqlSession.selectOne("m_user.getLogin", user);
+	}
+	
+	@Override
 	public int userJoin(User user) {
 		return sqlSession.insert("m_user.userJoin", user);
 	}

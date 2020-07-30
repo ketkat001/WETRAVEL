@@ -1,7 +1,10 @@
 package com.ssafy.travel.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -21,13 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.travel.dto.Book;
 import com.ssafy.travel.dto.User;
+import com.ssafy.travel.service.JwtService;
 import com.ssafy.travel.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 
 //http://localhost:8999/travel/swagger-ui.html
 @RestController
-@RequestMapping("api/user/*")
+@RequestMapping("/api/user")
 public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(BookController.class);
 	private static final String SUCCESS = "success";
@@ -36,29 +40,32 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@PostMapping("api/user/login")
+	@Autowired
+	JwtService jwtService;
+	
+	@PostMapping("login")
 	@ResponseBody
-	public User login(@RequestBody User user, HttpSession session) {
-		String col = "email";
-		User userIdCheck = userService.getUserOne(user.getEmail(), col);
-		User errorState = new User("No Match", "No Match", "No Match", "No Match");
-		if (userIdCheck == null)
-			return userIdCheck;
-		else {
-			if (user.getEmail().equals(userIdCheck.getEmail())) {
-				if (user.getPassword().equals(userIdCheck.getPassword())) {
-					session.setAttribute("loginUser", userIdCheck);
-					return userIdCheck;
-				}
-				else
-					return errorState;
-			}
-			else
-				return errorState;
+	public ResponseEntity<Map<String, Object>> login(@RequestBody User user, HttpServletResponse res) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		
+		try {
+			User userIdCheck = userService.getLogin(user.getEmail(), user.getPassword());
+			if (userIdCheck == null)
+				throw new RuntimeException();
+			String token = jwtService.create(userIdCheck);
+			res.setHeader("jwt-auth-token", token);
+			resultMap.put("status", true);
+			resultMap.put("data", userIdCheck);
+			status = HttpStatus.ACCEPTED;
+		} catch (RuntimeException e) {
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
 		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 	
-	@PostMapping("api/user/signUp")
+	@PostMapping("signUp")
 	@ResponseBody
 	public int signUp(@RequestBody User user) {
 		int result = 0;

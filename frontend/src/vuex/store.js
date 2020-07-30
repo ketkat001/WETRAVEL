@@ -4,12 +4,10 @@ import getters from './getters'
 import actions from './actions'
 import mutations from './mutations'
 
-import createPersistedState from 'vuex-persistedstate'
-
 Vue.use(Vuex)
 
 const state = {
-    host: 'http://localhost:8999/travel',
+    token: '',
     email: '',
     nickname: '',
     introduce: '',
@@ -23,7 +21,4 @@ export default new Vuex.Store({
     mutations,
     getters,
     actions,
-    plugins: [
-        createPersistedState()
-    ]
 })
