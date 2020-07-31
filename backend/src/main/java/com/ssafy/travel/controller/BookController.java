@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.travel.dto.Book;
 import com.ssafy.travel.service.BookService;
@@ -56,8 +57,16 @@ public class BookController {
 
     @ApiOperation(value = "새로운 book 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping
-	public ResponseEntity<String> registBook(@RequestBody Book book) {
+	public ResponseEntity<String> registBook(@RequestBody Book book, @RequestParam("file") MultipartFile file) {
 		logger.debug("registBook - 호출");
+		
+		try {
+			Object img = file.getBytes();
+			book.setImg(img);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		if (bookService.registBook(book)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
