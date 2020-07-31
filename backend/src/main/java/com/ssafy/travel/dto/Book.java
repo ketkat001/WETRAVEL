@@ -9,13 +9,14 @@ public class Book {
 	private String city;
 	private String startdate;
 	private double score;
+	private Object img;
 	
 	public Book() {
 		super();
 	}
 
 	public Book(int bookno, String title, String writer, String writedate, String province, String city,
-			String startdate, double score) {
+			String startdate, double score,Object img) {
 		super();
 		this.bookno = bookno;
 		this.title = title;
@@ -25,6 +26,7 @@ public class Book {
 		this.city = city;
 		this.startdate = startdate;
 		this.score = score;
+		this.img = img;
 	}
 	
 	public int getBookno() {
@@ -76,6 +78,14 @@ public class Book {
 
 	public void setScore(double score) {
 		this.score = score;
+	}
+	
+	public Object getImg() {
+		return img;
+	}
+
+	public void setImg(Object img) {
+		this.img = img;
 	}
 
 	@Override
