@@ -10,13 +10,14 @@ public class Article {
 	private String text;
 	private String traveldate;
 	private int day;
+	private Object img;
 	
 	public Article() {
 		super();
 	}
 
 	public Article(int articleno, int bookno, String title, String writedate, double score, String weather, String text,
-			String traveldate, int day) {
+			String traveldate, int day, Object img) {
 		super();
 		this.articleno = articleno;
 		this.bookno = bookno;
@@ -27,6 +28,7 @@ public class Article {
 		this.text = text;
 		this.traveldate = traveldate;
 		this.day = day;
+		this.img = img;
 	}
 	
 	public int getArticleno() {
@@ -84,6 +86,14 @@ public class Article {
 		this.day = day;
 	}
 	
+	public Object getImg() {
+		return img;
+	}
+
+	public void setImg(Object img) {
+		this.img = img;
+	}
+
 	@Override
 	public String toString() {
 		return "Article [articleno=" + articleno + ", bookno=" + bookno + ", title=" + title + ", writedate="
