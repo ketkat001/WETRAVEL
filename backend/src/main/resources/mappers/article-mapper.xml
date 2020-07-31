@@ -49,10 +49,8 @@
 	
 	<update id="modifyBookScore">
 		Update book
-		set score = 
-			(select AVG(score) from article where bookno = 
-				(select bookno from article where articleno = #{articleno})
-			)
-		where bookno = (select bookno from article where articleno = #{articleno})
+		set score = (select AVG(score) from article 
+		where bookno = #{bookno})
+		where articleno = #{articleno}
 	</update>
 </mapper>

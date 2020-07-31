@@ -41,17 +41,6 @@ public class ArticleDaoImpl implements ArticleDao{
 
 	@Override
 	public int registerScore(Score score) {
-		// score을 article_score 디비에 저장한다 
-		// 저장된 score article에 반영하기 위해 article테이블에 score를 avg로 갱신한다
-		// 저장된 score book에 반영하기 위해  book테이블에 score를 avg로 갱신한다
-		try {
-			int result = sqlSession.insert("m_article.registScore",score);
-			sqlSession.update("m_article.modifyArticleScore",score.getArticleno());
-			sqlSession.update("m_article.modifyBookScore",score.getArticleno());
-			return result;
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
+		return sqlSession.insert("m_article.registScore",score);
 	}
 }
