@@ -75,7 +75,7 @@
         </div>
       </div>
       <div class="home-content container">
-        <div class="korea-city">
+        <div class="korea-city" data-aos="zoom-in" data-aos-duration='1000'>
           <h2 style="margin-bottom: 40px; color: primary;">좋아하는 여행지를 골라보세요!</h2>
           <div class="row">
             <div class="col-3">
@@ -168,7 +168,7 @@
             </div>
           </div>
         </div>
-        <div class="best-city-article">
+        <div class="best-city-article" data-aos="zoom-in" data-aos-duration='1000'>
           <h2 style="margin-bottom:40px;">지역별 베스트 여행기를 보세요!</h2>
           <div class="row" style="justify-content: center;">
             <div class="col-10">
@@ -185,7 +185,7 @@
             </div>
           </div>
         </div>
-        <div class="best-article">
+        <div class="best-article" data-aos="zoom-in" data-aos-duration='1000'>
           <h2 style="margin-bottom:40px;">믿고 보는 베스트 여행기!</h2>
           <div class="row" style="justify-content:center;">
             <div class="col-3">
