@@ -1,5 +1,5 @@
 <template>
-  <div id="header" v-if="isHeader">
+  <div id="header" v-if="isHeader" :class="{ 'navbar--hidden': !showNavbar }">
     <b-navbar toggleable="lg" type="dark" variant="primary" class="p-0">
       <h1>
         <router-link to="/">We Travel</router-link>
@@ -35,11 +35,19 @@ export default {
   },
   watch: {
   },
+  mounted() {
+    this.lastScrollPosition = window.pageYOffset
+    window.addEventListener('scroll', this.onScroll)
+  },
+  beforeDestroy () {
+    window.removeEventListener('scroll', this.onScroll)
+  },
   created() {},
   methods: {
     handleClickButton() {
       this.visible = !this.visible;
     },
+    
     userLogout() {
       this.$store.commit('logout');
       this.$router.push('/').catch(()=>{});
@@ -54,7 +62,7 @@ export default {
       }
       this.showNavbar = currentScrollPosition < this.lastScrollPosition
       this.lastScrollPosition = currentScrollPosition
-    }
+    },
   },
   data: function () {
     return {
@@ -63,7 +71,6 @@ export default {
       constants,
       keyword: "",
       showNavbar: true,
-      lastScrollPosition: 0,
     };
   },
 };
@@ -80,13 +87,10 @@ button.btn {
 #header {
   border-bottom: 0px;
   background-color: #007bff;
-}
-.header {
-  transform: translate3d(0, 0, 0);
   transition: 0.1s all ease-out;
 }
-.header.navbar--hidden {
-  box-shadow: none;
+
+.navbar--hidden {
   transform: translate3d(0, -100%, 0);
 }
 </style>
