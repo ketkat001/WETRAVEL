@@ -105,7 +105,7 @@ export default {
       params: {
         province: this.$route.params.province,
         city: this.$route.params.city,
-        month: null
+        month: today.getMonth() + 1
       },
       headers: {'Content-Type': 'application/json'}
     }).then(response => {
