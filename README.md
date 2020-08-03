@@ -513,3 +513,7 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 - DB 살짝 수정: Book과 Article의 Startdate의 유형을 datetime에서 date로 변경
 - DB에 더미데이터 저장 및 Frontend에서 불러오기 기능 구현
 - Jira 4주차 스프린트 제작
+
+## 임진섭
+- 에디터 db와 연동하기 진행중
+- 계속적인 에디터의 기능 실험중
