@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './vuex/store'
 import axios from 'axios'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+
 
 Vue.prototype.$axios = axios
 Vue.config.productionType = false
@@ -12,6 +15,9 @@ new Vue({
   el: '#app',
   router, 
   store,
+  created () {
+    AOS.init()
+  },
   beforeCreate() {
     this.$store.dispatch("checkLogin")
   },
