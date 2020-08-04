@@ -173,7 +173,12 @@
           <div class="row" style="justify-content: center;">
             <div class="col-10">
               <carousel-3d>
-                <slide :index="0">규민아!!!!!!!</slide>
+                <slide :index="0">
+                  <img src="@/assets/img/12.jpg">
+                  <div class="slide-text">
+                    <h3>서울</h3>
+                  </div>
+                </slide>
                 <slide :index="1">너무!!!!!!</slide>
                 <slide :index="2">힘들다!!!!!</slide>
                 <slide :index="3">힘들다!!!!!</slide>
@@ -400,6 +405,17 @@ export default {
   }
   .best-city-article {
     margin-bottom: 40px;
+  }
+  .carousel-3d-slide img {
+    height: 100%;
+    opacity: 0.8;
+  }
+  .slide-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color:#ccc
   }
   .content-card {
     text-align: left;
