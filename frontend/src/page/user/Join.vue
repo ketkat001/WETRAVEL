@@ -4,20 +4,62 @@
       <form name="frm" action="join" method="post">
         <h3>회원 가입</h3>
         <div class="form-group">
-          <label>닉네임</label>
-          <input v-model="nickName" id="nickname" placeholder="닉네임을 입력해주세요" type="text" class="form-control"/>
+          <label for="nickname">닉네임</label>
+          <input 
+            v-model="nickName" 
+            v-validate="'required|min:3|max:20'" 
+            placeholder="닉네임을 입력해주세요" 
+            type="text" 
+            name="nickname"
+            class="form-control"
+          />
+          <div class="alert alert-danger" v-if="errors.has('nickname')">
+            {{ errors.first('nickname') }}
+          </div>
         </div>
         <div class="form-group">
-          <label>이메일 주소</label>
-          <input v-model="email" id="email" placeholder="이메일을 입력해주세요" type="email" class="form-control"/>
+          <label for="email">이메일 주소</label>
+          <input
+            v-model="email"
+            placeholder="이메일을 입력해주세요" 
+            type="email" 
+            name="email"
+            class="form-control"
+            v-validate="'required|email'"  
+          />
+          <div class="alert alert-danger" v-if="errors.has('email')">
+            {{ errors.first('email') }}
+          </div>
         </div>
         <div class="form-group">
-          <label>비밀번호</label>
-          <input v-model="password" id="password" :type="passwordType" placeholder="비밀번호를 입력해주세요" class="form-control"/>
+          <label for="password">비밀번호</label>
+          <input 
+            v-model="password" 
+            name="password" 
+            :type="passwordType" 
+            placeholder="비밀번호를 입력해주세요" 
+            class="form-control"
+            ref="password"
+            v-validate="'required|min:13'"
+          />
+          <div class="alert alert-danger" v-if="errors.has('password')">
+            {{ errors.first('password') }}
+          </div>
         </div>
         <div class="form-group">
-          <label>비밀번호 확인</label>
-          <input v-model="passwordConfirm" id="password-confirm" :type="passwordConfirmType" placeholder="비밀번호를 한번 더 입력해주세요" class="form-control"/>
+          <label for="password-confirmation">비밀번호 확인</label>
+          <input 
+            v-model="passwordConfirm"
+            v-validate="'required|confirmed:password'" 
+            name="password_confirmation" 
+            type="password" 
+            class="form-control" 
+            placeholder="비밀번호를 재입력해주세요" 
+            data-vv-as="password"
+          />
+          <div class="alert alert-danger" v-if="errors.has('password_confirmation')">
+            {{ errors.first('password_confirmation') }}          
+          </div>
         </div>
         <button type="submit" @click="backsubmit" class="btn btn-dark btn-lg btn-block">회원가입</button>
       </form>
@@ -110,5 +152,8 @@ export default {
   }
   button.btn {
     background-color:#6495ED;
+  }
+  .alert-danger {
+    font-size: 14px;
   }
 </style>

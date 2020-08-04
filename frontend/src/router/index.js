@@ -38,8 +38,8 @@ library.add(faPinterest)
 Vue.use(Router) 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-Vue.use(VeeValidate)
 Vue.use(Carousel3d)
+Vue.use(VeeValidate)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('star-rating', StarRating)
@@ -51,6 +51,7 @@ const requireAuth = () => (to, from, next) => {
   alert('로그인 후 이용 가능합니다')
   next('/');
 }
+
 
 export default new Router({
   mode: 'history',
@@ -103,5 +104,9 @@ export default new Router({
       component: profile,
       beforeEnter: requireAuth()
     }
-  ]
+  ],
+  // 페이지 이동 시 맨 위로 이동
+  scrollBehavior (to, from, savedPosition) {
+    return { x:0, y:0 }
+  }
 })

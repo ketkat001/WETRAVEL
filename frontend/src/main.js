@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './vuex/store'
 import axios from 'axios'
+
+
+// 스크롤 감지 이벤트
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 

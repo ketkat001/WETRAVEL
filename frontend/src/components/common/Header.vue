@@ -2,18 +2,18 @@
   <div id="header" v-if="isHeader" :class="{ 'navbar--hidden': !showNavbar }">
     <b-navbar toggleable="lg" type="dark" variant="primary" class="p-0">
       <h1>
-        <router-link to="/">We Travel</router-link>
+        <router-link style="text-decoration:none" to="/">We Travel</router-link>
       </h1>
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
-          <b-button v-b-modal.loginModal v-if="this.$store.getters.getIsAuth == ''" @click="handleClickButton" class="text-white mx-3">로그인</b-button>
+          <b-button variant="primary" v-b-modal.loginModal v-if="this.$store.getters.getIsAuth == ''" @click="handleClickButton" class="text-white mx-3">로그인</b-button>
           <div v-else>
-            <b-button class="text-white mx-3"><router-link :to="{ name: 'profile', params: { nickname: this.$store.getters.getNickname }}">프로필</router-link></b-button>
-            <b-button class="text-white mx-3" @click="userLogout()">로그아웃</b-button>
+            <b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" :to="{ name: 'profile', params: { nickname: this.$store.getters.getNickname }}">프로필</router-link></b-button>
+            <b-button variant="primary" class="text-white mx-3" @click="userLogout()">로그아웃</b-button>
           </div>
 
-          <b-button class="text-white mx-3"><router-link to="/join">회원가입</router-link></b-button>
+          <b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" to="/join">회원가입</router-link></b-button>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -81,7 +81,6 @@ a:visited {
   color: white;
 }
 button.btn {
-  background-color: rgba(255, 255, 255, 0);
   border-color: rgba(255, 255, 255, 0);
 }
 #header {
