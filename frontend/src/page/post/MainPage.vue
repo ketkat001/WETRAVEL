@@ -192,78 +192,18 @@
         </div>
         <div class="best-article" data-aos="zoom-in" data-aos-duration='1000'>
           <h2 style="margin-bottom:40px;">믿고 보는 베스트 여행기!</h2>
-          <div class="row" style="justify-content:center;">
-            <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>서울, 대한민국의 수도</b-card-text>
-              </b-card>
-            </div>
-            <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>서울, 대한민국의 수도</b-card-text>
-              </b-card>
-            </div>
-            <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>서울, 대한민국의 수도</b-card-text>
-              </b-card>
-            </div>
-            <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>서울, 대한민국의 수도</b-card-text>
-              </b-card>
-            </div>
-            <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>서울, 대한민국의 수도</b-card-text>
-              </b-card>
-            </div>
-            <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>서울, 대한민국의 수도</b-card-text>
-              </b-card>
-            </div>
-            <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>서울, 대한민국의 수도</b-card-text>
-              </b-card>
-            </div>
-            <div class="col-3">
-              <b-card
-                img-src="https://picsum.photos/600/300/"
-                style="max-width: 20rem;"
-                class="mb-2"
-              >
-                <b-card-text>서울, 대한민국의 수도</b-card-text>
-              </b-card>
+          <div class="content-card row">
+            <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
+              <b-link to="/posts/$route.params.province/$route.params.city/1/">
+                <div  class="card travel-card">
+                  <img class="travel-card-image" :src="card.image">
+                  <div class="travel-card-footer">
+                    <p class="travel-card-text">{{ $route.params.city }}</p>
+                    <h3 class="travel-card-title">{{ card.title }}</h3>
+                    <p class="travel-card-text">by <span class="travel-card-author">{{ card.author }}</span></p>
+                  </div>
+                </div>
+              </b-link>
             </div>
           </div>
         </div>
@@ -273,6 +213,16 @@
 </template>
  
 <script>
+const cards = [
+  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature'},
+  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
+  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
+  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature'},
+  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
+  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
+  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
+  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
+]
 export default {
   name: "Post",
   components: {},
@@ -290,6 +240,7 @@ export default {
       backImage3: {
         backgroundImage: `url(${require("@/assets/img/14.jpg")})`,
       },
+      cards: cards,
     };
   },
 };
@@ -364,7 +315,6 @@ export default {
   }
   button.btn {
     background-color : #007bff;
-    color: #fff;
   }
   .home-article {
     height: 720px;
