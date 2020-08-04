@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '@/router'
 
 export default {
     async login (store, {email, password}) {
@@ -15,20 +16,11 @@ export default {
                 this.showAlert = true;
                 this.errMsg = response.data.data.email + "로그인 되었습니다"
                 store.commit('TOKEN', response.headers["jwt-auth-token"])
-                store.commit('EMAIL', response.data.data.email)
-                store.commit('NICKNAME', response.data.data.nickname)
-                store.commit('INTRODUCE', response.data.data.introduce)
                 store.commit('IS_AUTH', true)
                 localStorage.setItem("jwt-auth-token", response.headers["jwt-auth-token"])
-                localStorage.setItem("login_email", response.data.data.email)
-                localStorage.setItem("login_nickname", response.data.data.nickname)
-                localStorage.setItem("login_introduce", response.data.data.introduce)
             }
             else {
                 store.commit('TOKEN', '')
-                store.commit('EMAIL', '')
-                store.commit('NICKNAME', '')
-                store.commit('INTRODUCE', '')
                 store.commit('IS_AUTH', false)
             }
         })
@@ -49,13 +41,23 @@ export default {
         return store.getters.getJoinSuccess
     },
 
-    checkLogin (store) {
+    async checkLogin (store) {
+        var result;
         if (localStorage.getItem('jwt-auth-token')) {
             store.commit('TOKEN', localStorage.getItem('jwt-auth-token'))
-            store.commit('EMAIL', localStorage.getItem('login_email'))
-            store.commit('NICKNAME', localStorage.getItem('login_nickname'))
-            store.commit('INTRODUCE', localStorage.getItem('login_introduce'))
             store.commit('IS_AUTH', true)
+            await axios.get(`/api/user/${store.getters.getToken}`, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {
+                result = res.data
+            }).catch(e => {
+                alert('로그인 정보가 유효하지 않습니다. 다시 로그인해주세요')
+                store.commit('logout')
+                router.push('/');
+            })
+            return result;
         }
     }
 }

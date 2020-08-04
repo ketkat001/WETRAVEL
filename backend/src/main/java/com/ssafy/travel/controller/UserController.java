@@ -87,15 +87,15 @@ public class UserController {
 		return result;
 	}
 	
-    @ApiOperation(value = "email에 해당하는 user의 정보를 반환한다.", response = User.class)    
-	@GetMapping("{email}")
-	public ResponseEntity<User> getUserDetail(@PathVariable String email) {
+    @ApiOperation(value = "token에 저장된 user의 정보를 반환한다.", response = User.class)    
+	@GetMapping("{jwt}")
+	public ResponseEntity<User> getUserDetail(@PathVariable String jwt) {
 		logger.debug("getUserDetail - 호출");
-		return new ResponseEntity<User>(userService.getUserDetail(email), HttpStatus.OK);
+		return new ResponseEntity<User>(jwtService.getUser(jwt), HttpStatus.OK);
 	}
     
-    @ApiOperation(value = "email에 해당하는 user의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping("{email}")
+    @ApiOperation(value = "token과 일치하는 user의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("{jwt}")
 	public ResponseEntity<String> modifyUser(@RequestBody User user) {
 		logger.debug("modifyUser - 호출");
 		logger.debug("" + user);
@@ -106,8 +106,8 @@ public class UserController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-    @ApiOperation(value = "email에 해당하는 user의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@DeleteMapping("{email}")
+    @ApiOperation(value = "token과 일치하는 user의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("{jwt}")
 	public ResponseEntity<String> deleteUser(@PathVariable String email) {
 		logger.debug("deleteUser - 호출");
 		if (userService.deleteUser(email)) {

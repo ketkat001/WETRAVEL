@@ -10,11 +10,11 @@
                             </div>
                             <div class="col-sm-6 col-md-8">
                                 <h4>
-                                    {{ this.$store.getters.getNickname }}</h4>
+                                    {{ nickname }}</h4>
                                 <p>
-                                    <i class="glyphicon glyphicon-envelope"></i>{{ this.$store.getters.getEmail }}
+                                    <i class="glyphicon glyphicon-envelope"></i>{{ email }}
                                     <br />
-                                    {{ this.$store.getters.getIntroduce }}
+                                    {{ introduce }}
                                 <!-- Split button -->
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-primary">
@@ -42,6 +42,20 @@
 <script>
 export default {
     name: "profile",
+    data: function() {
+        return {
+            email: '',
+            nickname: '',
+            introduce: ''
+        }
+    },
+    mounted: function() {
+        this.$store.dispatch('checkLogin').then(res => {
+            this.email = res.email
+            this.nickname = res.nickname
+            this.introduce = res.introduce
+        })
+    }
 }
 </script>
 

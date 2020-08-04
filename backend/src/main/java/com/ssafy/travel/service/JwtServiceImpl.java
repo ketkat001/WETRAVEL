@@ -3,9 +3,14 @@ package com.ssafy.travel.service;
 import java.util.Date;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.travel.controller.BookController;
 import com.ssafy.travel.dto.User;
 
 import io.jsonwebtoken.Claims;
@@ -21,6 +26,11 @@ public class JwtServiceImpl implements JwtService {
 	
 	@Value("${jwt.expmin}")
 	private Long expireMin;
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(BookController.class);
+	
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@Override
 	public String create(User user) {
@@ -38,8 +48,16 @@ public class JwtServiceImpl implements JwtService {
 	}
 	
 	@Override
-	public void checkValid(String jwt) {
-		Jwts.parser().setSigningKey(salt.getBytes()).parseClaimsJws(jwt);
+	public User getUser(String jwt) {
+		Jws<Claims> claims = null;
+		try {
+			claims = Jwts.parser().setSigningKey(salt.getBytes()).parseClaimsJws(jwt);
+		} catch (Exception e) {
+			LOGGER.error(e.getMessage(), e);
+			throw new RuntimeException("decoding failed");
+		}
+		
+		return objectMapper.convertValue(claims.getBody().get("User"), User.class);
 	}
 	
 	@Override

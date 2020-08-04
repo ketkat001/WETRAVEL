@@ -51,7 +51,7 @@
         <div class="content-card row">
           
           <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
-            <b-link to="/posts/$route.params.province/$route.params.city/1/">
+            <b-link :to="{name: 'bookpage', params: { province: $route.params.province, city: $route.params.city, bookno: card.bookno }}">
               <div  class="card travel-card">
                 <img class="travel-card-image" :src="card.image">
                 <div class="travel-card-footer">
@@ -69,7 +69,7 @@
 </template>
 
 <script>
-const cards = [
+/* const cards = [
   {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature'},
   {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
   {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
@@ -78,7 +78,8 @@ const cards = [
   {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
   {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
   {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
-]
+] */
+var cards = []
 export default {
   name: "CityPage",
   data: function() {
@@ -87,29 +88,23 @@ export default {
     } 
   },
   created() {
-    const city = this.$route.params.city;
-    const cities = ['서울', '부산']
-    let re = false
-    for (let i=0; i<cities.length; i++) {
-      if (cities[i] === city) {
-        re = true
-      }
-    }
-    if (re === false) {
-      this.$router.go(-1);
-    }
   },
   mounted() {
     let today = new Date();
+    while (cards.length > 0) {
+      cards.pop()
+    }
     this.$axios.get(`/api/book/all/date`, {
       params: {
         province: this.$route.params.province,
         city: this.$route.params.city,
-        month: today.getMonth() + 1
+        month: 0
       },
       headers: {'Content-Type': 'application/json'}
     }).then(response => {
-      console.log(response)
+      for (var i = 0; i < response.data.length; i++) {
+        cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, image: 'https://placeimg.com/640/480/arch'})
+      }
     })
   },
   method: {

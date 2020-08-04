@@ -8,9 +8,6 @@ Vue.use(Vuex)
 
 const state = {
     token: '',
-    email: '',
-    nickname: '',
-    introduce: '',
     errorState: '',
     isAuth: false,
     joinSuccess: false

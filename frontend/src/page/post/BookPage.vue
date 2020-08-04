@@ -56,7 +56,7 @@
 </template>
 
 <script>
-const articles = [
+/* const articles = [
   {title: '광화문 탐방', day: '1', writedate: '2020/03/11', score: 4.12, img: 'https://placeimg.com/640/480/animals'},
   {title: '서촌 맛집 탐방', day: '2', writedate: '2020/03/15', score: 4.53, img: 'https://placeimg.com/640/480/arch'},
   {title: '동대문 패션 타운', day: '3', writedate: '2020/03/16', score: 4.91, img: 'https://placeimg.com/640/480/nature'},
@@ -64,14 +64,31 @@ const articles = [
   {title: '북촌 한옥마을에서 서울 내려보기', day: '5', writedate: '2020/03/19', score: 5.0, img: 'https://placeimg.com/640/480/nature'},
   {title: '명동에서 쇼핑하기', day: '6', writedate: '2020/03/21', score: 4.51, img: 'https://placeimg.com/640/480/arch'},
   {title: '이태원에서 즐기기', day: '7', writedate: '2020/03.22', score: 3.21, img: 'https://placeimg.com/640/480/animals'},
-]
+] */
+var articles = []
+var book_info = {}
 export default {
   name: "BookPage",
   data: function() {
     return {
+      book_info: book_info,
       articles: articles,
     } 
   },
+  mounted() {
+    let today = new Date();
+    if (articles.length > 0) {
+      return
+    }
+    this.$axios.get(`/api/article/all/${this.$route.params.bookno}`, {
+      headers: {'Content-Type': 'application/json'}
+    }).then(response => {
+      for (var i = 0; i < response.data.length; i++) {
+        articles.push({title: response.data[i].title, day: response.data[i].day, writedate: response.data[i].writedate, 
+                        score: response.data[i].score, img: 'https://placeimg.com/640/480/arch'})
+      }
+    })
+  }
 }
 </script>
 

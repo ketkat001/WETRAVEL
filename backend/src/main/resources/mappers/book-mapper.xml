@@ -19,7 +19,7 @@
 			</if>
 		</if>
 
-		<if test='startdate != null and !startdate.equals("")'>
+		<if test='startdate != null and !startdate.equals("0")'>
 			and month(startdate) = #{startdate}
 		</if>
 		order by writedate

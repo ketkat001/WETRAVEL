@@ -58,39 +58,47 @@ export default new Router({
     // 포스트
     { 
       path: '/',
+      name: 'mainpage',
       component: mainpage,
     },
     {
       path:'/best/:city',
+      name: 'bestpage',
       component: bestpage,
     },
     {
       path:'/posts/:province',
+      name: 'provincepage',
       component: provincepage,
     },
     {
       path: '/posts/:province/:city', 
+      name: 'citypage',
       component: citypage,
     },
     {
-      path: '/posts/:province/:city/:id',
+      path: '/posts/:province/:city/:bookno',
+      name: 'bookpage',
       component: bookpage,
     },
     {
-      path: '/posts/:province/:city/:id/:id',
+      path: '/posts/:province/:city/:bookno/:articleno',
+      name: 'articlepage',
       component: articlepage,
     },
     // 가입
     {
       path: '/join',
+      name: 'join',
       component: join,
     },
     {
       path: '/forgotpassword',
+      name: 'forgotpassword',
       component: forgotpassword,
     },
     {
-      path: '/profile/:nickname',
+      path: '/profile',
       name: 'profile',
       component: profile,
       beforeEnter: requireAuth()

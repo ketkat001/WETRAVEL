@@ -6,6 +6,6 @@ import com.ssafy.travel.dto.User;
 
 public interface JwtService {
 	String create(User user);
-	void checkValid(String jwt);
+	User getUser(String jwt);
 	Map<String, Object> get(String jwt);
 }

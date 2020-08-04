@@ -8,8 +8,6 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.ssafy.travel.interceptor.JwtInterceptor;
-
 @SpringBootApplication
 public class BackendApplication implements WebMvcConfigurer {
 
