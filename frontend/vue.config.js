@@ -10,6 +10,8 @@ module.exports = {
                     '^/api': '/travel/api'
                 }
             }
-        }
+        },
+        disableHostCheck: true,
+        port: 8090
     }
 }

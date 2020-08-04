@@ -99,6 +99,19 @@ export default {
       this.$router.go(-1);
     }
   },
+  mounted() {
+    let today = new Date();
+    this.$axios.get(`/api/book/all/date`, {
+      params: {
+        province: this.$route.params.province,
+        city: this.$route.params.city,
+        month: today.getMonth() + 1
+      },
+      headers: {'Content-Type': 'application/json'}
+    }).then(response => {
+      console.log(response)
+    })
+  },
   method: {
     
   }

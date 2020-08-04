@@ -4,6 +4,7 @@
 <configuration>
    <typeAliases>
 		<typeAlias alias="user" type="com.ssafy.travel.dto.User"/>
+		<typeAlias alias="book" type="com.ssafy.travel.dto.Book"/>
        <package name="com.ssafy.travel.dto"/>
     </typeAliases>
 	<mappers>	  
