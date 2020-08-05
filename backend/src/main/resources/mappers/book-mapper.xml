@@ -3,12 +3,12 @@
 							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="m_book">
 	<insert id="registBook">
-		insert into book (title, writer, writedate, province, city, startdate, score)
-		values(#{title}, #{writer}, now(), #{province}, #{city}, #{startdate}, 0)
+		insert into book (title, writer, writedate, province, city, startdate, score, img)
+		values(#{title}, #{writer}, now(), #{province}, #{city}, #{startdate}, #{img})
 	</insert>
 
 	<select id="getBookList" resultType="book">
-		select bookno, title, writer, writedate, province, city, startdate, score
+		select bookno, title, writer, writedate, province, city, startdate, score, img
 		from book
 		where 1=1
 
@@ -19,8 +19,8 @@
 			</if>
 		</if>
 
-		<if test='month != null and !month.equals("")'>
-			and month(startdate) = #{month}
+		<if test='startdate != null and !startdate.equals("0")'>
+			and month(startdate) = #{startdate}
 		</if>
 		order by writedate
 	</select>

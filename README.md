@@ -501,3 +501,19 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 
 각 지역코드의 앞자리가 위와 같으므로 val.properties.SIG_CD.substring(0,2) == 'CODE' 를 통해 매핑해야 함! => 카드에서 클릭했을 때 넘겨주는 값을 매칭하는 방식으로
 
+# 07/29
+
+## [팀장]윤인하
+- Login 정보 Vuex에 저장 및 초기화 방지 구현: Timeout이 존재하지 않아 완벽하지 않음. JWT 다시 도전
+- 회원가입 기능 연동: 아직 성공 여부에 따라 Redirect나 팝업 띄우는 게 제대로 동작하지 않음. async / await 다시 해 보기
+
+# 08/03
+## 윤인하
+- AWS 내에서 Frontend 및 Backend 각각 구동 성공: 아직 서로 연동되는지는 확인하지 못함
+- DB 살짝 수정: Book과 Article의 Startdate의 유형을 datetime에서 date로 변경
+- DB에 더미데이터 저장 및 Frontend에서 불러오기 기능 구현
+- Jira 4주차 스프린트 제작
+
+## 임진섭
+- 에디터 db와 연동하기 진행중
+- 계속적인 에디터의 기능 실험중
