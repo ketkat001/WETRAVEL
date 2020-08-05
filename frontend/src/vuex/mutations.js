@@ -15,8 +15,8 @@ export default {
         state.joinSuccess = joinSuccess
     },
     logout (state) {
-        if (localStorage.getItem('jwt-auth-token')) {
-            localStorage.removeItem('jwt-auth-token')
+        if (sessionStorage.getItem('jwt-auth-token')) {
+            sessionStorage.removeItem('jwt-auth-token')
             this.commit('TOKEN', '')
             this.commit('IS_AUTH', false)
         }

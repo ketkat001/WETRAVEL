@@ -3,9 +3,7 @@ import router from '@/router'
 
 export default {
     async login (store, {email, password}) {
-        localStorage.setItem("jwt-auth-token", "")
-        localStorage.setItem("login_user", "")
-        localStorage.setItem("login_user_nickname", "")
+        sessionStorage.setItem("jwt-auth-token", "")
         await axios.post(`/api/user/login`,
         {
             email: email,
@@ -17,7 +15,7 @@ export default {
                 this.errMsg = response.data.data.email + "로그인 되었습니다"
                 store.commit('TOKEN', response.headers["jwt-auth-token"])
                 store.commit('IS_AUTH', true)
-                localStorage.setItem("jwt-auth-token", response.headers["jwt-auth-token"])
+                sessionStorage.setItem("jwt-auth-token", response.headers["jwt-auth-token"])
             }
             else {
                 store.commit('TOKEN', '')
@@ -43,8 +41,8 @@ export default {
 
     async checkLogin (store) {
         var result;
-        if (localStorage.getItem('jwt-auth-token')) {
-            store.commit('TOKEN', localStorage.getItem('jwt-auth-token'))
+        if (sessionStorage.getItem('jwt-auth-token')) {
+            store.commit('TOKEN', sessionStorage.getItem('jwt-auth-token'))
             store.commit('IS_AUTH', true)
             await axios.get(`/api/user/${store.getters.getToken}`, {
                 headers: {
@@ -53,8 +51,8 @@ export default {
             }).then(res => {
                 result = res.data
             }).catch(e => {
-                alert('로그인 정보가 유효하지 않습니다. 다시 로그인해주세요')
                 store.commit('logout')
+                alert('토큰이 만료되었습니다. 다시 로그인해주세요')
                 router.push('/');
             })
             return result;
