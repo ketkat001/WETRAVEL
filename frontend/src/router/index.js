@@ -69,7 +69,7 @@ VeeValidate.Validator.extend('verify_password', {
 
 
 const requireAuth = () => (to, from, next) => {
-  if (localStorage.getItem('jwt-auth-token')) {
+  if (sessionStorage.getItem('jwt-auth-token')) {
     return next();
   }
   alert('로그인 후 이용 가능합니다')

@@ -67,19 +67,28 @@ export default {
       articles: articles,
     } 
   },
-  mounted() {
-    let today = new Date();
-    if (articles.length > 0) {
-      return
+  watch: {
+    'this.$route.params.bookno': function(bookno) {
+      this.getArticleList()
     }
-    this.$axios.get(`/api/article/all/${this.$route.params.bookno}`, {
-      headers: {'Content-Type': 'application/json'}
-    }).then(response => {
-      for (var i = 0; i < response.data.length; i++) {
-        articles.push({title: response.data[i].title, day: response.data[i].day, writedate: response.data[i].writedate, 
-                        score: response.data[i].score, img: 'https://placeimg.com/640/480/arch'})
-      }
-    })
+  },
+  mounted() {
+    this.getArticleList()
+  },
+  methods: {
+    getArticleList: function() {
+      let today = new Date();
+      articles = []
+      this.$axios.get(`/api/article/all/${this.$route.params.bookno}`, {
+        headers: {'Content-Type': 'application/json'}
+      }).then(response => {
+        for (var i = 0; i < response.data.length; i++) {
+          articles.push({title: response.data[i].title, day: response.data[i].day, writedate: response.data[i].writedate, 
+                          score: response.data[i].score, img: 'https://placeimg.com/640/480/arch'})
+        }
+      })
+      this.articles = articles
+    }
   }
 }
 </script>

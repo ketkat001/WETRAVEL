@@ -89,26 +89,33 @@ export default {
   },
   created() {
   },
-  mounted() {
-    let today = new Date();
-    while (cards.length > 0) {
-      cards.pop()
+  watch: {
+    '$route.params.city': function(city) {
+      this.getBookList()
     }
-    this.$axios.get(`/api/book/all/date`, {
-      params: {
-        province: this.$route.params.province,
-        city: this.$route.params.city,
-        month: 0
-      },
-      headers: {'Content-Type': 'application/json'}
-    }).then(response => {
-      for (var i = 0; i < response.data.length; i++) {
-        cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, image: 'https://placeimg.com/640/480/arch'})
-      }
-    })
   },
-  method: {
-    
+  mounted() {
+    this.getBookList()
+  },
+  methods: {
+    getBookList: function() {
+      let today = new Date();
+      while (cards.length > 0) {
+        cards.pop()
+      }
+      this.$axios.get(`/api/book/all/date`, {
+        params: {
+          province: this.$route.params.province,
+          city: this.$route.params.city,
+          month: 0
+        },
+        headers: {'Content-Type': 'application/json'}
+      }).then(response => {
+        for (var i = 0; i < response.data.length; i++) {
+          cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, image: 'https://placeimg.com/640/480/arch'})
+        }
+      })
+    }
   }
 
 }
