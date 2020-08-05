@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,6 +43,26 @@ public class UserController {
 	
 	@Autowired
 	JwtService jwtService;
+
+    @ApiOperation(value = "입력한 이메일이 존재하면 true, 없으면 false를 반환한다", response = boolean.class)    
+	@GetMapping("emailCheck")
+    public boolean emailCheck(@RequestParam("email") String email) {
+    	User userIdCheck = userService.getUserOne(email, "email");
+    	if (userIdCheck != null)
+    		return true;
+    	else
+    		return false;
+    }
+
+    @ApiOperation(value = "입력한 닉네임이 존재하면 true, 없으면 false를 반환한다", response = boolean.class)    
+	@GetMapping("nicknameCheck")
+    public boolean nicknameCheck(@RequestParam("nickname") String nickname) {
+    	User userNicknameCheck = userService.getUserOne(nickname, "nickname");
+    	if (userNicknameCheck != null)
+    		return true;
+    	else
+    		return false;
+    }
 	
 	@PostMapping("login")
 	@ResponseBody
@@ -69,16 +90,11 @@ public class UserController {
 	@ResponseBody
 	public int signUp(@RequestBody User user) {
 		int result = 0;
-		String col = null;
 		
-		col = "email";
-		User userIdCheck = userService.getUserOne(user.getEmail(), col);
-		if (userIdCheck != null)
+		if (emailCheck(user.getEmail()))
 			result = 2;
 		
-		col = "nickname";
-		User userNicknameCheck = userService.getUserOne(user.getNickname(), col);
-		if (userNicknameCheck != null)
+		if (nicknameCheck(user.getNickname()))
 			result = 3;
 		
 		if (result < 2)
@@ -94,8 +110,8 @@ public class UserController {
 		return new ResponseEntity<User>(jwtService.getUser(jwt), HttpStatus.OK);
 	}
     
-    @ApiOperation(value = "token과 일치하는 user의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@PutMapping("{jwt}")
+    @ApiOperation(value = "email과 일치하는 user의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@PutMapping("{email}")
 	public ResponseEntity<String> modifyUser(@RequestBody User user) {
 		logger.debug("modifyUser - 호출");
 		logger.debug("" + user);
@@ -106,8 +122,8 @@ public class UserController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
 	}
 
-    @ApiOperation(value = "token과 일치하는 user의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
-	@DeleteMapping("{jwt}")
+    @ApiOperation(value = "email과 일치하는 user의 정보를 삭제한다. 그리고 DB삭제 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
+	@DeleteMapping("{email}")
 	public ResponseEntity<String> deleteUser(@PathVariable String email) {
 		logger.debug("deleteUser - 호출");
 		if (userService.deleteUser(email)) {
