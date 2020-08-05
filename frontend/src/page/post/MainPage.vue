@@ -367,7 +367,7 @@ export default {
       color:#fff
   }
   .home-article {
-    height: 720px;
+    height: 690px;
   }
 
   .home-cover .carousel-caption {
