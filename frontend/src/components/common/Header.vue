@@ -1,5 +1,5 @@
 <template>
-  <div id="header" v-if="isHeader" :class="{ 'navbar--hidden': !showNavbar }">
+  <div id="header" :class="{ 'navbar--hidden': !showNavbar }">
     <b-navbar toggleable="lg" type="dark" variant="primary" class="p-0">
       <h1>
         <router-link style="text-decoration:none" to="/">We Travel</router-link>
@@ -9,7 +9,7 @@
         <b-navbar-nav class="ml-auto">
           <b-button variant="primary" v-b-modal.loginModal v-if="this.$store.getters.getIsAuth == ''" @click="handleClickButton" class="text-white mx-3">로그인</b-button>
           <div v-else>
-            <b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" :to="{ name: 'profile'}">프로필</router-link></b-button>
+            <b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" :to="{ name: 'profile', params: { nickname: this.$store.getters.getNickname }}">프로필</router-link></b-button>
             <b-button variant="primary" class="text-white mx-3" @click="userLogout()">로그아웃</b-button>
           </div>
 
@@ -30,7 +30,6 @@ export default {
   components: {
     appLoginModal: loginmodal,
   },
-  props: ["isHeader"],
   computed: {
   },
   watch: {
