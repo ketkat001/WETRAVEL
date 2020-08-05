@@ -81,7 +81,7 @@
             <div class="col-3">
               <b-link to="/posts/서울/서울">
                 <b-card
-                  img-src="https://picsum.photos/600/300/"
+                  :img-src="require('@/assets/img/city/Seoul.jpg')"
                   style="max-width: 20rem;"
                   class="mb-2"
                 >
@@ -92,7 +92,7 @@
             <div class="col-3">
               <b-link to="/posts/경기">
                 <b-card
-                  img-src="https://picsum.photos/600/300/"
+                  :img-src="require('@/assets/img/city/Gyeonggido.jpg')"
                   style="max-width: 20rem;"
                   class="mb-2"
                 >
@@ -103,7 +103,7 @@
             <div class="col-3">
               <b-link to="/posts/강원">
                 <b-card
-                  img-src="https://picsum.photos/600/300/"
+                  :img-src="require('@/assets/img/city/Gangwondo.jpg')"
                   style="max-width: 20rem;"
                   class="mb-2"
                 >
@@ -114,7 +114,7 @@
             <div class="col-3">
               <b-link to="/posts/충청">
                 <b-card
-                  img-src="https://picsum.photos/600/300/"
+                  :img-src="require('@/assets/img/city/Chungcheongdo.jpg')"
                   style="max-width: 20rem;"
                   class="mb-2"
                 >
@@ -125,7 +125,7 @@
             <div class="col-3">
               <b-link to="/posts/전라">
                 <b-card
-                  img-src="https://picsum.photos/600/300/"
+                  :img-src="require('@/assets/img/city/Jeollado.jpg')"
                   style="max-width: 20rem;"
                   class="mb-2"
                 >
@@ -136,7 +136,7 @@
             <div class="col-3">
               <b-link to="/posts/경상">
                 <b-card
-                  img-src="https://picsum.photos/600/300/"
+                  :img-src="require('@/assets/img/city/Gyeongsangdo.jpg')"
                   style="max-width: 20rem;"
                   class="mb-2"
                 >
@@ -147,7 +147,7 @@
             <div class="col-3">
               <b-link to="posts/제주">
                 <b-card
-                  img-src="https://picsum.photos/600/300/"
+                  :img-src="require('@/assets/img/city/Jeju.jpg')"
                   style="max-width: 20rem;"
                   class="mb-2"
                 >
@@ -158,7 +158,7 @@
             <div class="col-3">
               <b-link to="/posts/부산/부산">
                 <b-card
-                  img-src="https://picsum.photos/600/300/"
+                  :img-src="require('@/assets/img/city/Busan.jpg')"
                   style="max-width: 20rem;"
                   class="mb-2"
                 >
@@ -174,18 +174,69 @@
             <div class="col-10">
               <carousel-3d>
                 <slide :index="0">
-                  <img src="@/assets/img/12.jpg">
-                  <div class="slide-text">
-                    <h3>서울</h3>
-                  </div>
+                  <img src="@/assets/img/city/Seoul.jpg">
+                  <router-link to="/best/서울">
+                    <div class="slide-text">
+                      <h3>서울</h3>
+                    </div>
+                  </router-link>
                 </slide>
-                <slide :index="1">너무!!!!!!</slide>
-                <slide :index="2">힘들다!!!!!</slide>
-                <slide :index="3">힘들다!!!!!</slide>
-                <slide :index="4">힘들다!!!!!</slide>
-                <slide :index="5">힘들다!!!!!</slide>
-                <slide :index="6">힘들다!!!!!</slide>
-                <slide :index="7">힘들다!!!!!</slide>
+                <slide :index="1"> 
+                  <img src="@/assets/img/city/Gyeonggido.jpg">
+                  <router-link to="/best/경기">
+                    <div class="slide-text">
+                      <h3>경기</h3>
+                    </div>
+                  </router-link>
+                </slide>
+                <slide :index="2">
+                  <img src="@/assets/img/city/Gangwondo.jpg">
+                  <router-link to="/best/강원">
+                    <div class="slide-text">
+                      <h3>강원</h3>
+                    </div>
+                  </router-link>
+                </slide>
+                <slide :index="3">
+                  <img src="@/assets/img/city/Chungcheongdo.jpg">
+                  <router-link to="/best/충청">
+                    <div class="slide-text">
+                      <h3>충청</h3>
+                    </div>
+                  </router-link>
+                </slide>
+                <slide :index="4">
+                  <img src="@/assets/img/city/Jeollado.jpg">
+                  <router-link to="/best/전라">
+                    <div class="slide-text">
+                      <h3>전라</h3>
+                    </div>
+                  </router-link>
+                </slide>
+                <slide :index="5">
+                  <img src="@/assets/img/city/Gyeongsangdo.jpg">
+                  <router-link to="/best/경상">
+                    <div class="slide-text">
+                      <h3>경상</h3>
+                    </div>
+                  </router-link>
+                </slide>
+                <slide :index="6">
+                  <img src="@/assets/img/city/Jeju.jpg">
+                  <router-link to="/best/제주">
+                    <div class="slide-text">
+                      <h3>제주</h3>
+                    </div>
+                  </router-link>
+                </slide>
+                <slide :index="7">
+                  <img src="@/assets/img/city/Busan.jpg">
+                  <router-link to="/best/부산">
+                    <div class="slide-text">
+                      <h3>부산</h3>
+                    </div>
+                  </router-link>
+                </slide>
               </carousel-3d>
             </div>
           </div>
@@ -353,6 +404,9 @@ export default {
   .korea-city a:link {
     text-decoration: none;
   }
+  .korea-city img.card-img {
+    height: 150px;
+  }
   .best-city-article {
     margin-bottom: 40px;
   }
@@ -365,7 +419,10 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color:#ccc
+    color:#fff;
+  }
+  .slide-text h3{
+    font-size: 3rem;
   }
   .content-card {
     text-align: left;
