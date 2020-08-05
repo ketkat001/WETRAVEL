@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header :isHeader="isHeader"/>
+    <Header />
     <router-view/>
     <Footer/>
   </div>
@@ -39,17 +39,11 @@ export default {
           ];
 
           let isHeader = true;
-          array.map(path => {
-              if (url === path)
-                  isHeader = false;
-          })
-          this.isHeader = isHeader;
 
       },
   },
   data: function () {
         return {
-            isHeader: true,
             constants
         } 
     }
