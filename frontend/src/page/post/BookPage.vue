@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <hr style="border: 1px solid #C4C3D0l; margin-bottom: 30px;">
+    <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
     <div class="book-article">
       <div v-for="(article, index) in articles" :key="index" :ref="`article_${index}`" class="book-article-content">
         <div class="col-2 p-0">
@@ -56,15 +56,7 @@
 </template>
 
 <script>
-/* const articles = [
-  {title: '광화문 탐방', day: '1', writedate: '2020/03/11', score: 4.12, img: 'https://placeimg.com/640/480/animals'},
-  {title: '서촌 맛집 탐방', day: '2', writedate: '2020/03/15', score: 4.53, img: 'https://placeimg.com/640/480/arch'},
-  {title: '동대문 패션 타운', day: '3', writedate: '2020/03/16', score: 4.91, img: 'https://placeimg.com/640/480/nature'},
-  {title: '인사동 방문 후기', day: '4', writedate: '2020/03/18', score: 4.03, img: 'https://placeimg.com/640/480/animals'},
-  {title: '북촌 한옥마을에서 서울 내려보기', day: '5', writedate: '2020/03/19', score: 5.0, img: 'https://placeimg.com/640/480/nature'},
-  {title: '명동에서 쇼핑하기', day: '6', writedate: '2020/03/21', score: 4.51, img: 'https://placeimg.com/640/480/arch'},
-  {title: '이태원에서 즐기기', day: '7', writedate: '2020/03.22', score: 3.21, img: 'https://placeimg.com/640/480/animals'},
-] */
+
 var articles = []
 var book_info = {}
 export default {

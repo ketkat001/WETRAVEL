@@ -40,7 +40,7 @@
             placeholder="비밀번호를 입력해주세요" 
             class="form-control"
             ref="password"
-            v-validate="'required|min:13'"
+            v-validate="'required|min:8|verify_password'"
           />
           <div class="alert alert-danger" v-if="errors.has('password')">
             {{ errors.first('password') }}
