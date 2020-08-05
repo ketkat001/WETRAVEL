@@ -412,7 +412,6 @@ export default {
   }
   .carousel-3d-slide img {
     height: 100%;
-    opacity: 0.8;
   }
   .slide-text {
     position: absolute;

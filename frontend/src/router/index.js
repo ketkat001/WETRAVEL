@@ -5,6 +5,8 @@ import VeeValidate from 'vee-validate'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Carousel3d from 'vue-carousel-3d'
+import store from '../vuex/store'
+
 
 // fontawesome
 import { library } from '@fortawesome/fontawesome-svg-core'
@@ -14,6 +16,14 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 // vue-star-rating
 import StarRating from 'vue-star-rating'
+
+
+// vue-quill-editor
+import VueQuillEditor from 'vue-quill-editor'
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
 
 // 유저
 import join from '../page/user/Join.vue'
@@ -27,7 +37,9 @@ import provincepage from '../page/post/ProvincePage.vue'
 import citypage from '../page/post/CityPage.vue'
 import bookpage from '../page/post/BookPage.vue'
 import articlepage from '../page/post/ArticlePage.vue'
-import store from '../vuex/store'
+import bookcreate from '../page/post/BookCreate.vue'
+import articlecreate from '../page/post/ArticleCreate.vue'
+
 
 library.add(fas)
 library.add(faFacebook)
@@ -40,9 +52,21 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(Carousel3d)
 Vue.use(VeeValidate)
+Vue.use(VueQuillEditor)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('star-rating', StarRating)
+
+
+
+VeeValidate.Validator.extend('verify_password', {
+  getMessage: field => `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number`,
+        validate: value => {
+            var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])");
+            return strongRegex.test(value);
+          }
+})
+
 
 const requireAuth = () => (to, from, next) => {
   if (sessionStorage.getItem('jwt-auth-token')) {
@@ -61,6 +85,17 @@ export default new Router({
       path: '/',
       name: 'mainpage',
       component: mainpage,
+    },
+    {
+      path:'/bookcreate',
+      name: 'bookcreate',
+      component: bookcreate,
+      //beforeEnter: requireAuth()
+    },
+    {
+      path:'/articlecreate',
+      name: 'articlecreate',
+      component: articlecreate,
     },
     {
       path:'/best/:city',
