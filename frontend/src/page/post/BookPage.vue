@@ -7,9 +7,9 @@
       <div class="col-1">
       </div>
       <div class="col-7 book-header-content">
-        <h3>서울의 밤은 밝다</h3>
+        <h3>{{ book_info.title }}</h3>
         <div class="book-content-inf">
-          <p>by 서울 야경</p>
+          <p>by {{ book_info.writer }}</p>
           <star-rating :increment="1"
              :max-rating="5"
              :rating="4"
@@ -21,7 +21,7 @@
           </star-rating>
         </div>
         <div class="book-content">
-          <p>넉넉히 여행시간이 있다면 구석구석 둘러 보자 서울! 며칠을 할애해도 모자른 넓은 서울, 천천히 둘러보자.</p>
+          <p>{{ book_info.description }}</p>
         </div>
       </div>
     </div>
@@ -70,12 +70,19 @@ export default {
   watch: {
     'this.$route.params.bookno': function(bookno) {
       this.getArticleList()
+      this.getBookInfo()
     }
   },
   mounted() {
+    this.getBookInfo()
     this.getArticleList()
   },
   methods: {
+    async getBookInfo() {
+      await this.$store.dispatch('getBookInfo', this.$route.params.bookno).then(res => {
+        this.book_info = res;
+      })
+    },
     getArticleList: function() {
       let today = new Date();
       articles = []

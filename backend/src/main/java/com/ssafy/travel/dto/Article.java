@@ -6,7 +6,7 @@ public class Article {
 	private String title;
 	private String writedate;
 	private double score;
-	private String weather;
+	private int score_count;
 	private String text;
 	private String traveldate;
 	private int day;
@@ -15,7 +15,7 @@ public class Article {
 		super();
 	}
 
-	public Article(int articleno, int bookno, String title, String writedate, double score, String weather, String text,
+	public Article(int articleno, int bookno, String title, String writedate, double score, int score_count, String text,
 			String traveldate, int day) {
 		super();
 		this.articleno = articleno;
@@ -23,7 +23,7 @@ public class Article {
 		this.title = title;
 		this.writedate = writedate;
 		this.score = score;
-		this.weather = weather;
+		this.score_count = score_count;
 		this.text = text;
 		this.traveldate = traveldate;
 		this.day = day;
@@ -59,11 +59,11 @@ public class Article {
 	public void setScore(double score) {
 		this.score = score;
 	}
-	public String getWeather() {
-		return weather;
+	public int getScoreCount() {
+		return score_count;
 	}
-	public void setWeather(String weather) {
-		this.weather = weather;
+	public void setWeather(int score_count) {
+		this.score_count = score_count;
 	}
 	public String getText() {
 		return text;
@@ -87,7 +87,7 @@ public class Article {
 	@Override
 	public String toString() {
 		return "Article [articleno=" + articleno + ", bookno=" + bookno + ", title=" + title + ", writedate="
-				+ writedate + ", score=" + score + ", weather=" + weather + ", text=" + text + ", traveldate="
+				+ writedate + ", score=" + score + ", score_count=" + score_count + ", text=" + text + ", traveldate="
 				+ traveldate + ", day=" + day + "]";
 	}
 	

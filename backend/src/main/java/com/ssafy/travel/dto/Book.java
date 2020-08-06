@@ -8,6 +8,8 @@ public class Book {
 	private String province;
 	private String city;
 	private String startdate;
+	private String description;
+
 	private double score;
 	
 	public Book() {
@@ -15,7 +17,7 @@ public class Book {
 	}
 
 	public Book(int bookno, String title, String writer, String writedate, String province, String city,
-			String startdate, double score) {
+			String startdate, String description, double score) {
 		super();
 		this.bookno = bookno;
 		this.title = title;
@@ -24,6 +26,7 @@ public class Book {
 		this.province = province;
 		this.city = city;
 		this.startdate = startdate;
+		this.description = description;
 		this.score = score;
 	}
 	
@@ -69,7 +72,14 @@ public class Book {
 	public void setStartdate(String startdate) {
 		this.startdate = startdate;
 	}
-	
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 	public double getScore() {
 		return score;
 	}
@@ -81,7 +91,8 @@ public class Book {
 	@Override
 	public String toString() {
 		return "Book [bookno=" + bookno + ", title=" + title + ", writer=" + writer + ", writedate=" + writedate
-				+ ", province=" + province + ", city=" + city + ", startdate=" + startdate + ", score=" + score + "]";
+				+ ", province=" + province + ", city=" + city + ", startdate=" + startdate + ", description="
+				+ description + ", score=" + score + "]";
 	}
 	
 }

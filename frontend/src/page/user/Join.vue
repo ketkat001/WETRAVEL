@@ -92,6 +92,7 @@ export default {
         if (isValid) {
           this.successful = await this.$store.dispatch("signUp", {email: this.email, password: this.password, nickname: this.nickName})
           if (this.successful == true) {
+            this.$store.dispatch("login", {email: this.email, password: this.password})
             this.$router.push('/')
           }
           else {

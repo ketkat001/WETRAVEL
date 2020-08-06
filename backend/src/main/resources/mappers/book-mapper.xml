@@ -3,12 +3,12 @@
 							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="m_book">
 	<insert id="registBook">
-		insert into book (title, writer, writedate, province, city, startdate, score, img)
+		insert into book (title, writer, writedate, province, city, startdate, description, score, img)
 		values(#{title}, #{writer}, now(), #{province}, #{city}, #{startdate}, #{img})
 	</insert>
 
 	<select id="getBookList" resultType="book">
-		select bookno, title, writer, writedate, province, city, startdate, score, img
+		select bookno, title, writer, writedate, province, city, startdate, description, score, img
 		from book
 		where 1=1
 
@@ -26,7 +26,7 @@
 	</select>
 
 	<select id="getBookListByScore" resultType="book">
-		select bookno, title, writer, writedate, province, city, startdate, score
+		select bookno, title, writer, writedate, province, city, startdate, description, score
 		from book
 		where 1=1
 
@@ -47,20 +47,20 @@
 	<update id="modifyBook">
 		Update book
 		set title = #{title}, writer = #{writer}, writedate=#{writedate},
-		province=#{province}, city=#{city}, startdate=#{startdate}
+		province=#{province}, city=#{city}, startdate=#{startdate}, description=#{description}
 		where bookno = #{bookno}
 	</update>
 
 	<select id="getBookDetail" resultType="book">
 		select bookno, title,
-		writer, writedate, province, city, startdate, score
+		writer, writedate, province, city, startdate, description, score
 		from book
 		where bookno = #{bookno}
 	</select>
 
 	<select id="getBookListByUser" resultType="book">
 		select bookno, title,
-		writer, writedate, province, city, startdate, score
+		writer, writedate, province, city, startdate, description, score
 		from book
 		where writer = #{email}
 		order by writedate

@@ -21,6 +21,10 @@ export default {
                 store.commit('TOKEN', '')
                 store.commit('IS_AUTH', false)
             }
+        }).catch(e => {
+            store.commit('TOKEN', '')
+            store.commit('IS_AUTH', false)
+            alert('로그인 정보가 올바르지 않습니다')
         })
         return store.getters.getIsAuth
     },
@@ -57,5 +61,19 @@ export default {
             })
             return result;
         }
+    },
+
+    async getBookInfo (store, bookno) {
+        var result;
+        await axios.get(`/api/book/${bookno}`, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(res => {
+            result = res.data
+        }).catch(e => {
+            alert('여행기 정보를 불러올 수 없습니다')
+        })
+        return result
     }
 }

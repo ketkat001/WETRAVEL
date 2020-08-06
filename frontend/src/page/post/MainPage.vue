@@ -363,12 +363,11 @@ export default {
       text-transform: capitalize;
       height: calc(3rem + 2px) !important;
       border-radius:0;
-  }
-  button.btn {
-    background-color : #007bff;
+      background-color : #007bff;
+      color:#fff
   }
   .home-article {
-    height: 720px;
+    height: 690px;
   }
 
   .home-cover .carousel-caption {
