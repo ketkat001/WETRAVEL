@@ -301,6 +301,9 @@ export default {
   #main-wrapper {
     padding-bottom: 80px;
   }
+  .row {
+    margin: 0px;
+  }
   .home-cover {
     margin-top: 60px;
     position: absolute;

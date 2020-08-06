@@ -48,7 +48,7 @@ import axios from 'axios';
     data () {
       return {
         form: {
-          bookno:'',
+          bookno: this.$route.params.bookno,   //bookno를 url에서 받아서 bookno에 저장
           writedate:'',
           title:'',
           day:'',
@@ -72,6 +72,7 @@ import axios from 'axios';
       createAction() {
         var content2 = this.$refs.myQuillEditor.$options.propsData.value
         alert(content2);
+        console.log(this.form.bookno)
         this.createHandler();
       },
       createHandler() {
