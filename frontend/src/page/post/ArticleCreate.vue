@@ -1,31 +1,43 @@
 <template>
   <div id="main" class="main">
     <div class="article-create container">
-      <h2>글 작성</h2>
-      <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
-      <input type="bookno" class="form-control" id="bookno" v-model="bookno" ref="bookno" placeholder="bookno">
-    <div class="form-group">
-      <label for="title">제목</label>
-        <input type="text" class="form-control" id="title" v-model="title" ref="title" placeholder="제목을 입력하세요">
-    </div>
-    <input type="day" class="form-control" id="day" v-model="day" ref="day" placeholder="day">
-    <div class="form-group">
-      <label for="title">여행날짜</label>
-        <input type="date" name="traveldate" id="traveldate" v-model="traveldate">
-    </div>
-    <div class="form-group">
-      <label for="weather">날씨</label>
-        <select name="weather" class="form-control" id="weather" ref="weather" v-model="weather">
-          <option value=""></option>
-          <option value="맑음">맑음</option>
-          <option value="흐림">흐림</option>
-          <option value="눈">눈</option>
-          <option value="비">비</option>
-        </select>
-    </div>
-      <quill-editor v-model="text" ref="myQuillEditor" :options="editorOption">
-      </quill-editor>
-      <b-button @click="createAction">작성완료</b-button>
+      <b-form>
+        <div class="article-info">
+          <b-form-group
+            id="input-group-0"
+            label="제목"
+            label-for="input-0"
+            description="제목을 입력해주세요!">
+            <b-form-input
+              id="input-0"
+              v-model="form.title"  
+              required
+              placeholder="제목 입력">
+            </b-form-input>
+          </b-form-group>
+          <b-form-group
+            id="input-group-1"
+            label="썸네일 사진 등록"
+            label-for="input-1"
+            description="대표 사진을 등록해주세요!">
+            <b-form-file 
+              multiple :file-name-formatter="formatNames"
+              placeholder="파일 없음"></b-form-file>
+          </b-form-group>
+          <b-form-group
+            id="input-group-3"
+            label="날짜 선택"
+            label-for="input-3"
+            description="날짜를 선택해주세요!">
+            <b-form-datepicker id="example-datepicker" v-model="form.traveldate" class="mb-2"></b-form-datepicker>
+          </b-form-group>
+        </div>
+        <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
+      
+        <quill-editor v-model="form.text" ref="myQuillEditor" :options="editorOption">
+        </quill-editor>
+        <b-button class="m-3" variant="primary" @click="createAction">작성완료</b-button>
+      </b-form>
     </div>
   </div>  
 </template>
@@ -35,18 +47,28 @@ import axios from 'axios';
   export default {
     data () {
       return {
-        bookno:'',
-        writedate:'',
-        title:'',
-        day:'',
-        traveldate:'',
-        weather:'',
-        text: '<h2>I am Example</h2>',
+        form: {
+          bookno:'',
+          writedate:'',
+          title:'',
+          day:'',
+          traveldate:'',
+          weather:'',
+          text: '',
+         
+        },
         editorOption: {
         }
       }
     },
     methods: {
+      formatNames(files) {
+        if (files.length === 1) {
+          return files[0].name
+        } else {
+          return `${files.length} files selected`
+        }
+      },
       createAction() {
         var content2 = this.$refs.myQuillEditor.$options.propsData.value
         alert(content2);
@@ -55,13 +77,13 @@ import axios from 'axios';
       createHandler() {
       axios
         .post('http://localhost:8999/travel/api/article/article', {
-           bookno:this.bookno,
-           writedate:this.writedate,
-           title:this.title,
-           day:this.day,
-           traveldate:this.traveldate,
-           weather:this.weather,
-           text:this.text
+           bookno:this.form.bookno,
+           writedate:this.form.writedate,
+           title:this.form.title,
+           day:this.form.day,
+           traveldate:this.form.traveldate,
+           weather:this.form.weather,
+           text:this.form.text
         })
         .then(({ data }) => {
           let msg = '등록 처리시 문제가 발생했습니다.';
@@ -78,6 +100,17 @@ import axios from 'axios';
 
 <style>
   .article-create {
-    margin-top: 120px;
+    margin-top: 60px;
+    margin-bottom: 60px;
+  }
+  .article-info {
+    width: 600px;
+    margin: auto;
+    text-align: left;
+    margin-bottom: 30px;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px 40px 40px 40px;
+    border-radius: 15px;
+    transition: all .3s;
   }
 </style>
