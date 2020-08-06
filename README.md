@@ -528,3 +528,13 @@ Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
 - 에디터에서 이미지 처리하기
 - 파이어베이스 or aws => 파이어베이스로 진행하기로!
 - book DB에 description 추가!
+
+# 08/06
+- user db에 back-img, profile-img 추가될 것으로 예상
+- article 작성시 day1, day2 보다는 첫번째 여행, 두번째 여행이 보기에 좋을 듯
+- firebase에 이미지 올리는데 cross origin 에러 발생 => 오류 해결 중...
+* input-type = file 형태로 firebase에 올릴 수 있음(썸네일은 충분히 가능할 듯)
+* 하지만 editor 안에서의 img는 위와 같은 방법으로는 해결하기 어려울 듯
+1. 에디터안에서 src 태그(img)만 추출해보기
+2. 추출한 img를 firebase에 올리고 가져오기
+로 접근 해봐야할 듯!
