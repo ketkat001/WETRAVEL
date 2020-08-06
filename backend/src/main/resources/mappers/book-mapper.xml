@@ -62,7 +62,7 @@
 		select bookno, title,
 		writer, writedate, province, city, startdate, description, score
 		from book
-		where writer = #{email}
+		where writer = #{nickname}
 		order by writedate
 	</select>
 </mapper>

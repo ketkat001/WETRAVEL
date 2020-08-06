@@ -11,5 +11,5 @@ public interface BookDao {
 	public int modifyBook(Book book);
 	public Book getBookDetail(int bookno);
 	public List<Book> getBookList(String province, String city, int month);
-	public List<Book> getBookListByUser(String email);
+	public List<Book> getBookListByUser(String nickname);
 }
