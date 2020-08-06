@@ -61,7 +61,7 @@ export default {
             this.email = res.email
             this.nickname = res.nickname
             this.introduce = res.introduce
-            this.$axios.get(`/api/book/all/${this.email}`, {
+            this.$axios.get(`/api/book/all/${this.nickname}`, {
                 headers: {'Content-Type': 'application/json'}
             }).then(response => {
                 for (var i = 0; i < response.data.length; i++) {

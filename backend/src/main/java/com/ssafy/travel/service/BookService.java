@@ -11,5 +11,5 @@ public interface BookService {
 	public boolean deleteBook(int bookno);
 	public Book getBookDetail(int bookno);
 	public boolean modifyBook(Book book);
-	public List<Book> getBookListByUser(String email);
+	public List<Book> getBookListByUser(String nickname);
 }

@@ -52,7 +52,7 @@ public class BookDaoImpl implements BookDao{
 	
 
 	@Override
-	public List<Book> getBookListByUser(String email) {
-		return sqlSession.selectList("m_book.getBookListByUser", email);
+	public List<Book> getBookListByUser(String nickname) {
+		return sqlSession.selectList("m_book.getBookListByUser", nickname);
 	}
 }
