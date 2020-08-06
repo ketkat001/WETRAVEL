@@ -93,7 +93,7 @@ export default new Router({
       //beforeEnter: requireAuth()
     },
     {
-      path:'/articlecreate',
+      path:'/:bookno/articlecreate',
       name: 'articlecreate',
       component: articlecreate,
     },
