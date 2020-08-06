@@ -21,6 +21,10 @@ export default {
                 store.commit('TOKEN', '')
                 store.commit('IS_AUTH', false)
             }
+        }).catch(e => {
+            store.commit('TOKEN', '')
+            store.commit('IS_AUTH', false)
+            alert('로그인 정보가 올바르지 않습니다')
         })
         return store.getters.getIsAuth
     },

@@ -14,11 +14,33 @@
           <h3 style="text-align:center; padding-bottom: 20px; line-height: 1; margin: 0;">로그인</h3>
           <div class="form-group">
               <label>이메일</label>
-              <input v-model="email" id="email" placeholder="이메일을 입력해주세요" type="email" class="form-control form-control-lg"  />
+              <input 
+                v-model="email" 
+                id="email" 
+                placeholder="이메일을 입력해주세요" 
+                type="email" 
+                name="email"
+                class="form-control form-control-lg"  
+                v-validate="'required|email'"  
+              />
+            <div class="alert alert-danger" v-if="errors.has('email')">
+              {{ errors.first('email') }}
+            </div>
           </div>
           <div class="form-group">
               <label>비밀번호</label>
-              <input v-model="password" type="password" id="password" placeholder="영문, 숫자 혼용 8자 이상" class="form-control form-control-lg"/>
+              <input 
+                v-model="password" 
+                name="password" 
+                type="password" 
+                id="password" 
+                placeholder="영문, 숫자 혼용 8자 이상" 
+                class="form-control form-control-lg"
+                v-validate="'required|min:8|verify_password'"
+              />
+            <div class="alert alert-danger" v-if="errors.has('password')">
+              {{ errors.first('password') }}
+            </div>
           </div>
           <button style="margin-top: 30px; margin-bottom: 30px;" class="btn btn-lg btn-primary btn-block btn--back btn--login">로그인</button>
 

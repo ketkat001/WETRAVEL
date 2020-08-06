@@ -7,13 +7,14 @@
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
-          <b-button variant="primary" v-b-modal.loginModal v-if="this.$store.getters.getIsAuth == ''" @click="handleClickButton" class="text-white mx-3">로그인</b-button>
+          <div v-if="this.$store.getters.getIsAuth == ''">
+            <b-button variant="primary" v-b-modal.loginModal  @click="handleClickButton" class="text-white mx-3">로그인</b-button>
+            <b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" to="/join">회원가입</router-link></b-button>
+          </div>
           <div v-else>
             <b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" :to="{ name: 'profile', params: { nickname: this.$store.getters.getNickname }}">프로필</router-link></b-button>
             <b-button variant="primary" class="text-white mx-3" @click="userLogout()">로그아웃</b-button>
           </div>
-
-          <b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" to="/join">회원가입</router-link></b-button>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>

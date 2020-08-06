@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   `title` varchar(50) DEFAULT NULL,
   `writedate` datetime DEFAULT current_timestamp(),
   `score` decimal(3,2) DEFAULT NULL,
-  `weather` varchar(10) DEFAULT NULL,
+  `score_count` int(11) DEFAULT NULL,
   `text` mediumtext DEFAULT NULL,
   `traveldate` date DEFAULT NULL,
   `day` int(11) DEFAULT NULL,
@@ -31,17 +31,23 @@ CREATE TABLE IF NOT EXISTS `article` (
   PRIMARY KEY (`articleno`),
   KEY `bookno` (`bookno`),
   CONSTRAINT `article_ibfk_1` FOREIGN KEY (`bookno`) REFERENCES `book` (`bookno`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4;
 
 -- 테이블 데이터 travel.article:~6 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
-INSERT INTO `article` (`articleno`, `bookno`, `title`, `writedate`, `score`, `weather`, `text`, `traveldate`, `day`, `img`) VALUES
-	(1, 1, '부산 당일치기, 거제 이동', '2020-08-03 02:56:48', NULL, '맑음', '1일차', '2020-07-04', 1, NULL),
-	(2, 1, '거제 여행', '2020-08-03 02:59:58', NULL, '비', '2일차', '2020-07-05', 2, NULL),
-	(3, 1, '귀가', '2020-08-03 12:00:45', NULL, '비', '3일차', '2020-07-06', 3, NULL),
-	(4, 2, '광화문 탐방', '2020-08-04 01:50:57', 4.12, '맑음', '1일차', '2020-08-04', 1, NULL),
-	(5, 2, '서촌 맛집 탐방', '2020-08-04 01:51:54', 4.53, '맑음', '2일차', '2020-08-04', 2, NULL),
-	(6, 2, '동대문 패션 타운', '2020-08-04 01:52:31', 4.91, '비', '3일차', '2020-08-04', 3, NULL);
+INSERT INTO `article` (`articleno`, `bookno`, `title`, `writedate`, `score`, `score_count`, `text`, `traveldate`, `day`, `img`) VALUES
+	(1, 1, '부산 당일치기, 거제 이동', '2020-08-03 02:56:48', 4.67, NULL, '1일차', '2020-07-04', 1, NULL),
+	(2, 1, '거제 여행', '2020-08-03 02:59:58', NULL, NULL, '2일차', '2020-07-05', 2, NULL),
+	(3, 1, '귀가', '2020-08-03 12:00:45', NULL, NULL, '3일차', '2020-07-06', 3, NULL),
+	(4, 2, '광화문 탐방', '2020-08-04 01:50:57', 4.12, NULL, '1일차', '2020-08-04', 1, NULL),
+	(5, 2, '서촌 맛집 탐방', '2020-08-04 01:51:54', 4.53, NULL, '2일차', '2020-08-04', 2, NULL),
+	(6, 2, '동대문 패션 타운', '2020-08-04 01:52:31', 4.91, NULL, '3일차', '2020-08-04', 3, NULL),
+	(7, 5, '다양하게 즐긴 1일차', '2020-08-06 05:24:57', 4.50, NULL, '1일차', '2013-08-02', 1, NULL),
+	(8, 5, '정말 좋았던 2일차', '2020-08-06 14:28:47', 5.00, NULL, '2일차', '2013-08-03', 2, NULL),
+	(9, 5, '기차 타느라 다 보지 못한 3일차', '2020-08-06 14:29:24', 4.00, NULL, '3일차', '2013-08-04', 3, NULL),
+	(10, 6, '부산 내려가는 길', '2020-08-06 14:30:24', 3.78, NULL, '1일차', '2019-11-16', 1, NULL),
+	(11, 6, '첫 지스타 방문', '2020-08-06 14:30:54', 4.86, NULL, '2일차', '2019-11-17', 2, NULL),
+	(12, 6, '돌아가기 전 부산 여행', '2020-08-06 14:31:33', 4.39, NULL, '3일차', '2019-11-18', 3, NULL);
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 
 -- 테이블 travel.article_comment 구조 내보내기
@@ -95,15 +101,17 @@ CREATE TABLE IF NOT EXISTS `book` (
   KEY `book_ibfk_2` (`province`,`city`),
   CONSTRAINT `book_ibfk_1` FOREIGN KEY (`writer`) REFERENCES `user` (`email`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `book_ibfk_2` FOREIGN KEY (`province`, `city`) REFERENCES `city_list` (`province`, `city`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 travel.book:~4 rows (대략적) 내보내기
+-- 테이블 데이터 travel.book:~6 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
 INSERT INTO `book` (`bookno`, `title`, `writer`, `writedate`, `province`, `city`, `startdate`, `score`, `img`) VALUES
 	(1, '2박 3일 거제도 여행', 'dlsgk147@naver.com', '2020-08-03 09:53:24', '경상', '거제', '2020-07-04', NULL, NULL),
 	(2, '서울 여행', 'dlsgk147@naver.com', '2020-08-03 16:52:17', '서울', '서울', '2020-08-03', NULL, NULL),
 	(3, '서울 나들이', 'dlsgk147@naver.com', '2020-08-03 18:04:05', '서울', '서울', '2020-06-26', NULL, NULL),
-	(4, '서울이 좋다', 'dlsgk147@naver.com', '2020-08-03 18:04:45', '서울', '서울', '2020-08-01', NULL, NULL);
+	(4, '서울이 좋다', 'dlsgk147@naver.com', '2020-08-03 18:04:45', '서울', '서울', '2020-08-01', NULL, NULL),
+	(5, '부산국제록페스티벌에 가다', 'dlsgk147@gmail.com', '2020-08-06 05:19:53', '부산', '부산', '2013-08-02', NULL, NULL),
+	(6, '2019 지스타 구경', 'dlsgk147@gmail.com', '2020-08-06 14:22:22', '부산', '부산', '2019-11-16', NULL, NULL);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 
 -- 테이블 travel.city_list 구조 내보내기
@@ -289,9 +297,10 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 travel.user:~1 rows (대략적) 내보내기
+-- 테이블 데이터 travel.user:~2 rows (대략적) 내보내기
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`email`, `password`, `nickname`, `introduce`) VALUES
+	('dlsgk147@gmail.com', 'Okey102938', 'mocaran', '안녕하세요'),
 	('dlsgk147@naver.com', '1234', 'hinew', 'hello world');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
