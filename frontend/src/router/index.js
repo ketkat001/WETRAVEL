@@ -137,7 +137,7 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: profile,
-      //beforeEnter: requireAuth()
+      beforeEnter: requireAuth()
     }
   ],
   // 페이지 이동 시 맨 위로 이동

@@ -48,7 +48,7 @@ import axios from 'axios';
     data () {
       return {
         form: {
-          bookno: this.$route.params.bookno,   //bookno를 url에서 받아서 bookno에 저장
+          bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
           writedate:'',
           title:'',
           day:'',
