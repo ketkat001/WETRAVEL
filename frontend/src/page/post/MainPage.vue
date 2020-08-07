@@ -301,6 +301,9 @@ export default {
   #main-wrapper {
     padding-bottom: 80px;
   }
+  .row {
+    margin: 0px;
+  }
   .home-cover {
     margin-top: 60px;
     position: absolute;
@@ -367,7 +370,7 @@ export default {
       color:#fff
   }
   .home-article {
-    height: 690px;
+    height: 720px;
   }
 
   .home-cover .carousel-caption {
