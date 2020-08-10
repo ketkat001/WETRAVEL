@@ -88,19 +88,20 @@ export default {
     },
     async backsubmit() {
       if (this.email == "") {
-        this.showAlert = true;
-        this.errMsg = "이메일을 입력해주세요";
+        alert("이메일을 입력해주세요");
         return;
       }
       if (this.password == "") {
-        this.showAlert = true;
-        this.errMsg = "비밀번호를 입력해주세요";
+        alert("비밀번호를 입력해주세요");
         return;
       }
       this.showAlert = false;
       let loginResult = await this.$store.dispatch('login', {email: this.email, password: this.password})
       if (loginResult == true) {
+        this.email = ""
+        this.password = ""
         this.handleWrapperClick();
+        this.$router.push('/').catch(()=>{});
       }
     },
   },
