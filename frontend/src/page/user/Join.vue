@@ -13,7 +13,7 @@
               type="text" 
               name="nickname"
               class="form-control"
-              :disabled="nicknameDup == false"
+              :disabled="nicknameDup === false"
             />
             <span class="input-group-btn" style="margin-left: 10px">
               <button type="button" class="btn btn-primary" @click="nicknameCheck">중복 확인</button>
@@ -97,10 +97,10 @@ export default {
   },
   watch: {
     'this.email': function() {
-      emailDup = true
+      this.emailDup = true
     },
     'this.nickName': function() {
-      nicknameDup = true
+      this.nicknameDup = true
     }
   },
   methods: {
@@ -216,7 +216,7 @@ export default {
 
   .vertical-center .form-control:disabled {
     border-color: #75f829;
-    background-color: #888888;
+    background-color: #000000;
   }
 
   .vertical-center h3 {
