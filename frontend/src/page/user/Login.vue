@@ -21,6 +21,7 @@
                 type="email" 
                 name="email"
                 class="form-control form-control-lg"  
+                autocomplete="false"
                 v-validate="'required|email'"  
               />
             <div class="alert alert-danger" v-if="errors.has('email')">
@@ -36,6 +37,7 @@
                 id="password" 
                 placeholder="영문, 숫자 혼용 8자 이상" 
                 class="form-control form-control-lg"
+                autocomplete="false"
                 v-validate="'required|min:8|verify_password'"
               />
             <div class="alert alert-danger" v-if="errors.has('password')">

@@ -34,7 +34,8 @@
               name="email"
               class="form-control"
               v-validate="'required|email'"  
-              :disabled="emailDup == false"
+              autocomplete="off"
+              :disabled="emailDup === false"
             />
             <span class="input-group-btn" style="margin-left: 10px">
               <button type="button" class="btn btn-primary" @click="emailCheck">중복 확인</button>
@@ -133,6 +134,7 @@ export default {
           }).then(res => {
             if (res.data == true) {
               alert('이미 사용중인 이메일입니다. 다른 이메일을 입력해 주세요')
+              this.email = ""
             }
             else {
               alert('사용 가능한 이메일입니다')
