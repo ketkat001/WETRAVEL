@@ -14,6 +14,12 @@ export default {
     [types.JOIN_SUCCESS] (state, joinSuccess) {
         state.joinSuccess = joinSuccess
     },
+    [types.PROVINCE_LIST] (state, provinceList) {
+        state.provinceList = provinceList
+    },
+    [types.CITY_LIST] (state, cityList) {
+        state.cityList = cityList
+    },
     logout (state) {
         if (sessionStorage.getItem('jwt-auth-token')) {
             sessionStorage.removeItem('jwt-auth-token')

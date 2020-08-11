@@ -10,7 +10,9 @@ const state = {
     token: '',
     errorState: '',
     isAuth: false,
-    joinSuccess: false
+    joinSuccess: false,
+    provinceList: ['서울', '경기', '강원', '충청', '전라', '경상', '제주', '부산'],
+    cityList: ['']
 }
 
 export default new Vuex.Store({

@@ -13,6 +13,7 @@
               type="text" 
               name="nickname"
               class="form-control"
+              autocomplete="off"
               :disabled="nicknameDup === false"
             />
             <span class="input-group-btn" style="margin-left: 10px">
@@ -95,14 +96,6 @@ export default {
       require: false,
     },
   },
-  watch: {
-    'this.email': function() {
-      this.emailDup = true
-    },
-    'this.nickName': function() {
-      this.nicknameDup = true
-    }
-  },
   methods: {
     backsubmit(event) {
       event.preventDefault();
@@ -160,6 +153,7 @@ export default {
           }).then(res => {
             if (res.data == true) {
               alert('이미 사용중인 닉네임입니다. 다른 닉네임을 입력해 주세요')
+              this.nickName = ""
             }
             else {
               alert('사용 가능한 닉네임입니다')
@@ -215,8 +209,7 @@ export default {
   }
 
   .vertical-center .form-control:disabled {
-    border-color: #75f829;
-    background-color: #000000;
+    background-color: #888888;
   }
 
   .vertical-center h3 {

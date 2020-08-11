@@ -75,5 +75,16 @@ export default {
             alert('여행기 정보를 불러올 수 없습니다')
         })
         return result
+    },
+
+    async getCityList(store, province) {
+        var result;
+        await axios.get(`/api/search/${province}`, {
+            headers: {'Content-Type': 'application/json'}
+        }).then(res => {
+            store.commit('CITY_LIST', res.data)
+        }).catch(e => {
+            alert('지역 목록을 불러오는 도중 오류가 발생했습니다. ')
+        })
     }
 }
