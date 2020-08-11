@@ -5,28 +5,40 @@
         <h3>회원 가입</h3>
         <div class="form-group">
           <label for="nickname">닉네임</label>
-          <input 
-            v-model="nickName" 
-            v-validate="'required|min:3|max:20'" 
-            placeholder="닉네임을 입력해주세요" 
-            type="text" 
-            name="nickname"
-            class="form-control"
-          />
+          <div class="input-group">
+            <input 
+              v-model="nickName" 
+              v-validate="'required|min:3|max:20'" 
+              placeholder="닉네임을 입력해주세요" 
+              type="text" 
+              name="nickname"
+              class="form-control"
+              :disabled="nicknameDup === false"
+            />
+            <span class="input-group-btn" style="margin-left: 10px">
+              <button type="button" class="btn btn-primary" @click="nicknameCheck">중복 확인</button>
+            </span>
+          </div>
           <div class="alert alert-danger" v-if="errors.has('nickname')">
             {{ errors.first('nickname') }}
           </div>
         </div>
         <div class="form-group">
           <label for="email">이메일 주소</label>
-          <input
-            v-model="email"
-            placeholder="이메일을 입력해주세요" 
-            type="email" 
-            name="email"
-            class="form-control"
-            v-validate="'required|email'"  
-          />
+          <div class="input-group">
+            <input
+              v-model="email"
+              placeholder="이메일을 입력해주세요" 
+              type="email" 
+              name="email"
+              class="form-control"
+              v-validate="'required|email'"  
+              :disabled="emailDup == false"
+            />
+            <span class="input-group-btn" style="margin-left: 10px">
+              <button type="button" class="btn btn-primary" @click="emailCheck">중복 확인</button>
+            </span>
+          </div>
           <div class="alert alert-danger" v-if="errors.has('email')">
             {{ errors.first('email') }}
           </div>
@@ -83,11 +95,27 @@ export default {
       require: false,
     },
   },
+  watch: {
+    'this.email': function() {
+      this.emailDup = true
+    },
+    'this.nickName': function() {
+      this.nicknameDup = true
+    }
+  },
   methods: {
     backsubmit(event) {
       event.preventDefault();
       this.message = "";
       this.submitted = true;
+      if (this.nicknameDup) {
+        alert('닉네임 중복 확인을 해 주세요')
+        return
+      }
+      if (this.emailDup) {
+        alert('이메일 중복 확인을 해 주세요')
+        return
+      }
       this.$validator.validate().then(async (isValid) => {
         if (isValid) {
           this.successful = await this.$store.dispatch("signUp", {email: this.email, password: this.password, nickname: this.nickName})
@@ -101,8 +129,47 @@ export default {
         }
       });
     },
+    emailCheck() {
+      this.$validator.validate('email').then(isValid => {
+        if (isValid) {
+          this.$axios.get('/api/user/emailCheck', {
+            params: {
+              email: this.email
+            },
+            headers: {'Content-Type': 'application/json'}
+          }).then(res => {
+            if (res.data == true) {
+              alert('이미 사용중인 이메일입니다. 다른 이메일을 입력해 주세요')
+            }
+            else {
+              alert('사용 가능한 이메일입니다')
+            }
+            this.emailDup = res.data
+          })
+        }
+      })
+    },
+    nicknameCheck() {
+      this.$validator.validate('nickname').then(isValid => {
+        if (isValid) {
+          this.$axios.get('/api/user/nicknameCheck', {
+            params: {
+              nickname: this.nickName
+            },
+            headers: {'Content-Type': 'application/json'}
+          }).then(res => {
+            if (res.data == true) {
+              alert('이미 사용중인 닉네임입니다. 다른 닉네임을 입력해 주세요')
+            }
+            else {
+              alert('사용 가능한 닉네임입니다')
+            }
+            this.nicknameDup = res.data
+          })
+        }
+      })
+    }
   },
-  watch: {},
   data: () => {
     return {
       email: "",
@@ -115,6 +182,8 @@ export default {
       submitted: false,
       message: "",
       successful: false,
+      emailDup: true,
+      nicknameDup: true
     };
   },
 };
@@ -143,6 +212,11 @@ export default {
   .vertical-center .form-control:focus {
     border-color: #2554FF;
     box-shadow: none;
+  }
+
+  .vertical-center .form-control:disabled {
+    border-color: #75f829;
+    background-color: #000000;
   }
 
   .vertical-center h3 {
