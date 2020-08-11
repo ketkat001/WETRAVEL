@@ -57,16 +57,6 @@
 </template>
 
 <script>
-/* const cards = [
-  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature'},
-  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
-  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
-  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature'},
-  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
-  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
-  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
-  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
-] */
 var cards = []
 export default {
   name: "CityPage",

@@ -96,6 +96,14 @@ export default {
       require: false,
     },
   },
+  watch: {
+    'this.email': function() {
+      emailDup = true
+    },
+    'this.nickName': function() {
+      nicknameDup = true
+    }
+  },
   methods: {
     backsubmit(event) {
       event.preventDefault();
