@@ -21,6 +21,7 @@
                 type="email" 
                 name="email"
                 class="form-control form-control-lg"  
+                autocomplete="false"
                 v-validate="'required|email'"  
               />
             <div class="alert alert-danger" v-if="errors.has('email')">
@@ -36,6 +37,7 @@
                 id="password" 
                 placeholder="영문, 숫자 혼용 8자 이상" 
                 class="form-control form-control-lg"
+                autocomplete="false"
                 v-validate="'required|min:8|verify_password'"
               />
             <div class="alert alert-danger" v-if="errors.has('password')">
@@ -88,19 +90,20 @@ export default {
     },
     async backsubmit() {
       if (this.email == "") {
-        this.showAlert = true;
-        this.errMsg = "이메일을 입력해주세요";
+        alert("이메일을 입력해주세요");
         return;
       }
       if (this.password == "") {
-        this.showAlert = true;
-        this.errMsg = "비밀번호를 입력해주세요";
+        alert("비밀번호를 입력해주세요");
         return;
       }
       this.showAlert = false;
       let loginResult = await this.$store.dispatch('login', {email: this.email, password: this.password})
       if (loginResult == true) {
+        this.email = ""
+        this.password = ""
         this.handleWrapperClick();
+        this.$router.push('/').catch(()=>{});
       }
     },
   },

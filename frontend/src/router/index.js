@@ -29,6 +29,7 @@ import 'quill/dist/quill.bubble.css'
 import join from '../page/user/Join.vue'
 import forgotpassword from '../page/user/ForgotPassword.vue'
 import profile from '../page/user/Profile.vue'
+import userdelete from '../page/user/UserDelete.vue'
 
 // 포스트
 import mainpage from '../page/post/MainPage.vue'
@@ -137,6 +138,12 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: profile,
+      beforeEnter: requireAuth()
+    },
+    {
+      path: '/userdelete',
+      name: 'userdelete',
+      component: userdelete,
       beforeEnter: requireAuth()
     }
   ],

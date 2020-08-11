@@ -9,37 +9,25 @@
             <form method="post" novalidate="novalidate">
               <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                  <select class="form-control search-slt" id="example">
-                    <option>서울</option>
-                    <option>경기</option>
-                    <option>강원</option>
-                    <option>충청</option>
-                    <option>전라</option>
-                    <option>경상</option>
-                    <option>제주</option>
-                    <option>부산</option>
+                  <select v-model="searchProvince" class="form-control search-slt" id="provinceComboBox" @change="cityList">
+                    <option selected value="">지역 선택</option> 
+                    <option v-for="(province, index) in this.$store.getters.getProvinceList" :key="index" :value="province">{{ province }}</option>
                   </select>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                  <select class="form-control search-slt" id="example">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                  <select v-model="searchCity" class="form-control search-slt" id="cityComboBox" @change="cityChange" :disabled="searchProvince == ''">
+                    <option selected value="">도시 선택</option> 
+                    <option v-for="(city, index) in replaceCityList" :key="index" :value="city">{{ city }}</option>
                   </select>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                  <select class="form-control search-slt" id="example">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                  <select v-model="searchMonth" class="form-control search-slt" id="monthComboBox" :disabled="searchCity == ''">
+                    <option selected value="0">전체</option> 
+                    <option v-for="i in (1, 12)" :key="i" :value="i">{{ i }}</option>
                   </select>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12 p-0">
-                  <button type="button" class="btn wrn-btn">Search</button>
+                  <button type="button" class="btn wrn-btn" @click="goCityPage">Search</button>
                 </div>
               </div>
             </form>
@@ -75,7 +63,15 @@ export default {
   data: function() {
     return {
       cards: cards,
+      searchProvince: '',
+      searchCity: '',
+      searchMonth: 0
     } 
+  },
+  computed: {
+    replaceCityList() {
+      return this.$store.getters.getCityList
+    }
   },
   created() {
   },
@@ -97,7 +93,7 @@ export default {
         params: {
           province: this.$route.params.province,
           city: this.$route.params.city,
-          month: 0
+          month: this.$route.params.month ? this.$route.params.month : 0
         },
         headers: {'Content-Type': 'application/json'}
       }).then(response => {
@@ -105,6 +101,30 @@ export default {
           cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, image: 'https://placeimg.com/640/480/arch'})
         }
       })
+    },
+    cityList: async function() {
+      if (this.searchProvince == '') {
+        this.searchCity = ''
+        this.searchMonth = 0
+      }
+      else {
+        await this.$store.dispatch('getCityList', this.searchProvince)
+      }
+    },
+    cityChange: function() {
+      if (this.searchCity == '')
+        this.searchMonth = 0
+    },
+    goCityPage: function() {
+      if (this.searchProvince == '') {
+        alert('지역을 선택해주세요')
+        return
+      }
+      if (this.searchCity == '') {
+        alert('도시를 선택해주세요')
+        return
+      }
+      this.$router.push({name: 'citypage', params: {province: this.searchProvince, city: this.searchCity, month: this.searchMonth}})
     }
   }
 
