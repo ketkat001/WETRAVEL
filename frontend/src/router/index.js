@@ -40,6 +40,7 @@ import bookpage from '../page/post/BookPage.vue'
 import articlepage from '../page/post/ArticlePage.vue'
 import bookcreate from '../page/post/BookCreate.vue'
 import articlecreate from '../page/post/ArticleCreate.vue'
+import aws from '../page/post/Aws.vue'
 
 
 library.add(fas)
@@ -145,6 +146,12 @@ export default new Router({
       name: 'userdelete',
       component: userdelete,
       beforeEnter: requireAuth()
+    },
+    {
+      path: '/aws',
+      name: 'aws',
+      component: aws,
+      //beforeEnter: requireAuth()
     }
   ],
   // 페이지 이동 시 맨 위로 이동
