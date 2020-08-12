@@ -35,29 +35,76 @@
     </div>
     <div class="main-content container">
       <hr style="border: 1px solid rgb(196, 195, 208); margin:60px;">
-      <h2>{{ $route.params.province }}의 여행지 19곳</h2>
+      <h2>{{ $route.params.province }}의 여행지 {{ cities.length + cities2.length }}곳</h2>
       <p>"활력이 넘치는 도시"</p>
       <h4>원하는 여행지를 골라보세요!</h4>
       <hr style="border: 1px solid rgb(196, 195, 208); margin:60px;">
-      <div class="map_set" :style="backImage">
+      <div class="map-tab" v-if="backImage3.backgroundImage !== ''">  <!--만약 도가 2개로 나눠진다면 (남, 북) tab을 생성해 나눔-->
+        <b-tabs content-class="mt-3" fill>
+          <b-tab>
+            <template v-slot:title>
+              <h3>{{ $route.params.province }} 북도</h3>
+            </template>
+            <div class="map-set" :style="backImage">
+              <div class="hover-bg" :style="backImage2">
+              </div>
+              <img class="trans_map" src="@/assets/img/map_img/map_transparent.png" usemap="#imgMap">
+              <map name="imgMap">
+                <area 
+                  v-for="city in cities" 
+                  :key="city.id" 
+                  class="map_poly"
+                  shape="poly"
+                  onfocus="this.blur();"
+                  :coords="city.coords"
+                  v-on:mouseover="changebg($route.params.province, city.name)"
+                  v-on:mouseout="originbg"
+                  v-on:click="selectcity(city.name)"
+                  >  
+              </map>
+            </div>
+          </b-tab>
+          <b-tab>
+            <template v-slot:title>
+              <h3>{{ $route.params.province }} 남도</h3>
+            </template>
+            <div class="map-set" :style="backImage3">
+              <div class="hover-bg" :style="backImage4">
+              </div>
+              <img class="trans_map" src="@/assets/img/map_img/map_transparent.png" usemap="#imgMap2">
+              <map name="imgMap2">
+                <area 
+                  v-for="city in cities2" 
+                  :key="city.id" 
+                  class="map_poly"
+                  shape="poly"
+                  onfocus="this.blur();"
+                  :coords="city.coords"
+                  v-on:mouseover="changebg2($route.params.province, city.name)"
+                  v-on:mouseout="originbg"
+                  v-on:click="selectcity(city.name)"
+                  >  
+              </map>
+            </div>
+          </b-tab>
+        </b-tabs>
+      </div>
+      <div class="map-set" v-if="backImage3.backgroundImage === ''" :style="backImage"> <!--도가 1개라면 그대로 출력-->
         <div class="hover-bg" :style="backImage2">
-        
         </div>
         <img class="trans_map" src="@/assets/img/map_img/map_transparent.png" usemap="#imgMap">
         <map name="imgMap">
-          <!--경기도-->
           <area 
-            v-for="city in gyeonggi_coords" 
+            v-for="city in cities" 
             :key="city.id" 
             class="map_poly"
             shape="poly"
             onfocus="this.blur();"
             :coords="city.coords"
-            v-on:mouseover="changebg(city.name)"
+            v-on:mouseover="changebg($route.params.province, city.name)"
             v-on:mouseout="originbg"
             v-on:click="selectcity(city.name)"
             >  
-          <!--//경기도-->
         </map>
       </div>
     </div>
@@ -67,39 +114,96 @@
 </template>
 
 <script>
-import { gyeonggi_coords } from '../../assets/js/coords_data.js'
+import { gyeonggi_coords, gangwon_coords, chungcheongnorth_coords, chungcheongsouth_coords, jeollanorth_coords, jeollasouth_coords, gyeongsangnorth_coords, gyeongsangsouth_coords } from '../../assets/js/coords_data.js'
+
+var cities = []
+var cities2 = []
 
 export default {
   name: "ProvincePage",
-  data: () => {
+  data: function() {
     return {
       backImage: {
-        backgroundImage: `url(${require("@/assets/img/map_img/Gyeonggi_map/Gyeonggido.png")})`,
+        backgroundImage: '',
       },
       backImage2: {
         backgroundImage: ''
       },
-      gyeonggi_coords: gyeonggi_coords,
+      backImage3: {
+        backgroundImage: '',
+      },
+      backImage4: {
+        backgroundImage: '',
+      },
       searchProvince: '',
       searchCity: '',
-      searchMonth: 0
+      searchMonth: 0,
+      cities: cities,
+      cities2: cities2,
     }
   },
   computed: {
     replaceCityList() {
       return this.$store.getters.getCityList
-    }
+    },
+  },
+  mounted() {
+    this.getMap(this.$route.params.province)
   },
   methods: {
-    changebg: function(title) {
-      this.backImage2.backgroundImage = `url(${require("@/assets/img/map_img/Gyeonggi_map/" + title + ".png")})`
+    getMap: function(province) {
+      if (province === '경기') {
+        this.cities = gyeonggi_coords
+        this.backImage.backgroundImage = `url(${require("@/assets/img/map_img/Gyeonggi_map/Gyeonggido.png")})`
+      }else if (province === '강원') {
+        this.cities = gangwon_coords
+        this.backImage.backgroundImage = `url(${require("@/assets/img/map_img/Gangwon_map/Gangwondo.png")})`
+      }else if (province === '충청') {
+        this.cities = chungcheongnorth_coords
+        this.cities2 = chungcheongsouth_coords
+        this.backImage.backgroundImage = `url(${require("@/assets/img/map_img/Chungcheong_map/North/ChungcheongNorth.png")})`
+        this.backImage3.backgroundImage = `url(${require("@/assets/img/map_img/Chungcheong_map/South/ChungcheongSouth.png")})`
+      }else if (province === '전라') {
+        this.cities = jeollanorth_coords
+        this.cities2 = jeollasouth_coords
+        this.backImage.backgroundImage = `url(${require("@/assets/img/map_img/Jeolla_map/North/JeollaNorth.png")})`
+        this.backImage3.backgroundImage = `url(${require("@/assets/img/map_img/Jeolla_map/South/JeollaSouth.png")})`
+      }else if (province === '경상') {
+        this.cities = gyeongsangnorth_coords
+        this.cities2 = gyeongsangsouth_coords
+        this.backImage.backgroundImage = `url(${require("@/assets/img/map_img/Gyeongsang_map/North/GyeongsangNorth.png")})`
+        this.backImage3.backgroundImage = `url(${require("@/assets/img/map_img/Gyeongsang_map/South/GyeongsangSouth.png")})`
+      }
+    },
+    changebg: function(province, title) {
+      if (province === '경기') {
+        this.backImage2.backgroundImage = `url(${require("@/assets/img/map_img/Gyeonggi_map/" + title + ".png")})`
+      }else if (province === '강원') {
+        this.backImage2.backgroundImage = `url(${require("@/assets/img/map_img/Gangwon_map/" + title + ".png")})`
+      }else if (province === '충청') {
+        this.backImage2.backgroundImage = `url(${require("@/assets/img/map_img/Chungcheong_map/North/" + title + ".png")})`
+      }else if (province === '전라') {
+        this.backImage2.backgroundImage = `url(${require("@/assets/img/map_img/Jeolla_map/North/" + title + ".png")})`
+      }else if (province === '경상') {
+        this.backImage2.backgroundImage = `url(${require("@/assets/img/map_img/Gyeongsang_map/North/" + title + ".png")})`
+      }
+    },
+    changebg2: function(province, title) {
+      if (province === '충청') {
+        this.backImage4.backgroundImage = `url(${require("@/assets/img/map_img/Chungcheong_map/South/" + title + ".png")})`
+      }else if (province === '전라') {
+        this.backImage4.backgroundImage = `url(${require("@/assets/img/map_img/Jeolla_map/South/" + title + ".png")})`
+      }else if (province === '경상') {
+        this.backImage4.backgroundImage = `url(${require("@/assets/img/map_img/Gyeongsang_map/South/" + title + ".png")})`
+      }
     },
     originbg: function() {
       this.backImage2.backgroundImage = ''
+      this.backImage4.backgroundImage = ''
     },
     selectcity: function(cityName) {
       if (cityName != null && cityName != '') {
-        this.$router.push({name: 'citypage', params: {province: '경기', city: cityName}})
+        this.$router.push({name: 'citypage', params: {province: this.$route.params.province, city: cityName}})
       }
     },
     cityList: async function() {
@@ -131,7 +235,7 @@ export default {
 </script>
 
 <style scoped>
-  .map_set {
+  .map-set {
     position: relative; 
     margin: 0 auto;
     display:flex;
