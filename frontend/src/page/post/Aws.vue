@@ -1,5 +1,5 @@
 <template>
-  <container>
+  <div>
     <h1>파일 리스트</h1>
     <div v-for="(file, index) in fileList" :key="file.Key">
       #{{index + 1}}{{file.Key}}
@@ -10,13 +10,13 @@
       id="file-selector"
       ref="file"
       type="file"
-      @change="handleFileUpload()">
+      @change="handleFileUpload()"  multiple>
       <button @click="uploadFile" color="primary">업로드</button>
 
       <div v-for="p in photoList" :key="p">
         <p v-html=p></p>
       </div>
-  </container>
+  </div>
 </template>
 
 <script>
@@ -25,20 +25,26 @@ import AWS from 'aws-sdk'
 export default {
   data(){
     return{
-      file:null,
+      file:[],
       albumBucketName : 'article-album',
       bucketRegion : 'us-east-1',
       IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
       fileList : [],
-      photoList : []
+      photoList : [],
+      photoKey : []
     }
   },  created(){
     this.getFiles()
   },
   methods:{
     handleFileUpload(){
-      this.file = this.$refs.file.files[0]
-      console.log('파일 업로드')
+      this.files = this.$refs.file.files
+      //console.log(this.file)
+      for (let index = 0; index < this.files.length; index++) {
+        this.file[index] = this.$refs.file.files[index]
+        console.log(this.file[index])
+      }
+      //console.log('파일 업로드')
     },
 
     uploadFile(){
@@ -56,22 +62,30 @@ export default {
       }
     })
 
-    let photoKey = this.file.name;
+    //let photoKey = this.file.name;
+    //console.log("photoKey"+photoKey)
 
+    for (let index = 0; index < this.file.length; index++) {
+      this.photoKey[index] = this.file[index].name
+      console.log(this.photoKey[index])
+    }
+    
     // Use S3 ManagedUpload class as it supports multipart uploads
-    s3.upload({
-      Key: photoKey,
-      Body: this.file,
-      ACL: "public-read"
-      },(err) => {
-        if(err){
-          console.log(err)
-          return alert("실패",err.message);
-        }
-        alert('성공');
-        this.getFiles()
-        this.viewAlbum()
-      });
+    for (let index = 0; index < this.photoKey.length; index++) {
+      console.log(this.photoKey[index])
+      s3.upload({
+        Key: this.photoKey[index],
+        Body: this.file[index],
+        ACL: "public-read"
+        },(err) => {
+          if(err){
+            console.log(err)
+            return alert("실패",err.message);
+          }
+          alert('성공');
+          this.getFiles()
+        });
+      }
     },
 
     getFiles(){
