@@ -1,10 +1,9 @@
 <template>
   <div id="header" :class="{ 'navbar--hidden': !showNavbar }">
     <b-navbar toggleable="lg" type="dark" variant="primary" class="p-0">
-      <h1>
-        <router-link style="text-decoration:none" to="/">We Travel</router-link>
-      </h1>
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+      <router-link style="text-decoration:none" to="/"><img src="@/assets/img/logo_wetravel.png" style="height: 60px; margin-left:30px;"></router-link>
+      <b-navbar-toggle target="nav-collapse">
+      </b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav class="ml-auto">
           <div v-if="this.$store.getters.getIsAuth == ''">
@@ -85,10 +84,14 @@ button.btn {
 }
 #header {
   border-bottom: 0px;
+  padding: 0px;
   background-color: #007bff;
   transition: 0.1s all ease-out;
+  z-index: 11;
 }
-
+.navbar {
+  height: 60px;
+}
 .navbar--hidden {
   transform: translate3d(0, -100%, 0);
 }

@@ -38,7 +38,7 @@
       <hr style="border: 1px solid #C4C3D0l; margin:30px;">
       <h4 style="text-align:left; margin-left: 25px;">가장 인기 많은 기행문을 확인해보세요</h4>
       <div class="content-card row">
-        <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
+        <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-6">
           <div class="card travel-card">
             <img class="travel-card-image" :src="card.image">
             <div class="travel-card-footer">

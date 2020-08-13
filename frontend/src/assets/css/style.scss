@@ -113,12 +113,7 @@ body {
 .right{float: right}
 .pcNone {display: none}
 .moNone {display: block}
-.btn {
-    border-radius: 100px;
-    border: 1px solid #000;
-    background-color: #eee;
-    padding: 5px 20px;
-}
+
 
 /*GAP*/
 .div{width: 100%; float: left; height: 1px;}
@@ -227,18 +222,5 @@ h2 {
             }
         }
         
-    }
-}
-
-
-/* media query */
-@media (max-width: 1024px) {
-    .hejhome {
-        .header {
-            .user-info-wrap {
-                h3 {
-                }
-            }
-        }
     }
 }

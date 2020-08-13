@@ -30,6 +30,7 @@ import join from '../page/user/Join.vue'
 import forgotpassword from '../page/user/ForgotPassword.vue'
 import profile from '../page/user/Profile.vue'
 import userdelete from '../page/user/UserDelete.vue'
+import userupdate from '../page/user/UserUpdate.vue'
 
 // 포스트
 import mainpage from '../page/post/MainPage.vue'
@@ -138,13 +139,19 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: profile,
-      beforeEnter: requireAuth()
+      //beforeEnter: requireAuth()
+    },
+    {
+      path: '/userupdate',
+      name: 'userupdate',
+      component: userupdate,
+      //beforeEnter: requireAuth()
     },
     {
       path: '/userdelete',
       name: 'userdelete',
       component: userdelete,
-      beforeEnter: requireAuth()
+      //beforeEnter: requireAuth()
     }
   ],
   // 페이지 이동 시 맨 위로 이동

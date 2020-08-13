@@ -2,15 +2,13 @@
   <div id="main-wrapper" class="main-wrapper">
     <main id="main" class="main">
       <div class="home-article">
-        <header class="home-header" style="height=720px;">
+        <header class="home-header">
           <div class="home-cover">
             <b-carousel
               id="carousel-fade"
               style="text-shadow: 0px 0px 2px #000"
               fade
               indicators
-              img-width="1280"
-              img-height="720"
             >
               <b-carousel-slide>
                 <span class="home-cover-pic" :style="backImage1"></span>
@@ -33,7 +31,7 @@
         <div class="search-content">
           <h3>여행지 검색 - 다른 기행문도 찾아보세요!</h3>
           <p>도심의 야경부터 시원한 바다까지</p>
-          <div class="container m-0">
+          <div class="container m-0 p-0">
             <form method="post" novalidate="novalidate">
               <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-12 p-0">
@@ -232,7 +230,7 @@
         <div class="best-article" data-aos="zoom-in" data-aos-duration='1000'>
           <h2 style="margin-bottom:40px;">믿고 보는 베스트 여행기!</h2>
           <div class="content-card row">
-            <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
+            <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-6">
               <b-link to="/posts/$route.params.province/$route.params.city/1/">
                 <div  class="card travel-card">
                   <img class="travel-card-image" :src="card.image">
@@ -328,14 +326,13 @@ export default {
   }
   .home-cover {
     margin-top: 60px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    max-width: 100%;
+    height: 720px;
     z-index: 0;
   }
   .home-cover-pic {
+    max-width: 100%;
+    height: auto;
     transition: 1s;
     position: absolute;
     top: 0;
@@ -343,14 +340,13 @@ export default {
     right: 0;
     bottom: 0;
     z-index: 5;
-    height: 720px;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
   }
   .home-header-text {
-    width: 100%;
-    height: 720px;
+    max-width: 100%;
+    height: auto;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -404,9 +400,8 @@ export default {
     margin-top: 60px;
     text-align: center;
     position: absolute;
-    top: 60%;
+    top: 50%;
     left: 50%;
-    height: 500px;
     transform: translate(-50%, -50%);
     overflow: hidden;
   }
