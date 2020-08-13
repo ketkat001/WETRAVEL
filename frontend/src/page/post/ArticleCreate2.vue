@@ -6,13 +6,13 @@
     <p>I plan to merge this feature soon but am making it available for testing and feedback.</p>
 
     <h3>To test out this version in your project:</h3>
-<pre>
-  <code class="bash">yarn add vue2-editor@images</code>
-</pre>
-<strong>OR</strong>
-<pre>
-  <code class="bash">npm install vue2-editor@images</code>
-</pre>
+    <pre>
+      <code class="bash">yarn add vue2-editor@images</code>
+    </pre>
+    <strong>OR</strong>
+    <pre>
+      <code class="bash">npm install vue2-editor@images</code>
+    </pre>
     <vue-editor id="editor"
       use-custom-image-handler
       :editor-options="editorSettings"
