@@ -111,7 +111,8 @@ export default {
   }
   .book-create {
     width: 600px;
-    margin: auto;
+    margin: 0 auto;
+    margin-top: 30px;
     margin-bottom: 30px;
     background: #ffffff;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
