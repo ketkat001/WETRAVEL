@@ -41,6 +41,7 @@ import bookpage from '../page/post/BookPage.vue'
 import articlepage from '../page/post/ArticlePage.vue'
 import bookcreate from '../page/post/BookCreate.vue'
 import articlecreate from '../page/post/ArticleCreate.vue'
+import aws from '../page/post/Aws.vue'
 
 
 library.add(fas)
@@ -151,6 +152,15 @@ export default new Router({
       path: '/userdelete',
       name: 'userdelete',
       component: userdelete,
+<<<<<<< HEAD
+=======
+      beforeEnter: requireAuth()
+    },
+    {
+      path: '/aws',
+      name: 'aws',
+      component: aws,
+>>>>>>> d8b8d588dfd74fef59458bf2e7e425904521595e
       //beforeEnter: requireAuth()
     }
   ],
