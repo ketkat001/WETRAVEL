@@ -164,11 +164,7 @@ export default new Router({
       path: '/userdelete',
       name: 'userdelete',
       component: userdelete,
-<<<<<<< HEAD
       //beforeEnter: requireAuth()
-=======
-      beforeEnter: requireAuth()
->>>>>>> fe4d7484d17798422b66948b5b3e981887f06aef
     },
     {
       path: '/aws',
