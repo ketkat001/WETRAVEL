@@ -149,6 +149,11 @@ export default {
   },
   mounted() {
     this.getMap(this.$route.params.province)
+    this.searchProvince = this.$route.params.province ? this.$route.params.province : ''
+    this.cityList()
+    this.searchCity = this.$route.params.city ? this.$route.params.city : ''
+    this.cityChange()
+    this.searchMonth = this.$route.params.month ? this.$route.params.month : 0
   },
   methods: {
     getMap: function(province) {
@@ -203,7 +208,7 @@ export default {
     },
     selectcity: function(cityName) {
       if (cityName != null && cityName != '') {
-        this.$router.push({name: 'citypage', params: {province: this.$route.params.province, city: cityName}})
+        this.$router.push({name: 'citypage', params: {province: this.$route.params.province, city: cityName, month: 0}})
       }
     },
     cityList: async function() {

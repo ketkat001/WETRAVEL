@@ -82,6 +82,11 @@ export default {
   },
   mounted() {
     this.getBookList()
+    this.searchProvince = this.$route.params.province ? this.$route.params.province : ''
+    this.cityList()
+    this.searchCity = this.$route.params.city ? this.$route.params.city : ''
+    this.cityChange()
+    this.searchMonth = this.$route.params.month ? this.$route.params.month : 0
   },
   methods: {
     getBookList: function() {
