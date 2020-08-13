@@ -108,7 +108,6 @@ export default {
   methods: {
     backsubmit(event) {
       event.preventDefault();
-      this.message = "";
       this.submitted = true;
       if (this.nicknameDup) {
         alert('닉네임 중복 확인을 해 주세요')
@@ -184,7 +183,6 @@ export default {
       passwordType: "password",
       passwordConfirmType: "password",
       submitted: false,
-      message: "",
       successful: false,
       emailDup: true,
       nicknameDup: true

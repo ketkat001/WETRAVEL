@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
-import VeeValidate from 'vee-validate'
+import VeeValidate, { Validator } from 'vee-validate'
+import ko from 'vee-validate/dist/locale/ko.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import Carousel3d from 'vue-carousel-3d'
@@ -51,20 +52,31 @@ library.add(faInstagram)
 library.add(faTwitter)
 library.add(faPinterest)
 
+
 Vue.use(Router) 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 Vue.use(Carousel3d)
-Vue.use(VeeValidate)
 Vue.use(VueQuillEditor)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.component('star-rating', StarRating)
 
 
+// Vee-Validate 사용
+
+const config = {
+  locale: 'ko',
+  dictionary: {
+    ko
+  }
+}
+
+Vue.use(VeeValidate, config)
+
 
 VeeValidate.Validator.extend('verify_password', {
-  getMessage: field => `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number`,
+  getMessage: field => `비밀번호는 최소 하나의 대문자와 소문자, 숫자를 포함하고 있어야 합니다`,
         validate: value => {
             var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])");
             return strongRegex.test(value);
@@ -158,7 +170,11 @@ export default new Router({
       path: '/userdelete',
       name: 'userdelete',
       component: userdelete,
+<<<<<<< HEAD
+      //beforeEnter: requireAuth()
+=======
       beforeEnter: requireAuth()
+>>>>>>> fe4d7484d17798422b66948b5b3e981887f06aef
     },
     {
       path: '/aws',
