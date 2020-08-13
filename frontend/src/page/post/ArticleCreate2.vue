@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="vueeditor2">
 
     <h1>Vue2Editor - Images Upload</h1>
     <h2>Upload an image to server and use response to get url and use that for editor content instead of defualt Base64 that Quill.js provides</h2>
@@ -26,7 +26,7 @@
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios'
 export default {
-  name: 'app',
+  name: 'vueeditor2',
   components: {
     VueEditor
   },
@@ -62,17 +62,20 @@ export default {
       .catch((err) => {
         console.log(err);
       })
+    },
+    handleImageRemoved(file, Editor) {
+
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 @import "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css";
 #editor {
   height: 400px;
 }
-#app {
+#vueeditor2 {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
