@@ -5,15 +5,13 @@
       <b-navbar-toggle target="nav-collapse">
       </b-navbar-toggle>
       <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav class="ml-auto">
-          <div v-if="this.$store.getters.getIsAuth == ''">
-            <b-button variant="primary" v-b-modal.loginModal  @click="handleClickButton" class="text-white mx-3">로그인</b-button>
-            <b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" to="/join">회원가입</router-link></b-button>
-          </div>
-          <div v-else>
-            <b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" :to="{ name: 'profile', params: { nickname: this.$store.getters.getNickname }}">프로필</router-link></b-button>
-            <b-button variant="primary" class="text-white mx-3" @click="userLogout()">로그아웃</b-button>
-          </div>
+        <b-navbar-nav class="ml-auto" v-if="this.$store.getters.getIsAuth == ''">
+          <b-nav-item><b-button variant="primary" v-b-modal.loginModal  @click="handleClickButton" class="text-white mx-3">로그인</b-button></b-nav-item>
+          <b-nav-item><b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" to="/join">회원가입</router-link></b-button></b-nav-item>
+        </b-navbar-nav>
+        <b-navbar-nav class="ml-auto" v-else>
+          <b-nav-item><b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" :to="{ name: 'profile', params: { nickname: this.$store.getters.getNickname }}">프로필</router-link></b-button></b-nav-item>
+          <b-nav-item><b-button variant="primary" class="text-white mx-3" @click="userLogout()">로그아웃</b-button></b-nav-item>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -89,8 +87,9 @@ button.btn {
   transition: 0.1s all ease-out;
   z-index: 11;
 }
-.navbar {
-  height: 60px;
+.nav-link {
+  text-align: left;
+  margin-left: 30px;
 }
 .navbar--hidden {
   transform: translate3d(0, -100%, 0);
