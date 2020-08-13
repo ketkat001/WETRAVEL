@@ -179,8 +179,14 @@ export default new Router({
       //beforeEnter: requireAuth()
     }
   ],
-  // 페이지 이동 시 맨 위로 이동
+
+  // 페이지 이동 시 저장된 위치가 있다면 저장된 위치로 아니면 최상단으로
   scrollBehavior (to, from, savedPosition) {
-    return { x:0, y:0 }
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      
+      return { x:0, y:0 }
+    }
   }
 })
