@@ -38,7 +38,7 @@
         <div class="col-2 p-0">
           <div class="user-btn">
             <div>
-              <b-button class="my-3" variant="primary"><router-link style="text-decoration:none" to="/join">회원 정보 수정</router-link></b-button>
+              <b-button class="my-3" variant="primary"><router-link style="text-decoration:none" to="/userupdate">회원 정보 수정</router-link></b-button>
             </div>
             <div>
               <b-button class="my-3" variant="primary" style="float:right"><router-link style="text-decoration:none" to="/userdelete">회원 탈퇴</router-link></b-button>
