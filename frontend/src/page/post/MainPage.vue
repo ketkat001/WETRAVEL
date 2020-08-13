@@ -20,7 +20,7 @@
                 <span class="home-cover-pic" :style="backImage3"></span>
               </b-carousel-slide>
             </b-carousel>
-            <div class="home-header-text container">
+            <div class="home-header-text">
               <span class="home-text text1">We Travel에 오신걸 환영합니다!</span>
               <span class="home-text text2">당신의 여행을 공유 해보세요!</span>
             </div>
@@ -344,14 +344,6 @@ export default {
     background-size: cover;
     background-position: center;
   }
-  .home-header-text {
-    max-width: 100%;
-    height: auto;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    
-  }
   .search-box {
     background-color: rgb(245, 245, 245);
     margin-bottom: 60px;
@@ -395,7 +387,7 @@ export default {
     position: static;
     height: 720px;
   }
-  .home-header .container {
+  .home-header-text {
     z-index: 10;
     margin-top: 60px;
     text-align: center;
@@ -403,9 +395,11 @@ export default {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    text-overflow: ellipsis;
+    white-space: nowrap;
     overflow: hidden;
   }
-  .container .home-text {
+  .home-text {
     color: white;
     display: block;
     font-size: 60px;
@@ -508,6 +502,16 @@ export default {
     }
     95% {
       letter-spacing: 3px;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    .home-header-text {
+      transform: translate(-35%, -100%);
+    }
+  }
+  @media screen and (max-width: 500px) {
+    .home-header-text {
+      transform: translate(-15%, -50%);
     }
   }
 </style>
