@@ -65,7 +65,7 @@
           <h2 style="margin-bottom: 40px; color: primary;">좋아하는 여행지를 골라보세요!</h2>
           <div class="row">
             <div class="col-3">
-              <b-link to="/posts/서울/서울">
+              <b-link :to="{name: 'citypage', params: {province: '서울', city: '서울', month: 0}}">
                 <b-card
                   :img-src="require('@/assets/img/city/Seoul.jpg')"
                   style="max-width: 20rem;"
