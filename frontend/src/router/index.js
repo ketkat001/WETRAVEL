@@ -42,7 +42,7 @@ import articlepage from '../page/post/ArticlePage.vue'
 import bookcreate from '../page/post/BookCreate.vue'
 import articlecreate from '../page/post/ArticleCreate.vue'
 import aws from '../page/post/Aws.vue'
-
+import articlecreate2 from '../page/post/ArticleCreate2.vue'
 
 library.add(fas)
 library.add(faFacebook)
@@ -159,6 +159,11 @@ export default new Router({
       name: 'aws',
       component: aws,
       //beforeEnter: requireAuth()
+    },
+    {
+      path: '/articlecreate2',
+      name: 'articlecreate2',
+      component: articlecreate2,
     }
   ],
   // 페이지 이동 시 맨 위로 이동
