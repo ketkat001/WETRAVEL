@@ -43,6 +43,7 @@ import articlepage from '../page/post/ArticlePage.vue'
 import bookcreate from '../page/post/BookCreate.vue'
 import articlecreate from '../page/post/ArticleCreate.vue'
 import aws from '../page/post/Aws.vue'
+import articlecreate2 from '../page/post/ArticleCreate2.vue'
 
 
 library.add(fas)
@@ -108,9 +109,14 @@ export default new Router({
       //beforeEnter: requireAuth()
     },
     {
-      path:'/:bookno/articlecreate',
+      path:'/:bookno/:articleno/articlecreate',
       name: 'articlecreate',
       component: articlecreate,
+    },
+    {
+      path:'/articlecreate2',
+      name: 'articlecreate2',
+      component: articlecreate2,
     },
     {
       path:'/best/:city',
@@ -164,7 +170,7 @@ export default new Router({
       path: '/userdelete',
       name: 'userdelete',
       component: userdelete,
-      //beforeEnter: requireAuth()
+      // beforeEnter: requireAuth()
     },
     {
       path: '/aws',
