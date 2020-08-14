@@ -5,7 +5,6 @@ import VeeValidate, { Validator } from 'vee-validate'
 import ko from 'vee-validate/dist/locale/ko.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import Carousel3d from 'vue-carousel-3d'
 import store from '../vuex/store'
 
 
@@ -35,7 +34,6 @@ import userupdate from '../page/user/UserUpdate.vue'
 
 // 포스트
 import mainpage from '../page/post/MainPage.vue'
-import bestpage from '../page/post/BestPage.vue'
 import provincepage from '../page/post/ProvincePage.vue'
 import citypage from '../page/post/CityPage.vue'
 import bookpage from '../page/post/BookPage.vue'
@@ -55,7 +53,6 @@ library.add(faPinterest)
 Vue.use(Router) 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-Vue.use(Carousel3d)
 Vue.use(VueQuillEditor)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
@@ -116,11 +113,6 @@ export default new Router({
       path:'/articlecreate2',
       name: 'articlecreate2',
       component: articlecreate2,
-    },
-    {
-      path:'/best/:city',
-      name: 'bestpage',
-      component: bestpage,
     },
     {
       path:'/posts/:province',
