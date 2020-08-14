@@ -63,170 +63,18 @@
       <div class="home-content container">
         <div class="korea-city" data-aos="zoom-in" data-aos-duration='1000'>
           <h2 style="margin-bottom: 40px; color: primary;">좋아하는 여행지를 골라보세요!</h2>
-          <div class="row">
-            <div class="col-3">
-              <b-link :to="{name: 'citypage', params: {province: '서울', city: '서울', month: 0}}">
-                <b-card
-                  :img-src="require('@/assets/img/city/Seoul.jpg')"
-                  style="max-width: 20rem;"
-                  class="mb-2"
-                >
-                  <b-card-text>서울, 대한민국의 수도</b-card-text>
-                </b-card>
-              </b-link>
-            </div>
-            <div class="col-3">
-              <b-link to="/posts/경기">
-                <b-card
-                  :img-src="require('@/assets/img/city/Gyeonggido.jpg')"
-                  style="max-width: 20rem;"
-                  class="mb-2"
-                >
-                  <b-card-text>경기, 활력 넘치는 도시</b-card-text>
-                </b-card>
-              </b-link>
-            </div>
-            <div class="col-3">
-              <b-link to="/posts/강원">
-                <b-card
-                  :img-src="require('@/assets/img/city/Gangwondo.jpg')"
-                  style="max-width: 20rem;"
-                  class="mb-2"
-                >
-                  <b-card-text>강원, 자연과 힐링</b-card-text>
-                </b-card>
-              </b-link>
-            </div>
-            <div class="col-3">
-              <b-link to="/posts/충청">
-                <b-card
-                  :img-src="require('@/assets/img/city/Chungcheongdo.jpg')"
-                  style="max-width: 20rem;"
-                  class="mb-2"
-                >
-                  <b-card-text>충청, 교통의 중심</b-card-text>
-                </b-card>
-              </b-link>
-            </div>
-            <div class="col-3">
-              <b-link to="/posts/전라">
-                <b-card
-                  :img-src="require('@/assets/img/city/Jeollado.jpg')"
-                  style="max-width: 20rem;"
-                  class="mb-2"
-                >
-                  <b-card-text>전라, 맛의 중심</b-card-text>
-                </b-card>
-              </b-link>
-            </div>
-            <div class="col-3">
-              <b-link to="/posts/경상">
-                <b-card
-                  :img-src="require('@/assets/img/city/Gyeongsangdo.jpg')"
-                  style="max-width: 20rem;"
-                  class="mb-2"
-                >
-                  <b-card-text>경상, 바다의 도시</b-card-text>
-                </b-card>
-              </b-link>
-            </div>
-            <div class="col-3">
-              <b-link to="/posts/제주">
-                <b-card
-                  :img-src="require('@/assets/img/city/Jeju.jpg')"
-                  style="max-width: 20rem;"
-                  class="mb-2"
-                >
-                  <b-card-text>제주, 추억과 행복</b-card-text>
-                </b-card>
-              </b-link>
-            </div>
-            <div class="col-3">
-              <b-link to="/posts/부산/부산">
-                <b-card
-                  :img-src="require('@/assets/img/city/Busan.jpg')"
-                  style="max-width: 20rem;"
-                  class="mb-2"
-                >
-                  <b-card-text>부산, 야경의 도시</b-card-text>
-                </b-card>
-              </b-link>
+          <div class="row city-box">
+            <div v-for="(city, index) in city_thumb" :key="index">
+              <div class="korea-img" :style="{ backgroundImage: 'url(' + city.image + ')'}">
+                <h4>{{ city.title }}</h4>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="best-city-article" data-aos="zoom-in" data-aos-duration='1000'>
-          <h2 style="margin-bottom:40px;">지역별 베스트 여행기를 보세요!</h2>
-          <div class="row" style="justify-content: center;">
-            <div class="col-10">
-              <carousel-3d>
-                <slide :index="0">
-                  <img src="@/assets/img/city/Seoul.jpg">
-                  <router-link to="/best/서울">
-                    <div class="slide-text">
-                      <h3>서울</h3>
-                    </div>
-                  </router-link>
-                </slide>
-                <slide :index="1"> 
-                  <img src="@/assets/img/city/Gyeonggido.jpg">
-                  <router-link to="/best/경기">
-                    <div class="slide-text">
-                      <h3>경기</h3>
-                    </div>
-                  </router-link>
-                </slide>
-                <slide :index="2">
-                  <img src="@/assets/img/city/Gangwondo.jpg">
-                  <router-link to="/best/강원">
-                    <div class="slide-text">
-                      <h3>강원</h3>
-                    </div>
-                  </router-link>
-                </slide>
-                <slide :index="3">
-                  <img src="@/assets/img/city/Chungcheongdo.jpg">
-                  <router-link to="/best/충청">
-                    <div class="slide-text">
-                      <h3>충청</h3>
-                    </div>
-                  </router-link>
-                </slide>
-                <slide :index="4">
-                  <img src="@/assets/img/city/Jeollado.jpg">
-                  <router-link to="/best/전라">
-                    <div class="slide-text">
-                      <h3>전라</h3>
-                    </div>
-                  </router-link>
-                </slide>
-                <slide :index="5">
-                  <img src="@/assets/img/city/Gyeongsangdo.jpg">
-                  <router-link to="/best/경상">
-                    <div class="slide-text">
-                      <h3>경상</h3>
-                    </div>
-                  </router-link>
-                </slide>
-                <slide :index="6">
-                  <img src="@/assets/img/city/Jeju.jpg">
-                  <router-link to="/best/제주">
-                    <div class="slide-text">
-                      <h3>제주</h3>
-                    </div>
-                  </router-link>
-                </slide>
-                <slide :index="7">
-                  <img src="@/assets/img/city/Busan.jpg">
-                  <router-link to="/best/부산">
-                    <div class="slide-text">
-                      <h3>부산</h3>
-                    </div>
-                  </router-link>
-                </slide>
-              </carousel-3d>
-            </div>
+          <div class="row province-box">
+            
           </div>
         </div>
+        
         <div class="best-article" data-aos="zoom-in" data-aos-duration='1000'>
           <h2 style="margin-bottom:40px;">믿고 보는 베스트 여행기!</h2>
           <div class="content-card row">
@@ -250,6 +98,12 @@
 </template>
  
 <script>
+
+const city_thumb = [
+  {title: '서울', image: require('@/assets/img/city/resize/Seoul.jpg')},
+  {title: '부산', image: require('@/assets/img/city/resize/Busan.jpg')},
+  {title: '제주', image: require('@/assets/img/city/resize/Jeju.jpg')},
+]
 const cards = [
   {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature'},
   {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
@@ -311,7 +165,8 @@ export default {
       cards: cards,
       searchProvince: '',
       searchCity: '',
-      searchMonth: 0
+      searchMonth: 0,
+      city_thumb: city_thumb
     };
   },
 };
@@ -411,31 +266,18 @@ export default {
   .korea-city{
     margin-bottom: 40px;
   }
-  .korea-city a:visited{
-    color:black;
+  .korea-img {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background-position: center;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    margin: 10px;
   }
-  .korea-city a:link {
-    text-decoration: none;
-  }
-  .korea-city img.card-img {
-    height: 150px;
-  }
-  .best-city-article {
-    margin-bottom: 40px;
-  }
-  .carousel-3d-slide img {
-    height: 100%;
-  }
-  .slide-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color:#fff;
-  }
-  .slide-text h3{
-    font-size: 3rem;
-  }
+  
   .content-card {
     text-align: left;
     justify-content: center;
@@ -447,7 +289,7 @@ export default {
     display: flex;
     justify-content: center;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 30px;  
   }
   .travel-card {
     background-color: #FFFFFF;
@@ -502,6 +344,11 @@ export default {
     }
     95% {
       letter-spacing: 3px;
+    }
+  }
+  @media screen and (max-width: 1024px) {
+    .home-header-text {
+      transform: translate(-50%, -150%);
     }
   }
   @media screen and (max-width: 768px) {
