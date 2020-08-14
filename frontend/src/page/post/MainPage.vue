@@ -293,6 +293,18 @@ export default {
   .korea-city{
     margin-bottom: 40px;
   }
+  @-webkit-keyframes play-state {
+    from {
+      left: -50px;
+    }
+    to {
+      left: 50px;
+    }
+  }
+
+  .swiper-wrapper {
+    animation: play-state 2s linear infinite alternate
+  }
   .swiper-slide {
     width: 200px !important;
     height: 200px;
