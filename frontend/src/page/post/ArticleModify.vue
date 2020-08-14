@@ -141,7 +141,7 @@ import axios from 'axios';
     const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+'/1/1'
+        Bucket: this.albumBucketName+'/1/1' // 하위 폴더 경로
       }
     })
 
