@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import constants from "../../lib/constants";
 
 export default {
   name: "my-modal",
@@ -112,7 +111,6 @@ export default {
   },
   data: () => {
     return {
-      constants,
       email: "",
       password: "",
       showAlert: false,
