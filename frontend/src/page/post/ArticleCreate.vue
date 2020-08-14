@@ -34,8 +34,11 @@
         </div>
         <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
       
-        <quill-editor v-model="form.text" ref="myQuillEditor" :options="editorOption">
-        </quill-editor>
+      <vue-editor id="editor"
+      use-custom-image-handler
+      :editor-options="editorSettings"
+      @image-added="handleImageAdded" @image-removed="handleImageRemoved" v-model="editorContent" ref="myQuillEditor">
+    </vue-editor>
         <b-button class="m-3" variant="primary" @click="createAction">작성완료</b-button>
       </b-form>
     </div>
@@ -43,21 +46,31 @@
 </template>
 
 <script>
+import AWS from 'aws-sdk'
+import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
   export default {
+    name : 'vueeditor2',
+    components : {
+      VueEditor
+    },
     data () {
       return {
+        editorContent: 'Initial Content',
+        albumBucketName : 'article-album',
+        bucketRegion : 'us-east-1',
+        IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
+        file : null,
+        photoKey : null,
         form: {
           bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
           writedate:'',
           title:'',
           day:'',
           traveldate:'',
-          weather:'',
           text: '',
-         
         },
-        editorOption: {
+        editorSettings: {
         }
       }
     },
@@ -84,7 +97,7 @@ import axios from 'axios';
            day:this.form.day,
            traveldate:this.form.traveldate,
            weather:this.form.weather,
-           text:this.form.text
+           text:this.editorContent
         })
         .then(({ data }) => {
           let msg = '등록 처리시 문제가 발생했습니다.';
@@ -94,7 +107,74 @@ import axios from 'axios';
           alert(msg);
           //this.moveList();
         });
-    }
+    },
+    handleImageAdded(file, Editor, cursorLocation) {
+      this.file = file
+ 
+      AWS.config.update({
+        region: this.bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: this.IdentityPoolId
+        })
+      })
+
+    let photoKey = this.file.name
+
+    const s3 = new AWS.S3({
+      apiVersion: "2006-03-01",
+      params: { 
+        Bucket: this.albumBucketName+'/1/1'
+      }
+    })
+
+    // Use S3 ManagedUpload class as it supports multipart uploads
+      s3.upload({
+        Key: photoKey,
+        Body: this.file,
+        ACL: "public-read",
+        CacheControl: "no-cache",
+        Expires: new Date()
+        },(err) => {
+          if(err){
+            console.log(err)
+            return alert("실패",err.message);
+          }
+          var href = "https://s3.amazonaws.com/"; // 기본 주소
+          var bucketUrl = href + this.albumBucketName + "/"; // 기본 주소 + 버킷이름
+          var photoloc = "1/1/" + file.name;
+          console.log("사진경로이름:"+photoloc)
+          var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
+          console.log("최종경로:"+photoUrl)
+          Editor.insertEmbed(cursorLocation,'image',photoUrl)
+          alert('성공');
+        });
+      },
+
+      handleImageRemoved(file, Editor, cursorLocation){
+        
+         AWS.config.update({
+        region: this.bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: this.IdentityPoolId
+        })
+      })
+
+      let photoKey = this.file.name
+
+      const s3 = new AWS.S3({
+      apiVersion: "2006-03-01",
+      params: { 
+        Bucket: this.albumBucketName+'/1/1'
+      }
+    })
+
+      s3.deleteObject({ Key: photoKey }, (err) => {
+      if (err) {
+        return alert("There was an error deleting your photo: ", err.message);
+      }
+      alert("Successfully deleted photo.");
+    });
+      }
   }
 }
 </script>

@@ -45,7 +45,6 @@ import articlecreate from '../page/post/ArticleCreate.vue'
 import aws from '../page/post/Aws.vue'
 import articlecreate2 from '../page/post/ArticleCreate2.vue'
 
-
 library.add(fas)
 library.add(faFacebook)
 library.add(faInstagram)
@@ -177,10 +176,21 @@ export default new Router({
       name: 'aws',
       component: aws,
       //beforeEnter: requireAuth()
+    },
+    {
+      path: '/articlecreate2',
+      name: 'articlecreate2',
+      component: articlecreate2,
     }
   ],
-  // 페이지 이동 시 맨 위로 이동
+
+  // 페이지 이동 시 저장된 위치가 있다면 저장된 위치로 아니면 최상단으로
   scrollBehavior (to, from, savedPosition) {
-    return { x:0, y:0 }
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      
+      return { x:0, y:0 }
+    }
   }
 })

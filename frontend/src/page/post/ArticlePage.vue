@@ -19,7 +19,7 @@
       <h2>서울의 밤은 밝다</h2>
       <h5>By 서울야경</h5>
       <div class="article-map">
-        내 용 무
+        <p v-html="text"></p>
       </div>
     </div>
     <div class="article-footer">
@@ -34,7 +34,27 @@
 
 <script>
 export default {
-
+  data(){
+    return {
+      bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
+          writedate:'',
+          title:'',
+          day:'',
+          traveldate:'',
+          text: '',
+          articleno:this.$route.params.articleno
+    }
+  },
+  mounted(){
+    this.$axios.get(`/api/article/${this.articleno}`, {
+      headers: {'Content-Type': 'application/json'}
+    }).then(res => {
+      this.writedate = res.data.writedate
+      this.title = res.data.title
+      this.day = res.data.day
+      this.text = res.data.text
+    })
+  }
 }
 </script>
 
