@@ -37,12 +37,14 @@
                 v-model="form.province"
                 :options="provinces"
                 required>
+                <option value="서울">서울</option>
               </b-form-select>
               <b-form-select
                 id="select-2"
                 v-model="form.city"
                 :options="cities"
                 required>
+                <option value="서울">서울</option>
               </b-form-select>
             </div>
           </b-form-group>
@@ -66,7 +68,7 @@
             </b-form-textarea>
           </b-form-group>
           <div class="text-center">
-            <b-button type="submit" variant="primary">Submit</b-button>
+            <b-button type="submit" variant="primary" @click="createAction">Submit</b-button>
           </div>
         </b-form>
       </div>
@@ -75,9 +77,15 @@
 </template>
 
 <script>
+import AWS from 'aws-sdk'
+
 export default {
   data() {
     return {
+      editorContent: 'Initial Content',
+        albumBucketName : 'article-album',
+        bucketRegion : 'us-east-1',
+        IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
       form: {
         title: "",
         province: null,
@@ -97,12 +105,53 @@ export default {
         return `${files.length} files selected`
       }
     },
+    createAction(){
+      AWS.config.update({
+        region: this.bucketRegion,
+        credentials: new AWS.CognitoIdentityCredentials({
+          IdentityPoolId: this.IdentityPoolId
+        })
+      })
+
+const s3 = new AWS.S3({
+      apiVersion: "2006-03-01",
+      params: { 
+        Bucket: this.albumBucketName
+      }
+    })
+
+  console.log(this.form.title)
+  let albumName = this.form.title
+  if (!albumName) {
+    return alert('Album names must contain at least one non-space character.');
+  }
+  if (albumName.indexOf('/') !== -1) {
+    return alert('Album names cannot contain slashes.');
+  }
+  var albumKey = encodeURIComponent(albumName) + '/';
+  s3.headObject({Key: albumKey}, function(err, data) {
+    if (!err) {
+      return alert('Album already exists.');
+    }
+    if (err.code !== 'NotFound') {
+      return alert('There was an error creating your album: ' + err.message);
+    }
+    s3.putObject({Key: albumKey}, function(err, data) {
+      if (err) {
+        return alert('There was an error creating your album: ' + err.message);
+      }
+      alert('Successfully created album.');
+      //viewAlbum(albumName);
+    });
+  });
+
+    }
   }
   
 }
 </script>
 
-<style scoped>
+<style>
   .vertical-center {
     display: flex;
     text-align: left;

@@ -56,7 +56,6 @@ import axios from 'axios';
     },
     data () {
       return {
-        editorContent: 'Initial Content',
         albumBucketName : 'article-album',
         bucketRegion : 'us-east-1',
         IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',

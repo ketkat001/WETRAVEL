@@ -37,7 +37,7 @@
       <vue-editor id="editor"
       use-custom-image-handler
       :editor-options="editorSettings"
-      @image-added="handleImageAdded" @image-removed="handleImageRemoved" v-model="editorContent" ref="myQuillEditor">
+      @image-added="handleImageAdded" @image-removed="handleImageRemoved" v-model="form.text" ref="myQuillEditor">
     </vue-editor>
         <b-button class="m-3" variant="primary" @click="createAction">수정완료</b-button>
       </b-form>
@@ -56,23 +56,16 @@ import axios from 'axios';
     },
     data () {
       return {
-        editorContent: 'Initial Content',
         albumBucketName : 'article-album',
         bucketRegion : 'us-east-1',
         IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
         file : null,
         photoKey : null,
-        bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
-          writedate:'',
-          title:'',
-          day:'',
-          traveldate:'',
-          articleno:this.$route.params.articleno,
         form: {
           bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
           writedate:'',
           title:'',
-          day:'',
+          day:2,
           traveldate:'',
           text: '',
           articleno:this.$route.params.articleno
@@ -82,14 +75,15 @@ import axios from 'axios';
       }
     },
     mounted(){
-        this.$axios.get(`/api/article/${this.articleno}`, {
+        this.$axios.get(`/api/article/${this.form.articleno}`, {
         headers: {'Content-Type': 'application/json'}
         }).then(res => {
-        this.writedate = res.data.writedate
-        this.title = res.data.title
-        this.day = res.data.day
-        this.editorContent = res.data.text
-        console.log(this.text)
+        this.form.traveldate = res.data.traveldate
+        this.form.writedate = res.data.writedate
+        this.form.title = res.data.title
+        this.form.day = res.data.day
+        this.form.text = res.data.text
+        console.log(this.form.text)
     })
     },
     methods: {
@@ -107,17 +101,19 @@ import axios from 'axios';
         this.createHandler();
       },
       createHandler() {
+        console.log(this.form.articleno)
       axios
-        .post('http://localhost:8999/travel/api/article/article', {
+        .put(`/api/article/${this.form.articleno}`, {
+           articleno:this.form.articleno,
            bookno:this.form.bookno,
            writedate:this.form.writedate,
            title:this.form.title,
            day:this.form.day,
            traveldate:this.form.traveldate,
-           weather:this.form.weather,
-           text:this.editorContent
-        })
+           text:this.form.text
+        },{headers : {'Content-Type': 'application/json'}})
         .then(({ data }) => {
+          console.log(this.form.text)
           let msg = '등록 처리시 문제가 발생했습니다.';
           if (data === 'success') {
             msg = '등록이 완료되었습니다.';
@@ -141,7 +137,7 @@ import axios from 'axios';
     const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+'/1/1'
+        Bucket: this.albumBucketName+'/1/1' // 하위 폴더 경로
       }
     })
 

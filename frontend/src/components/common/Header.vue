@@ -20,7 +20,6 @@
 </template>   
 
 <script>
-import constants from "../../lib/constants";
 import loginmodal from "../../page/user/Login.vue";
 
 export default {
@@ -65,7 +64,6 @@ export default {
     return {
       login: false,
       visible: false,
-      constants,
       keyword: "",
       showNavbar: true,
     };

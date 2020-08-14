@@ -11,7 +11,6 @@
 import './assets/css/style.scss' 
 import Header from './components/common/Header.vue'
 import Footer from './components/common/Footer.vue'
-import constants from './lib/constants' 
 
 export default {
   name: 'App',
@@ -20,33 +19,9 @@ export default {
     Footer
   },
   created() {
-      let url = this.$route.name;
-
-      this.checkUrl(url);
   },
   watch: {
-      $route (to){
-
-          this.checkUrl(to.name);
-      }
   },
-  methods : {
-      checkUrl(url) { 
-
-          let array = [
-              constants.URL_TYPE.USER.LOGIN,
-              constants.URL_TYPE.USER.JOIN,
-          ];
-
-          let isHeader = true;
-
-      },
-  },
-  data: function () {
-        return {
-            constants
-        } 
-    }
 }
 </script>
 

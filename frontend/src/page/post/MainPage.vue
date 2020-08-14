@@ -63,16 +63,16 @@
       <div class="home-content container">
         <div class="korea-city" data-aos="zoom-in" data-aos-duration='1000'>
           <h2 style="margin-bottom: 40px; color: primary;">좋아하는 여행지를 골라보세요!</h2>
-          <div class="row city-box">
-            <div v-for="(city, index) in city_thumb" :key="index">
-              <div class="korea-img" :style="{ backgroundImage: 'url(' + city.image + ')'}">
-                <h4>{{ city.title }}</h4>
-              </div>
-            </div>
-          </div>
-          <div class="row province-box">
-            
-          </div>
+          <swiper class="swiper" :options="swiperOption">
+            <swiper-slide v-for="(city, index) in city_thumb" :key="index" :style="{ backgroundImage: 'url(' + city.image + ')'}">
+              <router-link :to="{ name: 'citypage', params: {province: city.title, city: city.title}}"><h3>{{ city.title }}</h3></router-link>
+            </swiper-slide>
+          </swiper>
+          <swiper class="swiper" :options="swiperOption" style="margin-top:30px;">
+            <swiper-slide v-for="(province, index) in province_thumb" :key="index" :style="{ backgroundImage: 'url('+ province.image + ')'}">
+              <router-link :to="{ name: 'provincepage', params: {province: province.title }}"><h3>{{ province.title }}</h3></router-link>
+            </swiper-slide>
+          </swiper>
         </div>
         
         <div class="best-article" data-aos="zoom-in" data-aos-duration='1000'>
@@ -99,11 +99,29 @@
  
 <script>
 
+import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import 'swiper/swiper-bundle.css'
+
 const city_thumb = [
-  {title: '서울', image: require('@/assets/img/city/resize/Seoul.jpg')},
-  {title: '부산', image: require('@/assets/img/city/resize/Busan.jpg')},
-  {title: '제주', image: require('@/assets/img/city/resize/Jeju.jpg')},
+  {title: '서울', image: require('@/assets/img/city/Seoul.jpg')},
+  {title: '부산', image: require('@/assets/img/city/Busan.jpg')},
+  {title: '제주', image: require('@/assets/img/city/Jeju.jpg')},
+  {title: '광주', image: require('@/assets/img/city/Gwangju.jpg')},
+  {title: '대구', image: require('@/assets/img/city/Daegu.jpg')},
+  {title: '인천', image: require('@/assets/img/city/Incheon.jpg')},
+  {title: '대전', image: require('@/assets/img/city/Daejeon.jpg')},
+  {title: '울산', image: require('@/assets/img/city/Ulsan.jpg')},
+  {title: '세종', image: require('@/assets/img/city/Saejong.jpg')},
 ]
+
+const province_thumb = [
+  {title: '경기', image: require('@/assets/img/city/Gyeonggido.jpg')},
+  {title: '강원', image: require('@/assets/img/city/Gangwondo.jpg')},
+  {title: '충청', image: require('@/assets/img/city/Chungcheongdo.jpg')},
+  {title: '경상', image: require('@/assets/img/city/Gyeongsangdo.jpg')},
+  {title: '전라', image: require('@/assets/img/city/Jeollado.jpg')}
+]
+
 const cards = [
   {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature'},
   {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
@@ -116,7 +134,10 @@ const cards = [
 ]
 export default {
   name: "Post",
-  components: {},
+  components: {
+    Swiper,
+    SwiperSlide
+  },
   computed: {
     replaceCityList() {
       return this.$store.getters.getCityList
@@ -151,7 +172,7 @@ export default {
       this.$router.push({name: 'citypage', params: {province: this.searchProvince, city: this.searchCity, month: this.searchMonth}})
     }
   },
-  data: () => {
+  data: function() {
     return {
       backImage1: {
         backgroundImage: `url(${require("@/assets/img/12.jpg")})`,
@@ -166,7 +187,13 @@ export default {
       searchProvince: '',
       searchCity: '',
       searchMonth: 0,
-      city_thumb: city_thumb
+      city_thumb: city_thumb,
+      province_thumb: province_thumb,
+      swiperOption: {
+        slidesPerView: 4,
+        spaceBetween: 10,
+        direction: 'horizontal',
+      }
     };
   },
 };
@@ -266,8 +293,20 @@ export default {
   .korea-city{
     margin-bottom: 40px;
   }
-  .korea-img {
-    width: 200px;
+  @-webkit-keyframes play-state {
+    from {
+      left: -50px;
+    }
+    to {
+      left: 50px;
+    }
+  }
+
+  .swiper-wrapper {
+    animation: play-state 2s linear infinite alternate
+  }
+  .swiper-slide {
+    width: 200px !important;
     height: 200px;
     border-radius: 50%;
     background-position: center;
@@ -276,6 +315,13 @@ export default {
     align-items: center;
     color: white;
     margin: 10px;
+  }
+  .swiper-slide a {
+    color: white;
+    text-decoration: none;
+  }
+  .swiper-slide h3{
+    font-weight: 600;
   }
   
   .content-card {
@@ -346,6 +392,7 @@ export default {
       letter-spacing: 3px;
     }
   }
+
   @media screen and (max-width: 1024px) {
     .home-header-text {
       transform: translate(-50%, -150%);
