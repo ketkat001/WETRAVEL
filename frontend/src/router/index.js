@@ -44,6 +44,7 @@ import bookcreate from '../page/post/BookCreate.vue'
 import articlecreate from '../page/post/ArticleCreate.vue'
 import aws from '../page/post/Aws.vue'
 import articlecreate2 from '../page/post/ArticleCreate2.vue'
+import articlemodify from '../page/post/ArticleModify.vue'
 
 library.add(fas)
 library.add(faFacebook)
@@ -181,6 +182,11 @@ export default new Router({
       path: '/articlecreate2',
       name: 'articlecreate2',
       component: articlecreate2,
+    },
+    {
+      path: '/posts/:province/:city/:bookno/:articleno/articlemodify',
+      name: 'articlemodify',
+      component: articlemodify,
     }
   ],
 
