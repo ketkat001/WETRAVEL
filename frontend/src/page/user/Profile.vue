@@ -75,7 +75,11 @@ export default {
         }
     },
     mounted: function() {
-        this.$store.dispatch('checkLogin').then(res => {
+      this.getUserInfo()
+    },
+    methods: {
+      getUserInfo: async function() {
+        await this.$store.dispatch('checkLogin').then(res => {
             this.email = res.email
             this.nickname = res.nickname
             this.introduce = res.introduce
@@ -87,7 +91,8 @@ export default {
                 }
             })
         })
-    },
+      }
+    }
 }
 </script>
 

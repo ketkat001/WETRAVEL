@@ -105,6 +105,9 @@ export default {
         this.handleWrapperClick();
         this.$router.push('/').catch(()=>{});
       }
+      else {
+        this.password = ""
+      }
     },
   },
   data: () => {
