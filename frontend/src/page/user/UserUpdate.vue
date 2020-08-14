@@ -39,6 +39,16 @@
         <b-tab title="비밀번호 변경">
           <form name="frm" action="userupdate" method="post">
             <div class="form-group">
+              <label for="originalPassword">기존 비밀번호</label>
+              <input 
+                v-model="originalPassword" 
+                name="originalPassword" 
+                :type="passwordType" 
+                placeholder="기존 비밀번호를 입력해주세요" 
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
               <label for="password">비밀번호</label>
               <input 
                 v-model="password" 
@@ -68,7 +78,7 @@
                 {{ errors.first('password_confirmation') }}          
               </div>
             </div>
-            <button type="submit" @click="backsubmit" class="btn btn-dark btn-lg btn-block">비밀번호 변경</button>
+            <button type="submit" @click="backsubmit2" class="btn btn-dark btn-lg btn-block">비밀번호 변경</button>
           </form>
         </b-tab>
       </b-tabs>
@@ -81,15 +91,60 @@
 export default {
   name: "UserUpdate",
   methods: {
-    backsubmit(event) {
+    async remakeToken(newEmail, newPassword) {
+      await this.$store.dispatch('login', {email: newEmail, password: newPassword})
+      this.$router.push('/profile')
+    },
+    async backsubmit(event) {
       event.preventDefault();
       this.submitted = true;
-      if (this.nicknameDup) {
+      if (this.nickName != this.originalNickName && this.nicknameDup) {
         alert('닉네임 중복 확인을 해 주세요')
         return
       }
+      await this.$store.dispatch('checkLogin').then(res => {
+        this.$axios.put(`/api/user/${res.email}`, 
+          {
+            email: res.email,
+            password: res.password,
+            nickname: this.nickName,
+            introduce: this.introduce
+          }, { headers: {'Content-Type': 'application/json'}}
+        ).then(response => {
+          alert('회원정보 수정이 완료되었습니다')
+          this.remakeToken(res.email, res.password)
+        })
+      })
+    },
+    async backsubmit2(event) {
+      event.preventDefault();
+      this.submitted = true;
+      await this.$store.dispatch('checkLogin').then(res => {
+        if (res.password != this.originalPassword) {
+          alert('기존 패스워드가 일치하지 않습니다. 다시 입력해 주세요')
+          this.originalPassword = ""
+          return
+        }
+        else {
+          this.$axios.put(`/api/user/${res.email}`, 
+            {
+              email: res.email,
+              password: this.password,
+              nickname: res.nickname,
+              introduce: res.introduce
+            }, { headers: {'Content-Type': 'application/json'}}
+          ).then(response => {
+            alert('회원정보 수정이 완료되었습니다')
+            this.remakeToken(res.email, this.password)
+          })
+        }
+      })
     },
     nicknameCheck() {
+      if (this.nickName === this.originalNickName) {
+        alert('기존 닉네임과 동일합니다. ')
+        return;
+      }
       this.$validator.validate('nickname').then(isValid => {
         if (isValid) {
           this.$axios.get('/api/user/nicknameCheck', {
@@ -113,8 +168,11 @@ export default {
   },
   data: () => {
     return {
+      email: "",
+      originalNickName: "",
       nickName: "",
       introduce: "",
+      originalPassword: "",
       password: "",
       passwordConfirm: "",
       passwordType: "password",
@@ -123,8 +181,19 @@ export default {
       nicknameDup: true
     };
   },
-
-
+  mounted: function() {
+      this.$store.dispatch('checkLogin').then(res => {
+          this.originalNickName = res.nickname
+          this.nickName = this.originalNickName
+          this.introduce = res.introduce
+          this.email = res.email
+      })
+  },
+  watch: {
+    nickName: function (newVal, oldVal) {
+      this.nicknameDup = true
+    }
+  }
 }
 </script>
 
