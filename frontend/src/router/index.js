@@ -43,6 +43,7 @@ import articlecreate from '../page/post/ArticleCreate.vue'
 import aws from '../page/post/Aws.vue'
 import articlecreate2 from '../page/post/ArticleCreate2.vue'
 import articlemodify from '../page/post/ArticleModify.vue'
+import imagetest from '../page/post/ImageTest.vue'
 
 library.add(fas)
 library.add(faFacebook)
@@ -111,11 +112,6 @@ export default new Router({
       component: articlecreate,
     },
     {
-      path:'/articlecreate2',
-      name: 'articlecreate2',
-      component: articlecreate2,
-    },
-    {
       path:'/posts/:province',
       name: 'provincepage',
       component: provincepage,
@@ -179,6 +175,11 @@ export default new Router({
       path: '/posts/:province/:city/:bookno/:articleno/articlemodify',
       name: 'articlemodify',
       component: articlemodify,
+    },
+    {
+      path: '/imagetest',
+      name: 'imagetest',
+      component: imagetest
     }
   ],
 
