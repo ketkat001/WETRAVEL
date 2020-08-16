@@ -36,7 +36,6 @@
     <div class="main-content container">
       <hr style="border: 1px solid rgb(196, 195, 208); margin:60px;">
       <h2>{{ $route.params.province }}의 여행지 {{ cities.length + cities2.length }}곳</h2>
-      <p>"활력이 넘치는 도시"</p>
       <h4>원하는 여행지를 골라보세요!</h4>
       <hr style="border: 1px solid rgb(196, 195, 208); margin:60px;">
       <div class="map-tab" v-if="backImage3.backgroundImage !== ''">  <!--만약 도가 2개로 나눠진다면 (남, 북) tab을 생성해 나눔-->
