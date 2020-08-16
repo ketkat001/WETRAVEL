@@ -122,10 +122,11 @@ const s3 = new AWS.S3({
 
   console.log(this.form.title)
 
-  var albumName = ''
-  await this.$store.dispatch('checklogin').then(res => {
+  var albumName = '' 
+  await this.$store.dispatch('checkLogin').then(res => {
     albumName = res.email
   })
+  console.log(albumName)
   // let albumName = this.form.title
   if (!albumName) {
     return alert('Album names must contain at least one non-space character.');
