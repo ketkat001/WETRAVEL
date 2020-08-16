@@ -83,9 +83,6 @@ import axios from 'axios';
         }
       },
       createAction() {
-        var content2 = this.$refs.myQuillEditor.$options.propsData.value
-        alert(content2);
-        console.log(this.form.bookno)
         this.createHandler();
       },
       createHandler() {
@@ -108,7 +105,7 @@ import axios from 'axios';
           //this.moveList();
         });
     },
-    handleImageAdded(file, Editor, cursorLocation) {
+    async handleImageAdded(file, Editor, cursorLocation) {
       this.file = file
  
       AWS.config.update({
@@ -118,12 +115,17 @@ import axios from 'axios';
         })
       })
 
+    var mail = '' 
+    await this.$store.dispatch('checkLogin').then(res => {
+      mail = res.email
+    })
+
     let photoKey = this.file.name
 
     const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+'/1/1'
+        Bucket: this.albumBucketName+'/mail'
       }
     })
 
