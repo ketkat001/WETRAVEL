@@ -105,7 +105,7 @@ export default {
         return `${files.length} files selected`
       }
     },
-    createAction(){
+    async createAction(){
       AWS.config.update({
         region: this.bucketRegion,
         credentials: new AWS.CognitoIdentityCredentials({
@@ -121,7 +121,12 @@ const s3 = new AWS.S3({
     })
 
   console.log(this.form.title)
-  let albumName = this.form.title
+
+  var albumName = ''
+  await this.$store.dispatch('checklogin').then(res => {
+    albumName = res.email
+  })
+  // let albumName = this.form.title
   if (!albumName) {
     return alert('Album names must contain at least one non-space character.');
   }
