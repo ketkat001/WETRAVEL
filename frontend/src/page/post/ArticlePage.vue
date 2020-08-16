@@ -21,6 +21,9 @@
       <div class="article-map">
         <p v-html="text"></p>
       </div>
+      <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
+        <!-- <router-link :to="{name : 'articlemodify'}">수정</router-link> -->
+        <b-button class="m-3" variant="primary" @click="deleteAction">삭제</b-button>
     </div>
     <div class="article-footer">
       <star-rating :increment="0.01"
@@ -33,6 +36,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data(){
     return {
@@ -54,6 +58,25 @@ export default {
       this.day = res.data.day
       this.text = res.data.text
     })
+  },
+  methods : {
+    deleteAction(){
+      axios.
+        delete(`/api/article/${this.articleno}`, {
+        articleno : this.articleno
+        }, {headers : {'Content-Type': 'application/json'}})
+        .then(({ data }) => {
+          let msg = '삭제 처리시 문제가 발생했습니다.';
+          if (data === 'success') {
+            msg = '삭제가 완료되었습니다.';
+          }
+          alert(msg);
+          //this.moveList();
+        });
+    },
+    modifyAction(){
+      this.$router.push({name : 'articlemodify'})
+    }   
   }
 }
 </script>
