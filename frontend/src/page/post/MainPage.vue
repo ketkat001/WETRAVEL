@@ -79,7 +79,7 @@
           <h2 style="margin-bottom:40px;">믿고 보는 베스트 여행기!</h2>
           <div class="content-card row">
             <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-6">
-              <b-link to="/posts/$route.params.province/$route.params.city/1/">
+              <b-link :to="{ name: 'bookpage', params: { province: card.province, city: card.city, bookno: card.bookno }}">
                 <div  class="card travel-card">
                   <img class="travel-card-image" :src="card.image">
                   <div class="travel-card-footer">
@@ -123,14 +123,14 @@ const province_thumb = [
 ]
 
 const cards = [
-  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature'},
-  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
-  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
-  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature'},
-  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
-  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
-  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals'},
-  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch'},
+  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature', province: '서울', city: '서울', bookno: '1'},
+  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals', province: '부산', city: '부산', bookno: '1'},
+  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch', province: '제주', city: '제주', bookno: '1'},
+  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature', province: '서울', city: '서울', bookno: '1'},
+  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals', province: '부산', city: '부산', bookno: '1'},
+  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch', province: '제주', city: '제주', bookno: '1'},
+  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals', province: '부산', city: '부산', bookno: '1'},
+  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch', province: '제주', city: '제주', bookno: '1'},
 ]
 export default {
   name: "Post",
