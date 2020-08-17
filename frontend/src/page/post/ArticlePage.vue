@@ -4,33 +4,32 @@
       <div class="container">
         <div class="row">
           <div class="col-4 text-left">
-            <h5>2020.07.15</h5>
+            <h5>{{ this. writedate }}</h5>
           </div>
           <div class="col-4">
-            <h5>Day 1</h5>
+            <h5>{{ this.title }}</h5>
           </div>
           <div class="col-4 text-right">
-            <h5>Score: 4.8</h5>
+            <h5>Day 1</h5>
           </div>
         </div>
       </div>
     </div>
-    <div class="article-content">
-      <h2>서울의 밤은 밝다</h2>
-      <h5>By 서울야경</h5>
-      <div class="article-map">
-        <p v-html="text"></p>
-      </div>
-      <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
-        <!-- <router-link :to="{name : 'articlemodify'}">수정</router-link> -->
+    <div class="container">
+      <div class="article-content">
+        <div class="article-map">
+          <p v-html="text"></p>
+        </div>
+        <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
         <b-button class="m-3" variant="primary" @click="deleteAction">삭제</b-button>
-    </div>
-    <div class="article-footer">
-      <star-rating :increment="0.01"
-        :max-rating="5"
-        active-color="#007bff"
-        :star-size="25">
-      </star-rating>
+      </div>
+      <div class="article-footer">
+        <star-rating :increment="0.5"
+          :max-rating="5"
+          active-color="#007bff"
+          :star-size="25">
+        </star-rating>
+      </div>
     </div>
   </div>
 </template>
@@ -86,5 +85,10 @@ export default {
     background-color: rgb(245, 245, 245);
     padding: 10px;
     margin-bottom: 30px;
+  }
+  .article-footer {
+    display: flex;
+    justify-content: center;
+    margin : 30px;
   }
 </style>
