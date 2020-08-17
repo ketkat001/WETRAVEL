@@ -20,8 +20,10 @@
         <div class="article-map">
           <p v-html="text"></p>
         </div>
-        <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
-        <b-button class="m-3" variant="primary" @click="deleteAction">삭제</b-button>
+        <div class="article-btn" style="float: right;">
+          <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
+          <b-button class="m-3" variant="primary" @click="deleteAction">삭제</b-button>
+        </div>
       </div>
       <div class="article-footer">
         <star-rating :increment="0.5"
@@ -29,6 +31,21 @@
           active-color="#007bff"
           :star-size="25">
         </star-rating>
+        <div class="article-comment">
+          <div class="comments-header">
+            <div class="comments-stats">
+              <span class="m-3"><font-awesome-icon icon="thumbs-up" size="lg" class="mx-3"></font-awesome-icon>1</span>
+              <span class="m-3"><font-awesome-icon icon="comment" size="lg" class="mx-3"></font-awesome-icon>2</span>
+            </div>
+          </div>
+          <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
+          <div class="input-wrap">
+            <input class="input-comment" type="text" maxlength="200" required placeholder="댓글을 입력해주세요"/>
+            <div class="input-btn">
+             <b-button variant="primary" style="border-radius: 10px;">댓글 입력</b-button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -36,6 +53,8 @@
 
 <script>
 import axios from 'axios'
+import { faThumbsUp as thumbsUp_SolidIcon, faComment } from "@fortawesome/free-solid-svg-icons";
+
 export default {
   data(){
     return {
@@ -80,15 +99,53 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .article-header {
     background-color: rgb(245, 245, 245);
     padding: 10px;
     margin-bottom: 30px;
   }
+  .article-content {
+    min-height: 400px;
+  }
+  .article-content .article-map {
+    min-height: 300px;
+  }
   .article-footer {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     margin : 30px;
+  }
+  .vue-star-rating {
+    justify-content: center;
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  .comments-stats { 
+    width: 100%;
+    min-height: 50px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: flex-end;  
+  }
+  .input-wrap {
+    width: 100%;
+    min-height: 60px;
+    display: flex;
+    justify-content: center;
+    background-color:rgb(245, 245, 245);
+    border-radius: 30px;
+
+  }
+  .input-comment {
+    width: 70%;
+    margin-right: 10px;
+    background-color:rgb(245, 245, 245);
+  }
+  .input-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 </style>
