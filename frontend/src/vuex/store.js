@@ -11,7 +11,7 @@ const state = {
     errorState: '',
     isAuth: false,
     joinSuccess: false,
-    provinceList: ['서울', '경기', '강원', '충청', '전라', '경상', '제주', '부산'],
+    provinceList: ['서울', '제주', '부산', '대구', '광주', '대전', '세종', '울산', '인천', '경기', '강원', '충청', '전라', '경상'],
     cityList: ['']
 }
 
