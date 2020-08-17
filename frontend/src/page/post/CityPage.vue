@@ -36,8 +36,8 @@
       </div>
       <div class="main-content container">
         <h2>{{ $route.params.city }}의 새로운 기행문을 확인해보세요</h2>
+        <b-button variant="primary" style="float:right"><b-link style="text-decoration:none;" :to="{name:'bookcreate'}">새 여행기 작성하기</b-link></b-button>
         <div class="content-card row">
-          
           <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
             <b-link :to="{name: 'bookpage', params: { province: $route.params.province, city: $route.params.city, bookno: card.bookno }}">
               <div  class="card travel-card">

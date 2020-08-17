@@ -18,7 +18,8 @@
              active-color="#007bff"
              read-only
              :star-size="25">
-          </star-rating>
+          </star-rating>"
+          <b-button variant="primary"><b-link style="text-decoration:none;" :to="{name:'articlecreate', params:{ bookno: this.$route.params.bookno }}">글 작성</b-link></b-button>
         </div>
         <div class="book-content">
           <p>{{ book_info.description }}</p>
@@ -120,6 +121,7 @@ export default {
   }
   .book-content-inf {
     display: flex;
+    justify-content: space-between;
   }
   .book-content-inf .vue-star-rating{
     margin-left: 20px;
