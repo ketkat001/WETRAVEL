@@ -108,7 +108,7 @@ export default new Router({
       //beforeEnter: requireAuth()
     },
     {
-      path:'/:bookno/articlecreate',
+      path:'/bookno/:bookno/articlecreate',
       name: 'articlecreate',
       component: articlecreate,
     },
@@ -123,12 +123,12 @@ export default new Router({
       component: citypage,
     },
     {
-      path: '/posts/:province/:city/:bookno',
+      path: '/posts/:province/:city/bookno/:bookno',
       name: 'bookpage',
       component: bookpage,
     },
     {
-      path: '/posts/:province/:city/:bookno/:articleno',
+      path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno',
       name: 'articlepage',
       component: articlepage,
     },
@@ -173,7 +173,7 @@ export default new Router({
       component: articlecreate,
     },
     {
-      path: '/posts/:province/:city/:bookno/:articleno/articlemodify',
+      path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
       name: 'articlemodify',
       component: articlemodify,
     },
