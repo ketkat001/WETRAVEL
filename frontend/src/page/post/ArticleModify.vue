@@ -193,9 +193,9 @@ import axios from 'axios';
 }
 </script>
 
-<style>
+<style scoped>
   .article-create {
-    margin-top: 60px;
+    margin-top: 90px;
     margin-bottom: 60px;
   }
   .article-info {
