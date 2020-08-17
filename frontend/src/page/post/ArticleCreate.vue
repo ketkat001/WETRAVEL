@@ -125,7 +125,7 @@ import axios from 'axios';
     const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+'/mail'
+        Bucket: this.albumBucketName
       }
     })
 
@@ -142,10 +142,10 @@ import axios from 'axios';
             return alert("실패",err.message);
           }
           var href = "https://s3.amazonaws.com/"; // 기본 주소
-          var bucketUrl = href + this.albumBucketName + "/"; // 기본 주소 + 버킷이름
-          var photoloc = "1/1/" + file.name;
+          var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
+          var photoloc = encodeURIComponent(mail) + '/' + file.name;
           console.log("사진경로이름:"+photoloc)
-          var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
+          var photoUrl = bucketUrl + file.name // 최종 이미지 경로
           console.log("최종경로:"+photoUrl)
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
           alert('성공');
@@ -166,7 +166,7 @@ import axios from 'axios';
       const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+'/1/1'
+        Bucket: this.albumBucketName+mail+'/'
       }
     })
 
