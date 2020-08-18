@@ -1,5 +1,6 @@
 <template>
   <div id="vueeditor2">
+    <div id="map" style="width:600px;height:350px;"></div>
     <h1>Vue2Editor - Images Upload</h1>
     <h2>Upload an image to server and use response to get url and use that for editor content instead of defualt Base64 that Quill.js provides</h2>
     <p>This example uses the imgur API, and uses my account to upload photos.</p>
@@ -21,11 +22,14 @@
   </div>
 </template>
 
+
 <script>
 import AWS from 'aws-sdk'
 import EXIF from 'exif-js'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios'
+var lat = new Set()
+var long = new Set()
 export default {
   name: 'vueeditor2',
   components: {
@@ -48,18 +52,46 @@ export default {
       exifLongRef : '',
       exifLatRef : '',
       exifTime : '',
-
+      
       editorSettings: {
 
       }
     }
   },
+  mounted(){
+    window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+  },
   methods: {
-
+    initMap() { 
+      var container = document.getElementById('map'); 
+      var options = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), 
+        level: 3 
+      }; 
+      var map = new kakao.maps.Map(container, options); //마커추가하려면 객체를 아래와 같이 하나 만든다. 
+      var marker = new kakao.maps.Marker({ 
+        position: map.getCenter() 
+        }); 
+        marker.setMap(map); 
+      }, 
+      
+      addScript() { 
+        const script = document.createElement('script'); 
+        /* global kakao */ 
+        script.onload = () => kakao.maps.load(this.initMap); 
+        script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=06361ba6891dd71194432873935299c9'; 
+        document.head.appendChild(script); 
+        },
 
     handleImageAdded(file, Editor, cursorLocation) {
 
       this.file = file
+      const foo = new Set([ 1, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5, 5 ]);
+      
+      for (let value of foo){
+        console.log(value)
+      }
+
 
       EXIF.getData(this.file, function() {
         console.log('image info', this)
@@ -67,24 +99,34 @@ export default {
 
         this.exifLong = EXIF.getTag(this, "GPSLongitude");
         console.log(this.exifLong)
-                    this.exifLat = EXIF.getTag(this, "GPSLatitude");
-                    this.exifLongRef = EXIF.getTag(this, "GPSLongitudeRef");
-                    this.exifLatRef = EXIF.getTag(this, "GPSLatitudeRef");
-                    // this.exifTime = EXIF.getTag(this, "DateTime");
-                    //계산식 적용이유는 해당라이브러리가 위도경도를 도분초 단위로 출력하기 때문
-                    if (this.exifLatRef == "S") {
-                        var latitude = (this.exifLat[0]*-1) + (( (this.exifLat[1]*-60) + (this.exifLat[2]*-1) ) / 3600);						
-                    } else {
-                        var latitude = this.exifLat[0] + (( (this.exifLat[1]*60) + this.exifLat[2] ) / 3600);
-                    }
-                    console.log("위도 : " + latitude);
-                    if (this.exifLongRef == "W") {
-                        var longitude = (this.exifLong[0]*-1) + (( (this.exifLong[1]*-60) + (this.exifLong[2]*-1) ) / 3600);						
-                    } else {
-                        var longitude = this.exifLong[0] + (( (this.exifLong[1]*60) + this.exifLong[2] ) / 3600);
-                    } 
-                    console.log("경도 : " + longitude);
+        this.exifLat = EXIF.getTag(this, "GPSLatitude");
+        this.exifLongRef = EXIF.getTag(this, "GPSLongitudeRef");
+        this.exifLatRef = EXIF.getTag(this, "GPSLatitudeRef");
+        // this.exifTime = EXIF.getTag(this, "DateTime");
+        //계산식 적용이유는 해당라이브러리가 위도경도를 도분초 단위로 출력하기 때문
+        if(this.exifLatRef != undefined && this.exifLongRef != undefined){
+          if (this.exifLatRef == "S") {
+              var latitude = (this.exifLat[0]*-1) + (( (this.exifLat[1]*-60) + (this.exifLat[2]*-1) ) / 3600);						
+          } else {
+            var latitude = this.exifLat[0] + (( (this.exifLat[1]*60) + this.exifLat[2] ) / 3600);
+          }
+            //console.log("위도 : " + latitude);
+            lat.add(latitude)
+          if (this.exifLongRef == "W") {
+            var longitude = (this.exifLong[0]*-1) + (( (this.exifLong[1]*-60) + (this.exifLong[2]*-1) ) / 3600);						
+          } else {
+            var longitude = this.exifLong[0] + (( (this.exifLong[1]*60) + this.exifLong[2] ) / 3600);
+          } 
+          //console.log("경도 : " + longitude);
+          long.add(longitude)
+        }
+
+      console.log(lat)
+        console.log(long)
+
       })
+
+      
 
       AWS.config.update({
         region: this.bucketRegion,
@@ -115,11 +157,11 @@ export default {
           var href = "https://s3.amazonaws.com/"; // 기본 주소
           var bucketUrl = href + this.albumBucketName + "/"; // 기본 주소 + 버킷이름
           var photoloc = "1/1/" + file.name;
-          console.log("사진경로이름:"+photoloc)
+          //console.log("사진경로이름:"+photoloc)
           var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
-          console.log("최종경로:"+photoUrl)
+          //console.log("최종경로:"+photoUrl)
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
-          alert('성공');
+          //alert('성공');
         });
       },
 
