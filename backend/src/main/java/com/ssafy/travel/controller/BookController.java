@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -56,8 +57,10 @@ public class BookController {
 
     @ApiOperation(value = "새로운 book 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping
-	public ResponseEntity<String> registBook(@RequestBody Book book) {
+	public ResponseEntity<String> registBook(@ModelAttribute Book book) {
 		logger.debug("registBook - 호출");
+		book.setImg();
+		book.setImgName();
 		if (bookService.registBook(book)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -66,10 +69,12 @@ public class BookController {
 
     @ApiOperation(value = "book번호에 해당하는 book의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("{bookno}")
-	public ResponseEntity<String> modifyBook(@RequestBody Book book) {
+	public ResponseEntity<String> modifyBook(@ModelAttribute Book book) {
 		logger.debug("modifyBook - 호출");
 		logger.debug("" + book);
-		
+
+		book.setImg();
+		book.setImgName();
 		if (bookService.modifyBook(book)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}

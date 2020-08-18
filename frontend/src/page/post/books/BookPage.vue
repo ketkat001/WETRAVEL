@@ -2,7 +2,8 @@
   <div id="main" class="main container">
     <div class="book-header row">
       <div class="col-4 book-header-img">
-        <img class="header-card-img" src="@/assets/img/13.jpg">
+        <img v-if="book_info.img != null" class="header-card-img" :src="'data:image/jpg;base64,' + book_info.img">
+        <img v-else class="article-img" src="@/assets/img/logo_wetravel.png">
       </div>
       <div class="col-1">
       </div>
@@ -30,7 +31,8 @@
     <div class="book-article">
       <div v-for="(article, index) in articles" :key="index" :ref="`article_${index}`" class="book-article-content">
         <div class="col-2 p-0">
-          <img class="article-img" :src="article.img">
+          <img v-if="article.img != null" class="article-img" :src="'data:image/jpg;base64,' + article.img">
+          <img v-else class="article-img" src="@/assets/img/logo_wetravel.png">
         </div>
         <div class="col-5">
           <h5>{{ article.day }}화: {{ article.title }}</h5>

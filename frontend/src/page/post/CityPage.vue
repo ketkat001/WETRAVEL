@@ -41,7 +41,8 @@
           <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
             <b-link :to="{name: 'bookpage', params: { province: $route.params.province, city: $route.params.city, bookno: card.bookno }}">
               <div  class="card travel-card">
-                <img class="travel-card-image" :src="card.image">
+                <img v-if="card.image != null" class="travel-card-image" :src="'data:image/jpg;base64,' + card.image">
+                <img v-else class="travel-card-image" src="@/assets/img/logo_wetravel.png">
                 <div class="travel-card-footer">
                   <p class="travel-card-text">{{ $route.params.city }}</p>
                   <h3 class="travel-card-title">{{ card.title }}</h3>
@@ -103,7 +104,7 @@ export default {
         headers: {'Content-Type': 'application/json'}
       }).then(response => {
         for (var i = 0; i < response.data.length; i++) {
-          cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, image: 'https://placeimg.com/640/480/arch'})
+          cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, image: response.data[i].img})
         }
       })
     },

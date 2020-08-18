@@ -2,7 +2,7 @@
   <div id="main" class="main">
     <div class="vertical-center">
       <div class="book-create">
-        <h2>user 님의 여행기를 만들어 보세요!</h2>
+        <h2>{{ form.userName }} 님의 여행기를 만들어 보세요!</h2>
         <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
         <b-form>
           <b-form-group
@@ -24,6 +24,7 @@
             description="여행기의 대표 사진을 등록해주세요!">
             <b-form-file 
               multiple :file-name-formatter="formatNames"
+              v-model="thumbnail"
               placeholder="파일 없음"></b-form-file>
           </b-form-group>
           <b-form-group
@@ -35,16 +36,18 @@
               <b-form-select
                 id="select-1"
                 v-model="form.province"
-                :options="provinces"
+                 @change="cityList"
                 required>
-                <option value="서울">서울</option>
+                <option selected value="">지역 선택</option> 
+                <option v-for="(province, index) in this.$store.getters.getProvinceList" :key="index" :value="province">{{ province }}</option>
               </b-form-select>
               <b-form-select
                 id="select-2"
                 v-model="form.city"
-                :options="cities"
+                :disabled="form.province == ''"
                 required>
-                <option value="서울">서울</option>
+                <option selected value="">도시 선택</option> 
+                <option v-for="(city, index) in replaceCityList" :key="index" :value="city">{{ city }}</option>
               </b-form-select>
             </div>
           </b-form-group>
@@ -86,18 +89,37 @@ export default {
         albumBucketName : 'article-album',
         bucketRegion : 'us-east-1',
         IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
+        thumbnail: null,
       form: {
         title: "",
-        province: null,
-        city: null,
+        userName: '',
+        province: '',
+        city: '',
         startdate: "",
         description: ""
-      },
-      provinces: [],
-      cities: [],
+      }
     }
   },
+  computed: {
+    replaceCityList() {
+      return this.$store.getters.getCityList
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch('checkLogin').then(res => {
+      this.form.userName = res.nickname
+    })
+  },
   methods: {
+    cityList: async function() {
+      if (this.form.province == '') {
+        this.form.city = ''
+      }
+      else {
+        await this.$store.dispatch('getCityList', this.form.province)
+        this.form.city = ''
+      }
+    },
     formatNames(files) {
       if (files.length === 1) {
         return files[0].name
@@ -105,55 +127,27 @@ export default {
         return `${files.length} files selected`
       }
     },
-    async createAction(){
-      AWS.config.update({
-        region: this.bucketRegion,
-        credentials: new AWS.CognitoIdentityCredentials({
-          IdentityPoolId: this.IdentityPoolId
-        })
+    createAction(){
+      let formData = new FormData() 
+      formData.append('title', this.form.title)
+      formData.append('writer', this.form.userName)
+      formData.append('province', this.form.province)
+      formData.append('city', this.form.city)
+      formData.append('startdate', this.form.startdate)
+      formData.append('description', this.form.description)
+      formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : new File([""], ""))
+      this.$axios.post('/api/book', formData, {
+        headers: {'Content-Type': 'multipart/form-data'}
       })
-
-const s3 = new AWS.S3({
-      apiVersion: "2006-03-01",
-      params: { 
-        Bucket: this.albumBucketName
-      }
-    })
-
-  console.log(this.form.title)
-
-  var albumName = '' 
-  await this.$store.dispatch('checkLogin').then(res => {
-    albumName = res.email
-  })
-  console.log(albumName)
-  // let albumName = this.form.title
-  if (!albumName) {
-    return alert('Album names must contain at least one non-space character.');
-  }
-  if (albumName.indexOf('/') !== -1) {
-    return alert('Album names cannot contain slashes.');
-  }
-  var albumKey = (albumName) + '/';
-  s3.headObject({Key: albumKey}, function(err, data) {
-    if (!err) {
-      return alert('Album already exists.');
-    }
-    if (err.code !== 'NotFound') {
-      return alert('There was an error creating your album: ' + err.message);
-    }
-    s3.putObject({Key: albumKey}, function(err, data) {
-      if (err) {
-        return alert('There was an error creating your album: ' + err.message);
-      }
-      alert('Successfully created album.');
-      //viewAlbum(albumName);
-    });
-  });
-
+      .then(({ data }) => {
+        let msg = '등록 처리시 문제가 발생했습니다.';
+        if (data === 'success') {
+          msg = '등록이 완료되었습니다.';
+        }
+        alert(msg);
+      });
     }
   }
-  
 }
 </script>
 

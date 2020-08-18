@@ -71,10 +71,12 @@ public class ArticleController {
 
     @ApiOperation(value = "article번호에 해당하는 article의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("{articleno}")
-	public ResponseEntity<String> modifyArticle(@RequestBody Article article) {
+	public ResponseEntity<String> modifyArticle(@ModelAttribute Article article) {
 		logger.debug("modifyArticle - 호출");
 		logger.debug("" + article);
-		
+
+		article.setImg();
+		article.setImgName();
 		if (articleService.modifyArticle(article)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}

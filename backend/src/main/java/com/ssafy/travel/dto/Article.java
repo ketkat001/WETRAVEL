@@ -1,6 +1,7 @@
 package com.ssafy.travel.dto;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +48,10 @@ public class Article implements Serializable {
 
 	public void setImg() {
 		try {
-			this.img = this.thumbnail.getBytes();
+			if (!this.thumbnail.isEmpty())
+				this.img = this.thumbnail.getBytes();
+			else
+				this.img = null;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -66,7 +70,8 @@ public class Article implements Serializable {
 	}
 
 	public void setImgName() {
-		this.imgName = this.thumbnail.getOriginalFilename();
+		if (this.thumbnail != null)
+			this.imgName = this.thumbnail.getOriginalFilename();
 	}
 
 	public Article(int articleno, int bookno, String title, Date writedate, double score, int score_count, String text,
