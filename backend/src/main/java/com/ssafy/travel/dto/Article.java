@@ -30,7 +30,26 @@ public class Article implements Serializable {
 	private Date traveldate;
 	private int day;
 	private byte[] img;
+	private String exifLat;
+	private String exifLong;
 	
+	
+	public String getExifLat() {
+		return exifLat;
+	}
+
+	public void setExifLat(String exifLat) {
+		this.exifLat = exifLat;
+	}
+
+	public String getExifLong() {
+		return exifLong;
+	}
+
+	public void setExifLong(String exifLong) {
+		this.exifLong = exifLong;
+	}
+
 	@JsonIgnore
 	private MultipartFile thumbnail;
 	
