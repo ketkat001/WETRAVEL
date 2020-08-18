@@ -20,12 +20,12 @@
         <div class="article-map">
           <p v-html="text"></p>
         </div>
-        <div class="article-btn" style="float: right;">
-          <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
-          <b-button class="m-3" variant="primary" @click="deleteAction">삭제</b-button>
-        </div>
       </div>
       <div class="article-footer">
+        <div class="article-btn">
+          <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
+          <b-button class="m-3" variant="danger" @click="deleteAction">삭제</b-button>
+        </div>
         <star-rating :increment="0.5"
           :max-rating="5"
           active-color="#007bff"
@@ -39,12 +39,11 @@
             </div>
           </div>
           <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
-          <div class="input-wrap">
-            <input class="input-comment" type="text" maxlength="200" required placeholder="댓글을 입력해주세요"/>
-            <div class="input-btn">
-             <b-button variant="primary" style="border-radius: 10px;">댓글 입력</b-button>
-            </div>
-          </div>
+          <comments
+            :comments_wrapper_classes="['custom-scrollbar', 'comments-wrapper']"
+            :comments="comments"
+            @submit-comment="submitComment">
+          </comments>
         </div>
       </div>
     </div>
@@ -54,17 +53,22 @@
 <script>
 import axios from 'axios'
 import { faThumbsUp as thumbsUp_SolidIcon, faComment } from "@fortawesome/free-solid-svg-icons";
+import comments from '../comments/Comments.vue'
 
 export default {
+  components: {
+    comments
+  },
   data(){
     return {
       bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
-          writedate:'',
-          title:'',
-          day:'',
-          traveldate:'',
-          text: '',
-          articleno:this.$route.params.articleno
+      writedate:'',
+      title:'',
+      day:'',
+      traveldate:'',
+      text: '',
+      articleno:this.$route.params.articleno,
+      comments: []
     }
   },
   mounted(){
@@ -78,6 +82,13 @@ export default {
     })
   },
   methods : {
+    submitComment: function(reply) {
+      this.comments.push({
+        id: this.comments.length + 1,
+				user: '',
+        text: reply
+      })
+    },
     deleteAction(){
       axios.
         delete(`/api/article/${this.articleno}`, {
@@ -108,14 +119,15 @@ export default {
   .article-content {
     min-height: 400px;
   }
-  .article-content .article-map {
-    min-height: 300px;
-  }
   .article-footer {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin : 30px;
+  }
+  .article-btn {
+    display: flex;
+    justify-content: flex-end;
   }
   .vue-star-rating {
     justify-content: center;
@@ -129,23 +141,5 @@ export default {
     display: flex;
     justify-content: flex-end;  
   }
-  .input-wrap {
-    width: 100%;
-    min-height: 60px;
-    display: flex;
-    justify-content: center;
-    background-color:rgb(245, 245, 245);
-    border-radius: 30px;
-
-  }
-  .input-comment {
-    width: 70%;
-    margin-right: 10px;
-    background-color:rgb(245, 245, 245);
-  }
-  .input-btn {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
+  
 </style>

@@ -3,18 +3,34 @@
     <div class="article-create container">
       <b-form>
         <div class="article-info">
-          <b-form-group
-            id="input-group-0"
-            label="제목"
-            label-for="input-0"
-            description="제목을 입력해주세요!">
-            <b-form-input
-              id="input-0"
-              v-model="form.title"  
-              required
-              placeholder="제목 입력">
-            </b-form-input>
-          </b-form-group>
+          <div class="d-flex row">
+            <b-form-group
+              class="col-7 p-0"
+              id="input-group-0"
+              label="제목"
+              label-for="input-0"
+              description="제목을 입력해주세요!">
+              <b-form-input
+                id="input-0"
+                v-model="form.title"  
+                required
+                placeholder="제목 입력">
+              </b-form-input>
+            </b-form-group>
+            <b-form-group
+              class="col-5 pr-0"
+              id="input-group-4"
+              label="회차"
+              label-for="select-1"
+              description="여행기의 회차를 선택해주세요!">
+              <b-form-select
+                id="select-1"
+                v-model="form.day"
+                :options="dayList"
+                required>
+              </b-form-select>
+            </b-form-group>
+          </div>
           <b-form-group
             id="input-group-1"
             label="썸네일 사진 등록"
@@ -22,7 +38,6 @@
             description="대표 사진을 등록해주세요!">
             <b-form-file 
               multiple :file-name-formatter="formatNames"
-              v-model="thumbnail"
               placeholder="파일 없음"></b-form-file>
           </b-form-group>
           <b-form-group
@@ -50,6 +65,7 @@
 import AWS from 'aws-sdk'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
+
   export default {
     name : 'vueeditor2',
     components : {
@@ -63,12 +79,22 @@ import axios from 'axios';
         IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
         file : null,
         photoKey : null,
-        thumbnail: null,
+        dayList: [
+          {value: '1', text: '1화'},
+          {value: '2', text: '2화'},
+          {value: '3', text: '3화'},
+          {value: '4', text: '4화'},
+          {value: '5', text: '5화'},
+          {value: '6', text: '6화'},
+          {value: '7', text: '7화'},
+          {value: '8', text: '8화'},
+          {value: '9', text: '9화'},
+          ],
         form: {
           bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
           writedate:'',
           title:'',
-          day:1,
+          day:'',
           traveldate:'',
           text: '',
         },
@@ -84,10 +110,11 @@ import axios from 'axios';
           return `${files.length} files selected`
         }
       },
-      createAction() {
+      createAction() {  
         this.createHandler();
       },
       createHandler() {
+<<<<<<< HEAD:frontend/src/page/post/ArticleCreate.vue
         let formData = new FormData()
         formData.append('bookno', this.form.bookno)
         formData.append('title', this.form.title)
@@ -95,10 +122,17 @@ import axios from 'axios';
         formData.append('traveldate', this.form.traveldate)
         formData.append('text', this.editorContent)
         formData.append('thumbnail', this.thumbnail[0])
+=======
+>>>>>>> a88ec364a0ee049fcd5a368a2c483f818afef952:frontend/src/page/post/articles/ArticleCreate.vue
       axios
-        .post('/api/article/article', formData,
-        {
-          headers: {'Content-Type': 'multipart/form-data'}
+        .post('http://localhost:8999/travel/api/article/article', {
+           bookno:this.form.bookno,
+           writedate:this.form.writedate,
+           title:this.form.title,
+           day:this.form.day,
+           traveldate:this.form.traveldate,
+           weather:this.form.weather,
+           text:this.editorContent
         })
         .then(({ data }) => {
           let msg = '등록 처리시 문제가 발생했습니다.';
@@ -129,7 +163,7 @@ import axios from 'axios';
     const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName
+        Bucket: this.albumBucketName+'/mail'
       }
     })
 
@@ -146,10 +180,10 @@ import axios from 'axios';
             return alert("실패",err.message);
           }
           var href = "https://s3.amazonaws.com/"; // 기본 주소
-          var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
-          var photoloc = encodeURIComponent(mail) + '/' + file.name;
+          var bucketUrl = href + this.albumBucketName + "/"; // 기본 주소 + 버킷이름
+          var photoloc = "1/1/" + file.name;
           console.log("사진경로이름:"+photoloc)
-          var photoUrl = bucketUrl + file.name // 최종 이미지 경로
+          var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
           console.log("최종경로:"+photoUrl)
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
           alert('성공');
@@ -170,7 +204,7 @@ import axios from 'axios';
       const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+mail+'/'
+        Bucket: this.albumBucketName+'/1/1'
       }
     })
 
@@ -187,7 +221,7 @@ import axios from 'axios';
 
 <style>
   .article-create {
-    margin-top: 60px;
+    margin-top: 90px;
     margin-bottom: 60px;
   }
   .article-info {

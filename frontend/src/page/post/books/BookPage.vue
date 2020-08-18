@@ -18,7 +18,7 @@
              active-color="#007bff"
              read-only
              :star-size="25">
-          </star-rating>"
+          </star-rating>
           <b-button variant="primary"><b-link style="text-decoration:none;" :to="{name:'articlecreate', params:{ bookno: this.$route.params.bookno }}">글 작성</b-link></b-button>
         </div>
         <div class="book-content">
@@ -33,7 +33,7 @@
           <img class="article-img" :src="article.img">
         </div>
         <div class="col-5">
-          <h5>{{ article.day }}일차: {{ article.title }}</h5>
+          <h5>{{ article.day }}화: {{ article.title }}</h5>
         </div>
         <div class="col-3" style="display: flex;">
           <h5>평점</h5>
