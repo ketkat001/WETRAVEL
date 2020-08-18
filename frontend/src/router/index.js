@@ -92,6 +92,12 @@ ko.messages.min = (field) => {
     return "비밀번호는 최소 8글자 이상이어야 합니다"
   }
 }
+ko.messages.confirmed = (field) => {
+  return "비밀번호가 일치하지 않습니다."
+}
+ko.messages.email = (field) => {
+  return "유효한 이메일 형식이어야 합니다"
+}
 
 Vue.use(VeeValidate, config)
 
