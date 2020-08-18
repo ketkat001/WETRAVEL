@@ -188,6 +188,11 @@ export default new Router({
       //beforeEnter: requireAuth()
     },
     {
+      path: '/articlecreate2',
+      name: 'articlecreate2',
+      component: articlecreate2,
+    },
+    {
       path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
       name: 'articlemodify',
       component: articlemodify,
