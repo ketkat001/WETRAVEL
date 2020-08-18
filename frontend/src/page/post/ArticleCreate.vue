@@ -90,10 +90,9 @@ import axios from 'axios';
       createHandler() {
         let formData = new FormData()
         formData.append('bookno', this.form.bookno)
-        formData.append('writedate', this.form.writedate)
         formData.append('title', this.form.title)
         formData.append('day', this.form.day)
-        formData.append('traveldate', this.traveldate)
+        formData.append('traveldate', this.form.traveldate)
         formData.append('text', this.editorContent)
         formData.append('thumbnail', this.thumbnail[0])
       axios

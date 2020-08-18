@@ -4,7 +4,7 @@
 <mapper namespace="m_article">
 	<insert id="registArticle" parameterType="article">
 		insert into article (bookno, title, writedate, text, traveldate, day, img)
-		values(#{bookno}, #{title}, now(), #{text}, #{traveldate}, #{day}, #{img})
+		values(#{bookno}, #{title}, now(), #{text}, #{traveldate}, #{day}, #{img, jdbcType=BLOB})
 	</insert>
 
 	<select id="getArticleList" resultType="article">

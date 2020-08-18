@@ -59,6 +59,7 @@ public class ArticleController {
 		logger.debug("registArticle - 호출");
 		try {
 			article.setImg();
+			article.setImgName();
 			if (articleService.registArticle(article)) {
 				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 			}
