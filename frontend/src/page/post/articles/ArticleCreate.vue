@@ -63,9 +63,11 @@
 
 <script>
 import AWS from 'aws-sdk'
+import EXIF from 'exif-js'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
-
+var lat = new Set()
+var long = new Set()
   export default {
     name : 'vueeditor2',
     components : {
@@ -143,20 +145,48 @@ import axios from 'axios';
           //this.moveList();
         });
     },
-    async handleImageAdded(file, Editor, cursorLocation) {
+    handleImageAdded(file, Editor, cursorLocation) {
       this.file = file
- 
+
+      EXIF.getData(this.file, function() {
+        console.log('image info', this)
+        console.log('exif data', this.exifdata)
+
+        this.exifLong = EXIF.getTag(this, "GPSLongitude");
+        console.log(this.exifLong)
+        this.exifLat = EXIF.getTag(this, "GPSLatitude");
+        this.exifLongRef = EXIF.getTag(this, "GPSLongitudeRef");
+        this.exifLatRef = EXIF.getTag(this, "GPSLatitudeRef");
+        // this.exifTime = EXIF.getTag(this, "DateTime");
+        //계산식 적용이유는 해당라이브러리가 위도경도를 도분초 단위로 출력하기 때문
+        if(this.exifLatRef != undefined && this.exifLongRef != undefined){
+          if (this.exifLatRef == "S") {
+              var latitude = (this.exifLat[0]*-1) + (( (this.exifLat[1]*-60) + (this.exifLat[2]*-1) ) / 3600);						
+          } else {
+            var latitude = this.exifLat[0] + (( (this.exifLat[1]*60) + this.exifLat[2] ) / 3600);
+          }
+            //console.log("위도 : " + latitude);
+            lat.add(latitude)
+          if (this.exifLongRef == "W") {
+            var longitude = (this.exifLong[0]*-1) + (( (this.exifLong[1]*-60) + (this.exifLong[2]*-1) ) / 3600);						
+          } else {
+            var longitude = this.exifLong[0] + (( (this.exifLong[1]*60) + this.exifLong[2] ) / 3600);
+          } 
+          //console.log("경도 : " + longitude);
+          long.add(longitude)
+        }
+
+      console.log(lat)
+      console.log(long)
+
+    })
+
       AWS.config.update({
         region: this.bucketRegion,
         credentials: new AWS.CognitoIdentityCredentials({
           IdentityPoolId: this.IdentityPoolId
         })
       })
-
-    var mail = '' 
-    await this.$store.dispatch('checkLogin').then(res => {
-      mail = res.email
-    })
 
     let photoKey = this.file.name
 
@@ -180,8 +210,8 @@ import axios from 'axios';
             return alert("실패",err.message);
           }
           var href = "https://s3.amazonaws.com/"; // 기본 주소
-          var bucketUrl = href + this.albumBucketName + "/"; // 기본 주소 + 버킷이름
-          var photoloc = "1/1/" + file.name;
+          var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
+          var photoloc = file.name;
           console.log("사진경로이름:"+photoloc)
           var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
           console.log("최종경로:"+photoUrl)
