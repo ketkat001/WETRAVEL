@@ -42,12 +42,12 @@ import aws from '../page/post/Aws.vue'
 
 // Book
 import bookpage from '../page/post/books/BookPage.vue'
+import bookmodify from '../page/post/books/BookModify.vue'
 import bookcreate from '../page/post/books/BookCreate.vue'
 
 // Article
 import articlecreate from '../page/post/articles/ArticleCreate.vue'
 import articlepage from '../page/post/articles/ArticlePage.vue'
-import articlecreate2 from '../page/post/articles/ArticleCreate2.vue'
 import articlemodify from '../page/post/articles/ArticleModify.vue'
 
 
@@ -148,6 +148,12 @@ export default new Router({
       path: '/posts/:province/:city/bookno/:bookno',
       name: 'bookpage',
       component: bookpage,
+    },
+    {
+      path: '/posts/bookno/:bookno/bookmodify',
+      name: 'bookmodify',
+      component: bookmodify,
+      // beforeEnter: requireAuth()
     },
 
     // Article Page

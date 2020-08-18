@@ -2,6 +2,8 @@ package com.ssafy.travel.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ssafy.travel.dto.Book;
 
 public interface BookDao {

@@ -1,6 +1,7 @@
 package com.ssafy.travel.dto;
 
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,7 +31,27 @@ public class Article implements Serializable {
 	private Date traveldate;
 	private int day;
 	private byte[] img;
+	private String exiflat;
+	private String exiflong;
 	
+	
+	
+	public String getExiflat() {
+		return exiflat;
+	}
+
+	public void setExiflat(String exiflat) {
+		this.exiflat = exiflat;
+	}
+
+	public String getExiflong() {
+		return exiflong;
+	}
+
+	public void setExiflong(String exiflong) {
+		this.exiflong = exiflong;
+	}
+
 	@JsonIgnore
 	private MultipartFile thumbnail;
 	
@@ -47,7 +68,10 @@ public class Article implements Serializable {
 
 	public void setImg() {
 		try {
-			this.img = this.thumbnail.getBytes();
+			if (!this.thumbnail.isEmpty())
+				this.img = this.thumbnail.getBytes();
+			else
+				this.img = null;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -66,11 +90,12 @@ public class Article implements Serializable {
 	}
 
 	public void setImgName() {
-		this.imgName = this.thumbnail.getOriginalFilename();
+		if (this.thumbnail != null)
+			this.imgName = this.thumbnail.getOriginalFilename();
 	}
 
 	public Article(int articleno, int bookno, String title, Date writedate, double score, int score_count, String text,
-			Date traveldate, int day, MultipartFile thumbnail) {
+			Date traveldate, int day, MultipartFile thumbnail, String exiflong, String exiflat) {
 		super();
 		this.articleno = articleno;
 		this.bookno = bookno;
@@ -82,6 +107,8 @@ public class Article implements Serializable {
 		this.traveldate = traveldate;
 		this.day = day;
 		this.thumbnail = thumbnail;
+		this.exiflat = exiflat;
+		this.exiflong = exiflong;
 	}
 	
 	public int getScore_count() {

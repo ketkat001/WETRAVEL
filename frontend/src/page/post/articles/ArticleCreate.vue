@@ -50,7 +50,6 @@
           </b-form-group>
         </div>
         <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
-      
       <vue-editor id="editor"
       use-custom-image-handler
       :editor-options="editorSettings"
@@ -67,8 +66,10 @@ import AWS from 'aws-sdk'
 import EXIF from 'exif-js'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
-var lat = new Set()
-var long = new Set()
+let lat = new Set()
+let long = new Set()
+let lats = ''
+let longs = ''
   export default {
     name : 'vueeditor2',
     components : {
@@ -82,7 +83,7 @@ var long = new Set()
         IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
         file : null,
         photoKey : null,
-        thumbnail: null,
+        thumbnail: null, 
         dayList: [
           {value: '1', text: '1화'},
           {value: '2', text: '2화'},
@@ -94,6 +95,8 @@ var long = new Set()
           {value: '8', text: '8화'},
           {value: '9', text: '9화'},
           ],
+        exifLat : '',
+        exifLong : '',
         form: {
           bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
           writedate:'',
@@ -118,15 +121,19 @@ var long = new Set()
         this.createHandler();
       },
       createHandler() {
+        lat.forEach(v => lats += v + " ")
+        long.forEach(v => longs += v + " ")
         let formData = new FormData()
         formData.append('bookno', this.form.bookno)
         formData.append('title', this.form.title)
         formData.append('day', this.form.day)
         formData.append('traveldate', this.form.traveldate)
         formData.append('text', this.editorContent)
-        formData.append('thumbnail', this.thumbnail[0])
+        formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : new File([""], ""))
+        formData.append('exifLat', lats)
+        formData.append('exifLong', longs)
       axios
-        .post('http://localhost:8999/travel/api/article/article', formData, 
+        .post('http://localhost:8999/travel/api/article/article', formData,
         {
           headers: {'Content-Type': 'multipart/form-data'}
         })
@@ -143,11 +150,7 @@ var long = new Set()
       this.file = file
 
       EXIF.getData(this.file, function() {
-        console.log('image info', this)
-        console.log('exif data', this.exifdata)
-
         this.exifLong = EXIF.getTag(this, "GPSLongitude");
-        console.log(this.exifLong)
         this.exifLat = EXIF.getTag(this, "GPSLatitude");
         this.exifLongRef = EXIF.getTag(this, "GPSLongitudeRef");
         this.exifLatRef = EXIF.getTag(this, "GPSLatitudeRef");
@@ -159,20 +162,17 @@ var long = new Set()
           } else {
             var latitude = this.exifLat[0] + (( (this.exifLat[1]*60) + this.exifLat[2] ) / 3600);
           }
-            //console.log("위도 : " + latitude);
             lat.add(latitude)
           if (this.exifLongRef == "W") {
             var longitude = (this.exifLong[0]*-1) + (( (this.exifLong[1]*-60) + (this.exifLong[2]*-1) ) / 3600);						
           } else {
             var longitude = this.exifLong[0] + (( (this.exifLong[1]*60) + this.exifLong[2] ) / 3600);
           } 
-          //console.log("경도 : " + longitude);
           long.add(longitude)
         }
 
-      console.log(lat)
-      console.log(long)
-
+      this.exifLat = lat
+      this.exifLong = long
     })
 
       AWS.config.update({
@@ -187,7 +187,7 @@ var long = new Set()
     const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+'/mail'
+        Bucket: this.albumBucketName
       }
     })
 
@@ -201,16 +201,12 @@ var long = new Set()
         },(err) => {
           if(err){
             console.log(err)
-            return alert("실패",err.message);
           }
           var href = "https://s3.amazonaws.com/"; // 기본 주소
           var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
           var photoloc = file.name;
-          console.log("사진경로이름:"+photoloc)
           var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
-          console.log("최종경로:"+photoUrl)
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
-          alert('성공');
         });
       },
 
@@ -234,9 +230,8 @@ var long = new Set()
 
       s3.deleteObject({ Key: photoKey }, (err) => {
       if (err) {
-        return alert("There was an error deleting your photo: ", err.message);
+
       }
-      alert("Successfully deleted photo.");
     });
       }
   }

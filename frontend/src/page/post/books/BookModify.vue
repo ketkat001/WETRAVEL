@@ -96,7 +96,8 @@ export default {
         province: '',
         city: '',
         startdate: "",
-        description: ""
+        description: "",
+        bookno: this.$route.params.bookno
       }
     }
   },
@@ -109,6 +110,15 @@ export default {
     await this.$store.dispatch('checkLogin').then(res => {
       this.form.userName = res.nickname
     })
+    await this.$axios.get(`/api/book/${this.form.bookno}`).then(res => {
+      this.form.title = res.data.title
+      this.form.province = res.data.province
+      this.cityList()
+      this.form.city = res.data.city
+      this.form.startdate = res.data.startdate
+      this.form.description = res.data.description
+      this.thumbnail = this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg')
+    })
   },
   methods: {
     cityList: async function() {
@@ -117,7 +127,6 @@ export default {
       }
       else {
         await this.$store.dispatch('getCityList', this.form.province)
-        this.form.city = ''
       }
     },
     formatNames(files) {
@@ -127,16 +136,30 @@ export default {
         return `${files.length} files selected`
       }
     },
+    dataURLtoFile(dataurl, fileName) {
+      var arr = dataurl.split(','),
+          mime = arr[0].match(/:(.*?);/)[1],
+          bstr = atob(arr[1]),
+          n = bstr.length,
+          u8arr = new Uint8Array(n);
+
+          while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+          }
+
+          return new File([u8arr], fileName, {type:mime});
+    },
     createAction(){
       let formData = new FormData() 
+      formData.append('bookno', this.form.bookno)
       formData.append('title', this.form.title)
       formData.append('writer', this.form.userName)
       formData.append('province', this.form.province)
       formData.append('city', this.form.city)
       formData.append('startdate', this.form.startdate)
       formData.append('description', this.form.description)
-      formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : new File([""], ""))
-      this.$axios.post('/api/book', formData, {
+      formData.append('thumbnail', this.thumbnail != null ? this.thumbnail : new File([""], ""))
+      this.$axios.put(`/api/book/${this.form.bookno}`, formData, {
         headers: {'Content-Type': 'multipart/form-data'}
       })
       .then(({ data }) => {
