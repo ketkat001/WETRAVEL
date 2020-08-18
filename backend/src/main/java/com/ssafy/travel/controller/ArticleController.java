@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -29,6 +30,7 @@ import com.ssafy.travel.service.ArticleService;
 import io.swagger.annotations.ApiOperation;
 
 // http://localhost:8999/travel/swagger-ui.html
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/api/article")
 public class ArticleController {

@@ -17,8 +17,9 @@
     </div>
     <div class="container">
       <div class="article-content">
+        <div id="map" style="width:600px;height:350px;"></div>
         <div class="article-map">
-          <p v-html="text"></p>
+          <p style="width:100%" v-html="text"></p>
         </div>
       </div>
       <div class="article-footer">
@@ -54,7 +55,8 @@
 import axios from 'axios'
 import { faThumbsUp as thumbsUp_SolidIcon, faComment } from "@fortawesome/free-solid-svg-icons";
 import comments from '../comments/Comments.vue'
-
+let lats = ''
+let longs = ''
 export default {
   components: {
     comments
@@ -72,6 +74,7 @@ export default {
     }
   },
   mounted(){
+    window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
     this.$axios.get(`/api/article/${this.articleno}`, {
       headers: {'Content-Type': 'application/json'}
     }).then(res => {
@@ -79,9 +82,67 @@ export default {
       this.title = res.data.title
       this.day = res.data.day
       this.text = res.data.text
+      lats = res.data.exiflat
+      longs = res.data.exiflong
     })
   },
   methods : {
+    initMap() { 
+      var container = document.getElementById('map');
+      console.log(lats)
+      console.log(longs)
+      var latArr = lats.split(" ")
+      var longArr = longs.split(" ")
+      var latCen = ''
+      var longCen = ''
+      for(var i in latArr){
+         latCen = Number(latCen) + Number(latArr[i])
+         longCen = Number(longCen) + Number(longArr[i])
+      }
+
+      console.log(latCen)
+      console.log(longCen)
+      console.log(Number(latCen/(latArr.length-1)))
+      console.log(Number(longCen/(longArr.length-1)))
+      var options = { 
+        center: new kakao.maps.LatLng(Number(latCen/(latArr.length-1)), Number(longCen/(longArr.length-1))), 
+        level: 15
+      }; 
+      var map = new kakao.maps.Map(container, options); //마커추가하려면 객체를 아래와 같이 하나 만든다. 
+      
+      var linePath = [];
+
+      for(var i=0; i<latArr.length-1; i++){
+        linePath.push(new kakao.maps.LatLng(latArr[i],longArr[i]))
+      }
+
+      var polyline = new kakao.maps.Polyline({
+        path: linePath, // 선을 구성하는 좌표배열 입니다
+        strokeWeight: 5, // 선의 두께 입니다
+        strokeColor: '#FFAE00', // 선의 색깔입니다
+        strokeOpacity: 0.7, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle: 'solid' // 선의 스타일입니다
+      });
+
+      polyline.setMap(map);  
+
+      for(var i in latArr){
+          var marker = new kakao.maps.Marker({ 
+            position: new kakao.maps.LatLng(latArr[i],longArr[i]),
+          }); 
+          marker.setMap(map) 
+          }
+      },
+
+      
+      
+      addScript() { 
+        const script = document.createElement('script'); 
+        /* global kakao */ 
+        script.onload = () => kakao.maps.load(this.initMap); 
+        script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=06361ba6891dd71194432873935299c9'; 
+        document.head.appendChild(script); 
+        },
     submitComment: function(reply) {
       this.comments.push({
         id: this.comments.length + 1,
@@ -140,6 +201,11 @@ export default {
     border-radius: 10px;
     display: flex;
     justify-content: flex-end;  
+  }
+
+  .article-map > p > p > img {
+    width: 100%;
+    height: auto;
   }
   
 </style>

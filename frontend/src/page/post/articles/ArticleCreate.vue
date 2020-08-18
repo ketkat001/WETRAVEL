@@ -67,8 +67,10 @@ import AWS from 'aws-sdk'
 import EXIF from 'exif-js'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
-var lat = new Set()
-var long = new Set()
+let lat = new Set()
+let long = new Set()
+let lats = ''
+let longs = ''
   export default {
     name : 'vueeditor2',
     components : {
@@ -95,6 +97,8 @@ var long = new Set()
           {value: '8', text: '8화'},
           {value: '9', text: '9화'},
           ],
+        exifLat : '',
+        exifLong : '',
         form: {
           bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
           writedate:'',
@@ -119,6 +123,8 @@ var long = new Set()
         this.createHandler();
       },
       createHandler() {
+        lat.forEach(v => lats += v + " ")
+        long.forEach(v => longs += v + " ")
         let formData = new FormData()
         formData.append('bookno', this.form.bookno)
         formData.append('title', this.form.title)
@@ -126,8 +132,12 @@ var long = new Set()
         formData.append('traveldate', this.form.traveldate)
         formData.append('text', this.editorContent)
         formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : new File([""], ""))
+        formData.append('exifLat', lats)
+        console.log(lats)
+        formData.append('exifLong', longs)
+        console.log(longs)
       axios
-        .post('/api/article/article', formData, 
+        .post('http://localhost:8999/travel/api/article/article', formData,
         {
           headers: {'Content-Type': 'multipart/form-data'}
         })
@@ -171,8 +181,10 @@ var long = new Set()
           long.add(longitude)
         }
 
-      console.log(lat)
-      console.log(long)
+      this.exifLat = lat
+      console.log(this.exifLat)
+      this.exifLong = long
+      console.log(this.exifLong)
 
     })
 
@@ -188,7 +200,7 @@ var long = new Set()
     const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+'/mail'
+        Bucket: this.albumBucketName
       }
     })
 

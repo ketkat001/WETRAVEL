@@ -47,7 +47,6 @@ import bookcreate from '../page/post/books/BookCreate.vue'
 // Article
 import articlecreate from '../page/post/articles/ArticleCreate.vue'
 import articlepage from '../page/post/articles/ArticlePage.vue'
-import articlecreate2 from '../page/post/articles/ArticleCreate2.vue'
 import articlemodify from '../page/post/articles/ArticleModify.vue'
 
 
@@ -186,11 +185,6 @@ export default new Router({
       name: 'aws',
       component: aws,
       //beforeEnter: requireAuth()
-    },
-    {
-      path: '/articlecreate2',
-      name: 'articlecreate2',
-      component: articlecreate2,
     },
     {
       path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
