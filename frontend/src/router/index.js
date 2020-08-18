@@ -187,7 +187,11 @@ export default new Router({
       component: aws,
       //beforeEnter: requireAuth()
     },
-    
+    {
+      path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
+      name: 'articlemodify',
+      component: articlemodify,
+    },
     {
       path: '/imagetest',
       name: 'imagetest',

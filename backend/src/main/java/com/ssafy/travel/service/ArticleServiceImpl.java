@@ -1,5 +1,6 @@
 package com.ssafy.travel.service;
 
+import java.sql.Blob;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

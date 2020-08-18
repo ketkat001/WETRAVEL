@@ -1,6 +1,18 @@
 package com.ssafy.travel.dto;
 
-public class Article {
+import java.io.IOException;
+import java.io.Serializable;
+import java.sql.Blob;
+import java.sql.SQLException;
+
+import javax.sql.rowset.serial.SerialException;
+
+import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class Article implements Serializable {
 	private int articleno;
 	private int bookno;
 	private String title;
@@ -10,13 +22,48 @@ public class Article {
 	private String text;
 	private String traveldate;
 	private int day;
+	private byte[] img;
+	
+	@JsonIgnore
+	private MultipartFile thumbnail;
+	
+	@JsonProperty("thumbnail")
+	private String imgName;
 	
 	public Article() {
 		super();
 	}
 
+	public byte[] getImg() {
+		return img;
+	}
+
+	public void setImg() {
+		try {
+			this.img = this.thumbnail.getBytes();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+	}
+
+	public MultipartFile getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(MultipartFile thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public String getImgName() {
+		return imgName;
+	}
+
+	public void setImgName() {
+		this.imgName = this.thumbnail.getOriginalFilename();
+	}
+
 	public Article(int articleno, int bookno, String title, String writedate, double score, int score_count, String text,
-			String traveldate, int day) {
+			String traveldate, int day, MultipartFile thumbnail) {
 		super();
 		this.articleno = articleno;
 		this.bookno = bookno;
@@ -27,8 +74,17 @@ public class Article {
 		this.text = text;
 		this.traveldate = traveldate;
 		this.day = day;
+		this.thumbnail = thumbnail;
 	}
 	
+	public int getScore_count() {
+		return score_count;
+	}
+
+	public void setScore_count(int score_count) {
+		this.score_count = score_count;
+	}
+
 	public int getArticleno() {
 		return articleno;
 	}
