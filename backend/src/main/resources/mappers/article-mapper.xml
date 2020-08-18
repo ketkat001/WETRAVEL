@@ -12,7 +12,7 @@
 		traveldate, day, img
 		from article
 		where bookno = #{bookno}
-		order by writedate
+		order by day
 	</select>
 
 	<delete id="deleteArticle">
@@ -22,7 +22,7 @@
 
 	<update id="modifyArticle">
 		Update article
-		set title = #{title}, writedate = #{writedate}, score_count=#{score_count},
+		set title = #{title}, score_count=#{score_count},
 		text=#{text}, traveldate=#{traveldate}, day=#{day}, img=#{img, jdbcType=BLOB}
 		where articleno = #{articleno}
 	</update>

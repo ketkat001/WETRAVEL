@@ -8,7 +8,15 @@
       <div class="col-1">
       </div>
       <div class="col-7 book-header-content">
-        <h3>{{ book_info.title }}</h3>
+        <div class="row">
+          <div class="col-4 p-0">
+            <h3>{{ book_info.title }}</h3>
+          </div>
+          <div class="col-8 p-0" style="text-align:right">
+            <b-button class="mx-1" variant="primary"><router-link :to="{ name: 'bookmodify', params: {bookno: this.$route.params.bookno}}">수정</router-link></b-button>
+            <b-button class="ml-1" variant="danger">삭제</b-button>
+          </div>
+        </div>
         <div class="book-content-inf">
           <p>by {{ book_info.writer }}</p>
           <star-rating :increment="1"
