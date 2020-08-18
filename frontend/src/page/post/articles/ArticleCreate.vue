@@ -84,7 +84,8 @@ let longs = ''
         IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
         file : null,
         photoKey : null,
-        thumbnail: null,
+        thumbnail: null, 
+        dummy: null,
         dayList: [
           {value: '1', text: '1화'},
           {value: '2', text: '2화'},
@@ -130,7 +131,7 @@ let longs = ''
         formData.append('day', this.form.day)
         formData.append('traveldate', this.form.traveldate)
         formData.append('text', this.editorContent)
-        formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : null)
+        formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : new File([""], ""))
         formData.append('exifLat', lats)
         console.log(lats)
         formData.append('exifLong', longs)
@@ -138,7 +139,7 @@ let longs = ''
       axios
         .post('http://localhost:8999/travel/api/article/article', formData,
         {
-                    headers: {'Content-Type': 'multipart/form-data'}
+          headers: {'Content-Type': 'multipart/form-data'}
         })
         .then(({ data }) => {
           let msg = '등록 처리시 문제가 발생했습니다.';

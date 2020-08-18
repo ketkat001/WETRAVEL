@@ -30,24 +30,25 @@ public class Article implements Serializable {
 	private Date traveldate;
 	private int day;
 	private byte[] img;
-	private String exifLat;
-	private String exifLong;
+	private String exiflat;
+	private String exiflong;
 	
 	
-	public String getExifLat() {
-		return exifLat;
+	
+	public String getExiflat() {
+		return exiflat;
 	}
 
-	public void setExifLat(String exifLat) {
-		this.exifLat = exifLat;
+	public void setExiflat(String exiflat) {
+		this.exiflat = exiflat;
 	}
 
-	public String getExifLong() {
-		return exifLong;
+	public String getExiflong() {
+		return exiflong;
 	}
 
-	public void setExifLong(String exifLong) {
-		this.exifLong = exifLong;
+	public void setExiflong(String exiflong) {
+		this.exiflong = exiflong;
 	}
 
 	@JsonIgnore
@@ -89,7 +90,7 @@ public class Article implements Serializable {
 	}
 
 	public Article(int articleno, int bookno, String title, Date writedate, double score, int score_count, String text,
-			Date traveldate, int day, MultipartFile thumbnail) {
+			Date traveldate, int day, MultipartFile thumbnail, String exiflong, String exiflat) {
 		super();
 		this.articleno = articleno;
 		this.bookno = bookno;
@@ -101,6 +102,8 @@ public class Article implements Serializable {
 		this.traveldate = traveldate;
 		this.day = day;
 		this.thumbnail = thumbnail;
+		this.exiflat = exiflat;
+		this.exiflong = exiflong;
 	}
 	
 	public int getScore_count() {

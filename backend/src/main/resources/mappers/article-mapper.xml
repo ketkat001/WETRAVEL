@@ -3,8 +3,8 @@
 							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="m_article">
 	<insert id="registArticle" parameterType="article">
-		insert into article (bookno, title, writedate, text, traveldate, day, img, exifLat, exifLong)
-		values(#{bookno}, #{title}, now(), #{text}, #{traveldate}, #{day}, #{img, jdbcType=BLOB}, #{exifLat}, #{exifLong})
+		insert into article (bookno, title, writedate, text, traveldate, day, img, exiflat, exiflong)
+		values(#{bookno}, #{title}, now(), #{text}, #{traveldate}, #{day}, #{img, jdbcType=BLOB}, #{exiflat}, #{exiflong})
 	</insert>
 
 	<select id="getArticleList" resultType="article">
@@ -29,7 +29,7 @@
 
 	<select id="getArticleDetail" resultType="article">
 		select articleno,
-		bookno, title, writedate, score, score_count, text, traveldate, day, img, exifLat, exifLong
+		bookno, title, writedate, score, score_count, text, traveldate, day, img, exiflat, exiflong
 		from article
 		where articleno = #{articleno}
 	</select>

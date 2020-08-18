@@ -62,8 +62,6 @@ public class ArticleController {
 		try {
 			article.setImg();
 			article.setImgName();
-			System.out.println(article.getExifLat());
-			System.out.println(article.getExifLong());
 			if (articleService.registArticle(article)) {
 				return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 			}
