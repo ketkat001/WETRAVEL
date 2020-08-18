@@ -3,18 +3,34 @@
     <div class="article-create container">
       <b-form>
         <div class="article-info">
-          <b-form-group
-            id="input-group-0"
-            label="제목"
-            label-for="input-0"
-            description="제목을 입력해주세요!">
-            <b-form-input
-              id="input-0"
-              v-model="form.title"  
-              required
-              placeholder="제목 입력">
-            </b-form-input>
-          </b-form-group>
+          <div class="d-flex row">
+            <b-form-group
+              class="col-7 p-0"
+              id="input-group-0"
+              label="제목"
+              label-for="input-0"
+              description="제목을 입력해주세요!">
+              <b-form-input
+                id="input-0"
+                v-model="form.title"  
+                required
+                placeholder="제목 입력">
+              </b-form-input>
+            </b-form-group>
+            <b-form-group
+              class="col-5 pr-0"
+              id="input-group-4"
+              label="회차"
+              label-for="select-1"
+              description="여행기의 회차를 선택해주세요!">
+              <b-form-select
+                id="select-1"
+                v-model="form.day"
+                :options="dayList"
+                required>
+              </b-form-select>
+            </b-form-group>
+          </div>
           <b-form-group
             id="input-group-1"
             label="썸네일 사진 등록"
@@ -49,6 +65,7 @@
 import AWS from 'aws-sdk'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
+
   export default {
     name : 'vueeditor2',
     components : {
@@ -62,6 +79,17 @@ import axios from 'axios';
         IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
         file : null,
         photoKey : null,
+        dayList: [
+          {value: '1', text: '1화'},
+          {value: '2', text: '2화'},
+          {value: '3', text: '3화'},
+          {value: '4', text: '4화'},
+          {value: '5', text: '5화'},
+          {value: '6', text: '6화'},
+          {value: '7', text: '7화'},
+          {value: '8', text: '8화'},
+          {value: '9', text: '9화'},
+          ],
         form: {
           bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
           writedate:'',
@@ -82,7 +110,7 @@ import axios from 'axios';
           return `${files.length} files selected`
         }
       },
-      createAction() {
+      createAction() {  
         this.createHandler();
       },
       createHandler() {
@@ -183,7 +211,7 @@ import axios from 'axios';
 
 <style>
   .article-create {
-    margin-top: 60px;
+    margin-top: 90px;
     margin-bottom: 60px;
   }
   .article-info {
