@@ -47,7 +47,6 @@ import bookcreate from '../page/post/books/BookCreate.vue'
 // Article
 import articlecreate from '../page/post/articles/ArticleCreate.vue'
 import articlepage from '../page/post/articles/ArticlePage.vue'
-import articlecreate2 from '../page/post/articles/ArticleCreate2.vue'
 import articlemodify from '../page/post/articles/ArticleModify.vue'
 
 
