@@ -50,7 +50,6 @@
           </b-form-group>
         </div>
         <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
-      
       <vue-editor id="editor"
       use-custom-image-handler
       :editor-options="editorSettings"
@@ -86,7 +85,6 @@ let longs = ''
         file : null,
         photoKey : null,
         thumbnail: null, 
-        dummy: null,
         dayList: [
           {value: '1', text: '1화'},
           {value: '2', text: '2화'},

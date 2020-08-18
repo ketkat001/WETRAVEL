@@ -42,6 +42,7 @@ import aws from '../page/post/Aws.vue'
 
 // Book
 import bookpage from '../page/post/books/BookPage.vue'
+import bookmodify from '../page/post/books/BookModify.vue'
 import bookcreate from '../page/post/books/BookCreate.vue'
 
 // Article
@@ -75,13 +76,36 @@ const config = {
     ko
   }
 }
+ko.messages.required = (field) => {
+  if (field==='nickname') {
+    return "닉네임은 필수 정보입니다"
+}else if (field==='password') {
+    return "비밀번호는 필수 정보입니다"
+}
+return "이메일은 필수 정보입니다"
+}
+ko.messages.min = (field) => {
+  if (field==='nickname') {
+    return "닉네임은 최소 3글자 이상이어야 합니다"
+  }
+  if (field==="password") {
+    return "비밀번호는 최소 8글자 이상이어야 합니다"
+  }
+}
+ko.messages.confirmed = (field) => {
+  return "비밀번호가 일치하지 않습니다."
+}
+ko.messages.email = (field) => {
+  return "유효한 이메일 형식이어야 합니다"
+}
 
 Vue.use(VeeValidate, config)
 
 
+
 VeeValidate.Validator.extend('verify_password', {
-  getMessage: field => `비밀번호는 최소 하나의 대문자와 소문자, 숫자를 포함하고 있어야 합니다`,
-        validate: value => {
+  getMessage: (field) => `비밀번호는 최소 하나의 대문자와 소문자, 숫자를 포함하고 있어야 합니다`,
+        validate: (value) => {
             var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])");
             return strongRegex.test(value);
           }
@@ -130,6 +154,12 @@ export default new Router({
       path: '/posts/:province/:city/bookno/:bookno',
       name: 'bookpage',
       component: bookpage,
+    },
+    {
+      path: '/posts/bookno/:bookno/bookmodify',
+      name: 'bookmodify',
+      component: bookmodify,
+      // beforeEnter: requireAuth()
     },
 
     // Article Page
