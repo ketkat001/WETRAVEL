@@ -24,7 +24,7 @@
       <div class="article-footer">
         <div class="article-btn">
           <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
-          <b-button class="m-3" variant="primary" @click="deleteAction">삭제</b-button>
+          <b-button class="m-3" variant="danger" @click="deleteAction">삭제</b-button>
         </div>
         <star-rating :increment="0.5"
           :max-rating="5"
