@@ -118,12 +118,8 @@ let longs = ''
         this.form.writedate = res.data.writedate
         this.form.title = res.data.title
         this.form.day = res.data.day
-<<<<<<< HEAD
         this.editorContent = res.data.text
         this.thumbnail = this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg')
-=======
-        this.form.text = res.data.text
->>>>>>> 0b99bf18d0be57cb1d790be9abc3e32b5108f947
     })
     },
     methods: {
@@ -134,7 +130,6 @@ let longs = ''
           return `${files.length} files selected`
         }
       },
-<<<<<<< HEAD
       dataURLtoFile(dataurl, fileName) {
         var arr = dataurl.split(','),
             mime = arr[0].match(/:(.*?);/)[1],
@@ -167,13 +162,6 @@ let longs = ''
         console.log(lats)
         formData.append('exifLong', longs)
         console.log(longs)
-=======
-      createAction() {
-        var content2 = this.$refs.myQuillEditor.$options.propsData.value
-        this.createHandler();
-      },
-      createHandler() {
->>>>>>> 0b99bf18d0be57cb1d790be9abc3e32b5108f947
       axios
         .put('http://localhost:8999/travel/api/article/article', formData,
         {
@@ -255,14 +243,9 @@ let longs = ''
             
           }
           var href = "https://s3.amazonaws.com/"; // 기본 주소
-<<<<<<< HEAD
           var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
           var photoloc = file.name;
           console.log("사진경로이름:"+photoloc)
-=======
-          var bucketUrl = href + this.albumBucketName + "/"; // 기본 주소 + 버킷이름
-          var photoloc = "1/1/" + file.name;
->>>>>>> 0b99bf18d0be57cb1d790be9abc3e32b5108f947
           var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
         });
