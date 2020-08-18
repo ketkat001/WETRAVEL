@@ -67,6 +67,7 @@ import AWS from 'aws-sdk'
 import EXIF from 'exif-js'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
+
 let lat = new Set()
 let long = new Set()
 let lats = ''
@@ -108,6 +109,7 @@ let longs = ''
           text: '',
         },
         editorSettings: {
+
         }
       }
     },
@@ -135,7 +137,7 @@ let longs = ''
         formData.append('exifLat', lats)
         formData.append('exifLong', longs)
       axios
-        .post('http://localhost:8999/travel/api/article/article', formData,
+        .post('/api/article/article', formData,
         {
           headers: {'Content-Type': 'multipart/form-data'}
         })
