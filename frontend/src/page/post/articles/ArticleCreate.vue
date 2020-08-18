@@ -3,18 +3,34 @@
     <div class="article-create container">
       <b-form>
         <div class="article-info">
-          <b-form-group
-            id="input-group-0"
-            label="제목"
-            label-for="input-0"
-            description="제목을 입력해주세요!">
-            <b-form-input
-              id="input-0"
-              v-model="form.title"  
-              required
-              placeholder="제목 입력">
-            </b-form-input>
-          </b-form-group>
+          <div class="d-flex row">
+            <b-form-group
+              class="col-7 p-0"
+              id="input-group-0"
+              label="제목"
+              label-for="input-0"
+              description="제목을 입력해주세요!">
+              <b-form-input
+                id="input-0"
+                v-model="form.title"  
+                required
+                placeholder="제목 입력">
+              </b-form-input>
+            </b-form-group>
+            <b-form-group
+              class="col-5 pr-0"
+              id="input-group-4"
+              label="회차"
+              label-for="select-1"
+              description="여행기의 회차를 선택해주세요!">
+              <b-form-select
+                id="select-1"
+                v-model="form.day"
+                :options="dayList"
+                required>
+              </b-form-select>
+            </b-form-group>
+          </div>
           <b-form-group
             id="input-group-1"
             label="썸네일 사진 등록"
@@ -65,6 +81,17 @@ var long = new Set()
         IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
         file : null,
         photoKey : null,
+        dayList: [
+          {value: '1', text: '1화'},
+          {value: '2', text: '2화'},
+          {value: '3', text: '3화'},
+          {value: '4', text: '4화'},
+          {value: '5', text: '5화'},
+          {value: '6', text: '6화'},
+          {value: '7', text: '7화'},
+          {value: '8', text: '8화'},
+          {value: '9', text: '9화'},
+          ],
         form: {
           bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
           writedate:'',
@@ -85,7 +112,7 @@ var long = new Set()
           return `${files.length} files selected`
         }
       },
-      createAction() {
+      createAction() {  
         this.createHandler();
       },
       createHandler() {
@@ -156,7 +183,7 @@ var long = new Set()
     const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName
+        Bucket: this.albumBucketName+'/mail'
       }
     })
 
@@ -176,7 +203,7 @@ var long = new Set()
           var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
           var photoloc = file.name;
           console.log("사진경로이름:"+photoloc)
-          var photoUrl = bucketUrl + file.name // 최종 이미지 경로
+          var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
           console.log("최종경로:"+photoUrl)
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
           alert('성공');
@@ -197,7 +224,7 @@ var long = new Set()
       const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+mail+'/'
+        Bucket: this.albumBucketName+'/1/1'
       }
     })
 
@@ -214,7 +241,7 @@ var long = new Set()
 
 <style>
   .article-create {
-    margin-top: 60px;
+    margin-top: 90px;
     margin-bottom: 60px;
   }
   .article-info {

@@ -37,14 +37,20 @@ import userupdate from '../page/user/UserUpdate.vue'
 import mainpage from '../page/post/MainPage.vue'
 import provincepage from '../page/post/ProvincePage.vue'
 import citypage from '../page/post/CityPage.vue'
-import bookpage from '../page/post/BookPage.vue'
-import articlepage from '../page/post/ArticlePage.vue'
-import bookcreate from '../page/post/BookCreate.vue'
-import articlecreate from '../page/post/ArticleCreate.vue'
-import aws from '../page/post/Aws.vue'
-import articlecreate2 from '../page/post/ArticleCreate2.vue'
-import articlemodify from '../page/post/ArticleModify.vue'
 import imagetest from '../page/post/ImageTest.vue'
+import aws from '../page/post/Aws.vue'
+
+// Book
+import bookpage from '../page/post/books/BookPage.vue'
+import bookcreate from '../page/post/books/BookCreate.vue'
+
+// Article
+import articlecreate from '../page/post/articles/ArticleCreate.vue'
+import articlepage from '../page/post/articles/ArticlePage.vue'
+import articlecreate2 from '../page/post/articles/ArticleCreate2.vue'
+import articlemodify from '../page/post/articles/ArticleModify.vue'
+
+
 
 library.add(fas)
 library.add(faFacebook)
@@ -101,37 +107,51 @@ export default new Router({
       name: 'mainpage',
       component: mainpage,
     },
+
+    {
+      path:'/posts/:province',
+      name: 'provincepage',
+      component: provincepage,
+    },
+
+    {
+      path: '/posts/:province/:city', 
+      name: 'citypage',
+      component: citypage,
+    },
+    // BookPage
     {
       path:'/bookcreate',
       name: 'bookcreate',
       component: bookcreate,
       //beforeEnter: requireAuth()
     },
-    {
-      path:'/bookno/:bookno/articlecreate',
-      name: 'articlecreate',
-      component: articlecreate,
-    },
-    {
-      path:'/posts/:province',
-      name: 'provincepage',
-      component: provincepage,
-    },
-    {
-      path: '/posts/:province/:city', 
-      name: 'citypage',
-      component: citypage,
-    },
+
     {
       path: '/posts/:province/:city/bookno/:bookno',
       name: 'bookpage',
       component: bookpage,
     },
+
+    // Article Page
+    {
+      path:'/bookno/:bookno/articlecreate',
+      name: 'articlecreate',
+      component: articlecreate,
+    },
+    
     {
       path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno',
       name: 'articlepage',
       component: articlepage,
     },
+
+    {
+      path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
+      name: 'articlemodify',
+      component: articlemodify,
+    },
+
     // 가입
     {
       path: '/join',
@@ -168,11 +188,14 @@ export default new Router({
       //beforeEnter: requireAuth()
     },
     {
+<<<<<<< HEAD
       path: '/articlecreate2',
       name: 'articlecreate2',
       component: articlecreate2,
     },
     {
+=======
+>>>>>>> a88ec364a0ee049fcd5a368a2c483f818afef952
       path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
       name: 'articlemodify',
       component: articlemodify,

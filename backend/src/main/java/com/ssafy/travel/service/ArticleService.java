@@ -1,5 +1,6 @@
 package com.ssafy.travel.service;
 
+import java.sql.Blob;
 import java.util.List;
 
 import com.ssafy.travel.dto.Article;
