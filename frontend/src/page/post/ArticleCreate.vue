@@ -22,6 +22,7 @@
             description="대표 사진을 등록해주세요!">
             <b-form-file 
               multiple :file-name-formatter="formatNames"
+              v-model="thumbnail"
               placeholder="파일 없음"></b-form-file>
           </b-form-group>
           <b-form-group
@@ -62,11 +63,12 @@ import axios from 'axios';
         IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
         file : null,
         photoKey : null,
+        thumbnail: null,
         form: {
           bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
           writedate:'',
           title:'',
-          day:'',
+          day:1,
           traveldate:'',
           text: '',
         },
@@ -86,15 +88,18 @@ import axios from 'axios';
         this.createHandler();
       },
       createHandler() {
+        let formData = new FormData()
+        formData.append('bookno', this.form.bookno)
+        formData.append('writedate', this.form.writedate)
+        formData.append('title', this.form.title)
+        formData.append('day', this.form.day)
+        formData.append('traveldate', this.traveldate)
+        formData.append('text', this.editorContent)
+        formData.append('thumbnail', this.thumbnail[0])
       axios
-        .post('http://localhost:8999/travel/api/article/article', {
-           bookno:this.form.bookno,
-           writedate:this.form.writedate,
-           title:this.form.title,
-           day:this.form.day,
-           traveldate:this.form.traveldate,
-           weather:this.form.weather,
-           text:this.editorContent
+        .post('/api/article/article', formData,
+        {
+          headers: {'Content-Type': 'multipart/form-data'}
         })
         .then(({ data }) => {
           let msg = '등록 처리시 문제가 발생했습니다.';

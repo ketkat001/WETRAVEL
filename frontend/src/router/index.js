@@ -168,11 +168,6 @@ export default new Router({
       //beforeEnter: requireAuth()
     },
     {
-      path: '/articlecreate',
-      name: 'articlecreate',
-      component: articlecreate,
-    },
-    {
       path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
       name: 'articlemodify',
       component: articlemodify,
