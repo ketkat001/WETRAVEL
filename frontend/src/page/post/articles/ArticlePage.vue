@@ -89,8 +89,6 @@ export default {
   methods : {
     initMap() { 
       var container = document.getElementById('map');
-      console.log(lats)
-      console.log(longs)
       var latArr = lats.split(" ")
       var longArr = longs.split(" ")
       var latCen = ''
@@ -100,10 +98,6 @@ export default {
          longCen = Number(longCen) + Number(longArr[i])
       }
 
-      console.log(latCen)
-      console.log(longCen)
-      console.log(Number(latCen/(latArr.length-1)))
-      console.log(Number(longCen/(longArr.length-1)))
       var options = { 
         center: new kakao.maps.LatLng(Number(latCen/(latArr.length-1)), Number(longCen/(longArr.length-1))), 
         level: 15

@@ -131,9 +131,7 @@ let longs = ''
         formData.append('text', this.editorContent)
         formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : new File([""], ""))
         formData.append('exifLat', lats)
-        console.log(lats)
         formData.append('exifLong', longs)
-        console.log(longs)
       axios
         .post('http://localhost:8999/travel/api/article/article', formData,
         {
@@ -152,11 +150,7 @@ let longs = ''
       this.file = file
 
       EXIF.getData(this.file, function() {
-        console.log('image info', this)
-        console.log('exif data', this.exifdata)
-
         this.exifLong = EXIF.getTag(this, "GPSLongitude");
-        console.log(this.exifLong)
         this.exifLat = EXIF.getTag(this, "GPSLatitude");
         this.exifLongRef = EXIF.getTag(this, "GPSLongitudeRef");
         this.exifLatRef = EXIF.getTag(this, "GPSLatitudeRef");
@@ -168,22 +162,17 @@ let longs = ''
           } else {
             var latitude = this.exifLat[0] + (( (this.exifLat[1]*60) + this.exifLat[2] ) / 3600);
           }
-            //console.log("위도 : " + latitude);
             lat.add(latitude)
           if (this.exifLongRef == "W") {
             var longitude = (this.exifLong[0]*-1) + (( (this.exifLong[1]*-60) + (this.exifLong[2]*-1) ) / 3600);						
           } else {
             var longitude = this.exifLong[0] + (( (this.exifLong[1]*60) + this.exifLong[2] ) / 3600);
           } 
-          //console.log("경도 : " + longitude);
           long.add(longitude)
         }
 
       this.exifLat = lat
-      console.log(this.exifLat)
       this.exifLong = long
-      console.log(this.exifLong)
-
     })
 
       AWS.config.update({
@@ -212,16 +201,12 @@ let longs = ''
         },(err) => {
           if(err){
             console.log(err)
-            return alert("실패",err.message);
           }
           var href = "https://s3.amazonaws.com/"; // 기본 주소
           var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
           var photoloc = file.name;
-          console.log("사진경로이름:"+photoloc)
           var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
-          console.log("최종경로:"+photoUrl)
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
-          alert('성공');
         });
       },
 
@@ -245,9 +230,8 @@ let longs = ''
 
       s3.deleteObject({ Key: photoKey }, (err) => {
       if (err) {
-        return alert("There was an error deleting your photo: ", err.message);
+
       }
-      alert("Successfully deleted photo.");
     });
       }
   }

@@ -118,8 +118,12 @@ let longs = ''
         this.form.writedate = res.data.writedate
         this.form.title = res.data.title
         this.form.day = res.data.day
+<<<<<<< HEAD
         this.editorContent = res.data.text
         this.thumbnail = this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg')
+=======
+        this.form.text = res.data.text
+>>>>>>> 0b99bf18d0be57cb1d790be9abc3e32b5108f947
     })
     },
     methods: {
@@ -130,6 +134,7 @@ let longs = ''
           return `${files.length} files selected`
         }
       },
+<<<<<<< HEAD
       dataURLtoFile(dataurl, fileName) {
         var arr = dataurl.split(','),
             mime = arr[0].match(/:(.*?);/)[1],
@@ -162,6 +167,13 @@ let longs = ''
         console.log(lats)
         formData.append('exifLong', longs)
         console.log(longs)
+=======
+      createAction() {
+        var content2 = this.$refs.myQuillEditor.$options.propsData.value
+        this.createHandler();
+      },
+      createHandler() {
+>>>>>>> 0b99bf18d0be57cb1d790be9abc3e32b5108f947
       axios
         .put('http://localhost:8999/travel/api/article/article', formData,
         {
@@ -170,7 +182,7 @@ let longs = ''
         .then(({ data }) => {
           let msg = '등록 처리시 문제가 발생했습니다.';
           if (data === 'success') {
-            msg = '등록이 완료되었습니다.';
+            msg = '수정이 완료되었습니다.';
           }
           alert(msg);
           //this.moveList();
@@ -240,16 +252,19 @@ let longs = ''
         },(err) => {
           if(err){
             console.log(err)
-            return alert("실패",err.message);
+            
           }
           var href = "https://s3.amazonaws.com/"; // 기본 주소
+<<<<<<< HEAD
           var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
           var photoloc = file.name;
           console.log("사진경로이름:"+photoloc)
+=======
+          var bucketUrl = href + this.albumBucketName + "/"; // 기본 주소 + 버킷이름
+          var photoloc = "1/1/" + file.name;
+>>>>>>> 0b99bf18d0be57cb1d790be9abc3e32b5108f947
           var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
-          console.log("최종경로:"+photoUrl)
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
-          alert('성공');
         });
       },
 
@@ -273,9 +288,9 @@ let longs = ''
 
       s3.deleteObject({ Key: photoKey }, (err) => {
       if (err) {
-        return alert("There was an error deleting your photo: ", err.message);
+    
       }
-      alert("Successfully deleted photo.");
+      
     });
       }
   }
