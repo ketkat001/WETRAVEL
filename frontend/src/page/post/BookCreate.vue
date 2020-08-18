@@ -113,6 +113,12 @@ export default {
         })
       })
 
+var albumName = '' 
+  await this.$store.dispatch('checkLogin').then(res => {
+    albumName = res.email
+  })
+  console.log(albumName)
+
 const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
@@ -122,11 +128,6 @@ const s3 = new AWS.S3({
 
   console.log(this.form.title)
 
-  var albumName = '' 
-  await this.$store.dispatch('checkLogin').then(res => {
-    albumName = res.email
-  })
-  console.log(albumName)
   // let albumName = this.form.title
   if (!albumName) {
     return alert('Album names must contain at least one non-space character.');
@@ -134,7 +135,7 @@ const s3 = new AWS.S3({
   if (albumName.indexOf('/') !== -1) {
     return alert('Album names cannot contain slashes.');
   }
-  var albumKey = (albumName) + '/';
+  var albumKey = albumName + '/';
   s3.headObject({Key: albumKey}, function(err, data) {
     if (!err) {
       return alert('Album already exists.');
