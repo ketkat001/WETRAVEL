@@ -33,7 +33,7 @@
           <img class="article-img" :src="article.img">
         </div>
         <div class="col-5">
-          <h5>{{ article.day }}일차: {{ article.title }}</h5>
+          <h5>{{ article.day }}화: {{ article.title }}</h5>
         </div>
         <div class="col-3" style="display: flex;">
           <h5>평점</h5>
