@@ -92,7 +92,7 @@ export default {
       }).then(response => {
         for (var i = 0; i < response.data.length; i++) {
           articles.push({title: response.data[i].title, day: response.data[i].day, writedate: response.data[i].writedate, 
-                          score: response.data[i].score, img: 'https://placeimg.com/640/480/arch'})
+                          score: response.data[i].score, img: response.data[i].img})
         }
       })
       this.articles = articles

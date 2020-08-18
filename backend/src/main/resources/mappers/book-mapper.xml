@@ -4,7 +4,7 @@
 <mapper namespace="m_book">
 	<insert id="registBook">
 		insert into book (title, writer, writedate, province, city, startdate, description, score, img)
-		values(#{title}, #{writer}, now(), #{province}, #{city}, #{startdate}, #{img})
+		values(#{title}, #{writer}, now(), #{province}, #{city}, #{startdate}, #{img, jdbcType=BLOB})
 	</insert>
 
 	<select id="getBookList" resultType="book">

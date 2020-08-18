@@ -1,10 +1,15 @@
 package com.ssafy.travel.dto;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Blob;
+import java.sql.Date;
 import java.sql.SQLException;
 
+import javax.imageio.ImageIO;
 import javax.sql.rowset.serial.SerialException;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -12,15 +17,17 @@ import org.springframework.web.multipart.MultipartFile;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import net.coobird.thumbnailator.Thumbnails;
+
 public class Article implements Serializable {
 	private int articleno;
 	private int bookno;
 	private String title;
-	private String writedate;
+	private Date writedate;
 	private double score;
 	private int score_count;
 	private String text;
-	private String traveldate;
+	private Date traveldate;
 	private int day;
 	private byte[] img;
 	
@@ -62,8 +69,8 @@ public class Article implements Serializable {
 		this.imgName = this.thumbnail.getOriginalFilename();
 	}
 
-	public Article(int articleno, int bookno, String title, String writedate, double score, int score_count, String text,
-			String traveldate, int day, MultipartFile thumbnail) {
+	public Article(int articleno, int bookno, String title, Date writedate, double score, int score_count, String text,
+			Date traveldate, int day, MultipartFile thumbnail) {
 		super();
 		this.articleno = articleno;
 		this.bookno = bookno;
@@ -103,10 +110,10 @@ public class Article implements Serializable {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getWritedate() {
+	public Date getWritedate() {
 		return writedate;
 	}
-	public void setWritedate(String writedate) {
+	public void setWritedate(Date writedate) {
 		this.writedate = writedate;
 	}
 	public double getScore() {
@@ -127,10 +134,10 @@ public class Article implements Serializable {
 	public void setText(String text) {
 		this.text = text;
 	}
-	public String getTraveldate() {
+	public Date getTraveldate() {
 		return traveldate;
 	}
-	public void setTraveldate(String traveldate) {
+	public void setTraveldate(Date traveldate) {
 		this.traveldate = traveldate;
 	}
 	public int getDay() {
