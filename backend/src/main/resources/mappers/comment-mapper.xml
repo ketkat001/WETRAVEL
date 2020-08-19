@@ -9,9 +9,7 @@
 	
 	<select id="getCommentList" resultType="comment">
 		select * from article_comment
-		<if test="articleno != null">
-			where articleno = #{articleno};
-		</if>
+		where articleno = #{articleno};
 	</select>
 	
 	<update id="modifyComment">

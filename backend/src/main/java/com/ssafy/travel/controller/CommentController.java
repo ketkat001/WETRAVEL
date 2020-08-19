@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,6 +28,7 @@ public class CommentController {
 	private static final String SUCCESS = "success";
 	private static final String FAIL = "fail";
 	
+	@Autowired
 	private CommentService commentService;
 	
 	@ApiOperation(value = "새로운 댓글을 입력하고 성공 여부에 따라 success 또는 fail을 반환한다.", response = String.class)
@@ -41,7 +43,6 @@ public class CommentController {
 	@ApiOperation(value = "article 번호에 해당하는 article에 등록된 댓글 목록을 반환한다. ", response = List.class)
 	@GetMapping("{articleno}")
 	public ResponseEntity<List<Comment>> getCommentList(@PathVariable int articleno) {
-		System.out.println(articleno);
 		return new ResponseEntity<List<Comment>>(commentService.getCommentList(articleno), HttpStatus.OK);
 	}
 	

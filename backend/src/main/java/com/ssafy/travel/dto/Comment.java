@@ -9,6 +9,11 @@ public class Comment {
 	private Date writedate;
 	private String text;
 	
+	public Comment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	public Comment(int commentno, int articleno, String writer, Date writedate, String text) {
 		super();
 		this.commentno = commentno;

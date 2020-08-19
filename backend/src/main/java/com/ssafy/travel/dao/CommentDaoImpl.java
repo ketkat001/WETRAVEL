@@ -20,7 +20,6 @@ public class CommentDaoImpl implements CommentDao {
 
 	@Override
 	public List<Comment> getCommentList(int articleno) {
-		System.out.println("DAO");
 		return sqlSession.selectList("m_comment.getCommentList", articleno);
 	}
 
