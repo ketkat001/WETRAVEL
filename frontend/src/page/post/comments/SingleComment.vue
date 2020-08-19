@@ -1,7 +1,7 @@
 <template>
   <div class="comment">
 		<div class="comment-text">
-			<b-link class="username" :to="{name: 'profile'}">{{ comment.user }}</b-link>
+			<b-link class="username" :to="{name: 'profile'}">{{ comment.writer }}</b-link>
 			<span>{{ comment.text }}</span>
 		</div>
 		<b-button variant="primary" class="mx-1">수정</b-button>

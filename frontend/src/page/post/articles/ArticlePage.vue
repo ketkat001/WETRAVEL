@@ -70,6 +70,7 @@ export default {
       day:'',
       traveldate:'',
       text: '',
+      score: 0,
       articleno:this.$route.params.articleno,
       comments: [],
       isAuthor: false
@@ -169,6 +170,7 @@ export default {
       }
     },
     modifyAction(){
+      console.log(this.score)
       this.$router.push({name : 'articlemodify'})
     },
     authorCheck: async function() {

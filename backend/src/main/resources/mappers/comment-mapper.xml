@@ -7,7 +7,7 @@
 		values (#{commentno}, #{articleno}, #{writer}, now(), #{text});
 	</insert>
 	
-	<select id="getCommentList">
+	<select id="getCommentList" resultType="comment">
 		select * from article_comment
 		<if test="articleno != null">
 			where articleno = #{articleno};
