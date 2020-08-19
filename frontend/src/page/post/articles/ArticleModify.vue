@@ -174,7 +174,9 @@ let longs = ''
             msg = '수정이 완료되었습니다.';
           }
           alert(msg);
-          this.$router.go(-1)
+          this.$store.dispatch('getBookInfo', this.$route.params.bookno).then(res => {
+            this.$router.push({name: 'bookpage', params: {province: res.province, city: res.city, bookno: this.$route.params.bookno}})
+          })
         });
     },
     handleImageAdded(file, Editor, cursorLocation) {
