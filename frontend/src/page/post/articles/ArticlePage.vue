@@ -30,7 +30,7 @@
         <star-rating :increment="0.5"
           :max-rating="5"
           active-color="#007bff"
-          :star-size="25">
+          :star-size="25" @rating-selected="setRating">
         </star-rating>
         <div class="article-comment">
           <div class="comments-header">
@@ -91,6 +91,9 @@ export default {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods : {
+    setRating: function(rating) {
+      alert("!!")
+    },
     initMap() { 
       var container = document.getElementById('map');
       var latArr = lats.split(" ")
