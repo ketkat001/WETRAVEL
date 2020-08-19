@@ -97,6 +97,8 @@ export default {
     },
     initMap() { 
       var container = document.getElementById('map');
+      
+      if(lats.length != 0){
       var latArr = lats.split(" ")
       var longArr = longs.split(" ")
       var latCen = ''
@@ -134,10 +136,9 @@ export default {
           }); 
           marker.setMap(map) 
           }
+        }
       },
 
-      
-      
       addScript() { 
         const script = document.createElement('script'); 
         /* global kakao */ 
@@ -228,4 +229,10 @@ export default {
     height: auto;
   }
   
+  img {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 5px;
+  width: 10px;
+}
 </style>
