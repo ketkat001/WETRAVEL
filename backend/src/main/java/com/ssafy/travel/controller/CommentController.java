@@ -38,9 +38,10 @@ public class CommentController {
 		return new ResponseEntity<String>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@ApiOperation(value = "article 번호에 해당하는 article에 등록된 댓글 목록을 반환한다. ", response = Comment.class)
+	@ApiOperation(value = "article 번호에 해당하는 article에 등록된 댓글 목록을 반환한다. ", response = List.class)
 	@GetMapping("{articleno}")
 	public ResponseEntity<List<Comment>> getCommentList(@PathVariable int articleno) {
+		System.out.println(articleno);
 		return new ResponseEntity<List<Comment>>(commentService.getCommentList(articleno), HttpStatus.OK);
 	}
 	

@@ -35,18 +35,30 @@ export default {
 	},
 	data() {
 		return {
-			reply: ''
+			reply: '',
+			comments: []
 		}
+	},
+	mounted: function() {
+		this.getCommentList();
 	},
 	methods: {
 		submitComment() {
-			if(this.reply != '') {
+/* 			if(this.reply != '') {
 				this.$emit('submit-comment', this.reply)
 				this.reply=''
-			}
+			} */
+
+		},
+		getCommentList() {
+			this.$axios.get(`/api/comment/${this.$route.params.articleno}`).then(res => {
+				for (var i = 0; i < res.data.length; i++) {
+					this.comments.push({commentno: res.data[i].commentno, writer: res.data[i].writer, writedate: res.data[i].writedate, text: res.data[i].text})
+				}
+			})
 		}
 	},
-	props: ['comments', 'comments_wrapper_classes']
+	props: ['comments_wrapper_classes']
 
 }
 </script>

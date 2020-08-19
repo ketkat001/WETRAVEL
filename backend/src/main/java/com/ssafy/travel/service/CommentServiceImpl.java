@@ -20,6 +20,7 @@ public class CommentServiceImpl implements CommentService {
 
 	@Override
 	public List<Comment> getCommentList(int articleno) {
+		System.out.println("Service");
 		return commentDao.getCommentList(articleno);
 	}
 
