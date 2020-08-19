@@ -12,9 +12,9 @@
           <div class="col-4 p-0">
             <h3>{{ book_info.title }}</h3>
           </div>
-          <div class="col-8 p-0" style="text-align:right">
+          <div class="col-8 p-0" style="text-align:right" v-show="isAuthor">
             <b-button class="mx-1" variant="primary"><router-link :to="{ name: 'bookmodify', params: {bookno: this.$route.params.bookno}}">수정</router-link></b-button>
-            <b-button class="ml-1" variant="danger">삭제</b-button>
+            <b-button class="ml-1" variant="danger" @click="deleteaction">삭제</b-button>
           </div>
         </div>
         <div class="book-content-inf">
@@ -37,7 +37,7 @@
     </div>
     <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
     <div class="book-article">
-      <div v-for="(article, index) in articles" :key="index" :ref="`article_${index}`" class="book-article-content">
+      <div v-for="(article, index) in articles" :key="index" :ref="`article_${index}`" class="book-article-content" @click="$router.push({name: 'articlepage', params: {province: $route.params.province, city: $route.params.city, bookno: $route.params.bookno, articleno: article.articleno}})">
         <div class="col-2 p-0">
           <img v-if="article.img != null" class="article-img" :src="'data:image/jpg;base64,' + article.img">
           <img v-else class="article-img" src="@/assets/img/logo_wetravel.png">
@@ -76,6 +76,7 @@ export default {
     return {
       book_info: book_info,
       articles: articles,
+      isAuthor: false,
     } 
   },
   watch: {
@@ -87,6 +88,7 @@ export default {
   mounted() {
     this.getBookInfo()
     this.getArticleList()
+    this.authorCheck()
   },
   methods: {
     async getBookInfo() {
@@ -101,11 +103,42 @@ export default {
         headers: {'Content-Type': 'application/json'}
       }).then(response => {
         for (var i = 0; i < response.data.length; i++) {
-          articles.push({title: response.data[i].title, day: response.data[i].day, writedate: response.data[i].writedate, 
+          articles.push({articleno: response.data[i].articleno, title: response.data[i].title, day: response.data[i].day, writedate: response.data[i].writedate, 
                           score: response.data[i].score, img: response.data[i].img})
         }
       })
       this.articles = articles
+    },
+    deleteaction: function() {
+      let res = confirm("정말로 삭제하시겠습니까?")
+      if (res == true) {
+        this.$axios.
+          delete(`/api/book/${this.$route.params.bookno}`, {
+          articleno : this.$route.params.bookno
+          }, {headers : {'Content-Type': 'application/json'}})
+          .then(({ data }) => {
+            let msg = '삭제 처리시 문제가 발생했습니다.';
+            if (data === 'success') {
+              msg = '삭제가 완료되었습니다.';
+            }
+            alert(msg);
+            this.$router.push({name: 'citypage', params: {'province': this.$route.params.province, 'city': this.$route.params.city}})
+          });
+      }
+    },
+    goToArticlePage: function() {
+      this.$router.push({name: 'articlepage', params: {province: this.$route.params.province, city: this.$route.params.city, bookno: this.$route.params.bookno, articleno: article.articleno}})
+    },
+    authorCheck: async function() {
+      if (sessionStorage.getItem('jwt-auth-token') == null)
+        this.isAuthor = false
+      await this.$store.dispatch('checkLogin').then(res => {
+        console.log(res.nickname)
+        if (res.nickname == this.book_info.writer)
+          this.isAuthor = true
+        else
+          this.isAuthor = false
+      })
     }
   }
 }

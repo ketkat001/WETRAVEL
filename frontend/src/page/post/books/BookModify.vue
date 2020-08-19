@@ -117,7 +117,7 @@ export default {
       this.form.city = res.data.city
       this.form.startdate = res.data.startdate
       this.form.description = res.data.description
-      this.thumbnail = this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg')
+        this.thumbnail = res.data.img != null ? this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg') : null
     })
   },
   methods: {

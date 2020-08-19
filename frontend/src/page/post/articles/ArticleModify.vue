@@ -119,7 +119,7 @@ let longs = ''
         this.form.title = res.data.title
         this.form.day = res.data.day
         this.editorContent = res.data.text
-        this.thumbnail = this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg')
+        this.thumbnail = res.data.img != null ? this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg') : null
     })
     },
     methods: {
@@ -163,7 +163,7 @@ let longs = ''
         formData.append('exifLong', longs)
         console.log(longs)
       axios
-        .put('http://localhost:8999/travel/api/article/article', formData,
+        .put('/api/article/article', formData,
         {
           headers: {'Content-Type': 'multipart/form-data'}
         })

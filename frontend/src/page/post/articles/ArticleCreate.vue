@@ -145,7 +145,7 @@ let longs = ''
             msg = '등록이 완료되었습니다.';
           }
           alert(msg);
-          //this.moveList();
+          this.$router.go(-1)
         });
     },
     handleImageAdded(file, Editor, cursorLocation) {

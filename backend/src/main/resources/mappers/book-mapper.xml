@@ -46,7 +46,7 @@
 
 	<update id="modifyBook">
 		Update book
-		set title = #{title}, writer = #{writer}, writedate=#{writedate},
+		set title = #{title}, writer = #{writer}, 
 		province=#{province}, city=#{city}, startdate=#{startdate}, description=#{description}, img=#{img, jdbcType=BLOB}
 		where bookno = #{bookno}
 	</update>
