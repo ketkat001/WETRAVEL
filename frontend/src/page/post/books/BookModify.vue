@@ -71,7 +71,7 @@
             </b-form-textarea>
           </b-form-group>
           <div class="text-center">
-            <b-button type="submit" variant="primary" @click="createAction">Submit</b-button>
+            <b-button type="submit" variant="primary" @click="createAction">작성 완료</b-button>
           </div>
         </b-form>
       </div>
@@ -98,7 +98,8 @@ export default {
         startdate: "",
         description: "",
         bookno: this.$route.params.bookno
-      }
+      },
+      originalFile: null
     }
   },
   computed: {
@@ -117,7 +118,7 @@ export default {
       this.form.city = res.data.city
       this.form.startdate = res.data.startdate
       this.form.description = res.data.description
-        this.thumbnail = res.data.img != null ? this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg') : null
+      this.originalFile = res.data.img != null ? this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg') : null
     })
   },
   methods: {
@@ -158,7 +159,7 @@ export default {
       formData.append('city', this.form.city)
       formData.append('startdate', this.form.startdate)
       formData.append('description', this.form.description)
-      formData.append('thumbnail', this.thumbnail != null ? this.thumbnail : new File([""], ""))
+        formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : (this.originalFile != null ? this.originalFile : new File([""], "")))
       this.$axios.put(`/api/book/${this.form.bookno}`, formData, {
         headers: {'Content-Type': 'multipart/form-data'}
       })
