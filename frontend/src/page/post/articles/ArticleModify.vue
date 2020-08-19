@@ -159,9 +159,9 @@ let longs = ''
         formData.append('text', this.editorContent)
         formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : (this.originalFile != null ? this.originalFile : new File([""], "")))
         console.log(this.thumbnail)
-        formData.append('exifLat', lats)
+        formData.append('exiflat', lats)
         console.log(lats)
-        formData.append('exifLong', longs)
+        formData.append('exiflong', longs)
         console.log(longs)
       axios
         .put(`/api/article/${this.form.articleno}`, formData,
