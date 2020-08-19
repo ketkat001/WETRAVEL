@@ -19,8 +19,6 @@
 	
 	<delete id="deleteComment">
 		delete from article_comment
-		<if test="commentno != null">
-			where commentno = #{commentno};
-		</if>
+		where commentno = #{commentno};
 	</delete>
 </mapper>

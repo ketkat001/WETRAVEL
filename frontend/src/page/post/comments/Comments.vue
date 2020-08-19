@@ -19,6 +19,7 @@
 				v-for="comment in comments"
 				:comment="comment"
 				:key="comment.id"
+				@changed="getCommentList()"
 			>
 			</singlecomment>
 		</div>
@@ -36,26 +37,55 @@ export default {
 	data() {
 		return {
 			reply: '',
-			comments: []
+			comments: [],
+			username: ''
 		}
 	},
 	mounted: function() {
 		this.getCommentList();
 	},
 	methods: {
-		submitComment() {
+		async submitComment() {
 /* 			if(this.reply != '') {
 				this.$emit('submit-comment', this.reply)
 				this.reply=''
 			} */
-
+			if (this.reply == '') {
+				alert("내용을 입력해주세요")
+			}
+			else if (!sessionStorage.getItem('jwt-auth-token')) {
+				alert("로그인 후 댓글을 작성할 수 있습니다")
+			}
+			else {
+				await this.$store.dispatch('checkLogin').then(res => {
+					this.$axios.post('/api/comment', {
+						articleno: this.$route.params.articleno,
+						writer: res.nickname,
+						text: this.reply
+					}, {
+						headers: {
+							'Content-Type': 'application/json'
+						}
+					}).then(({ data }) => {
+						if (data === 'success') {
+							alert('댓글이 등록되었습니다')
+							this.getCommentList()
+						}
+						else {
+							alert('댓글 등록 중 오류가 발생하였습니다')
+						}
+					})
+				})
+			}
 		},
-		getCommentList() {
-			this.$axios.get(`/api/comment/${this.$route.params.articleno}`).then(res => {
+		async getCommentList() {
+			this.comments = []
+			await this.$axios.get(`/api/comment/${this.$route.params.articleno}`).then(res => {
 				for (var i = 0; i < res.data.length; i++) {
 					this.comments.push({commentno: res.data[i].commentno, writer: res.data[i].writer, writedate: res.data[i].writedate, text: res.data[i].text})
 				}
 			})
+			this.$emit('commentnum', this.comments.length)
 		}
 	},
 	props: ['comments_wrapper_classes']
