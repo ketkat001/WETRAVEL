@@ -60,6 +60,8 @@ public class ArticleController {
 	public ResponseEntity<String> registArticle(@ModelAttribute Article article) {
 		logger.debug("registArticle - 호출");
 		try {
+			System.out.println(article.getExiflat());
+			System.out.println(article.getExiflong());
 			article.setImg();
 			article.setImgName();
 			if (articleService.registArticle(article)) {
