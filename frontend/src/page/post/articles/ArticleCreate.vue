@@ -132,8 +132,8 @@ let longs = ''
         formData.append('traveldate', this.form.traveldate)
         formData.append('text', this.editorContent)
         formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : new File([""], ""))
-        formData.append('exifLat', lats)
-        formData.append('exifLong', longs)
+        formData.append('exiflat', lats)
+        formData.append('exiflong', longs)
       axios
         .post('/api/article/article', formData,
         {
@@ -165,12 +165,14 @@ let longs = ''
             var latitude = this.exifLat[0] + (( (this.exifLat[1]*60) + this.exifLat[2] ) / 3600);
           }
             lat.add(latitude)
+            console.log(lat)
           if (this.exifLongRef == "W") {
             var longitude = (this.exifLong[0]*-1) + (( (this.exifLong[1]*-60) + (this.exifLong[2]*-1) ) / 3600);						
           } else {
             var longitude = this.exifLong[0] + (( (this.exifLong[1]*60) + this.exifLong[2] ) / 3600);
           } 
           long.add(longitude)
+           console.log(long)
         }
 
       this.exifLat = lat
