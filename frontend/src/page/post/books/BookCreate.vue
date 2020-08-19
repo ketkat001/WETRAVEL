@@ -71,7 +71,7 @@
             </b-form-textarea>
           </b-form-group>
           <div class="text-center">
-            <b-button type="submit" variant="primary" @click="createAction">작성 완료</b-button>
+            <b-button variant="primary" @click="createAction">작성 완료</b-button>
           </div>
         </b-form>
       </div>

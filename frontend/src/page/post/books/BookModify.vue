@@ -71,7 +71,7 @@
             </b-form-textarea>
           </b-form-group>
           <div class="text-center">
-            <b-button type="submit" variant="primary" @click="createAction">작성 완료</b-button>
+            <b-button variant="primary" @click="createAction">작성 완료</b-button>
           </div>
         </b-form>
       </div>
@@ -169,6 +169,7 @@ export default {
           msg = '등록이 완료되었습니다.';
         }
         alert(msg);
+        this.$router.push({name: 'citypage', params: {province: this.form.province, city: this.form.city}})
       });
     }
   }
