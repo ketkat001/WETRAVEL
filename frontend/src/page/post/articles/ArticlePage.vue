@@ -30,6 +30,7 @@
         <star-rating :increment="0.5"
           :max-rating="5"
           active-color="#007bff"
+          :rating="score"
           :star-size="25">
         </star-rating>
         <div class="article-comment">
@@ -70,6 +71,7 @@ export default {
       day:'',
       traveldate:'',
       text: '',
+      score: 0,
       articleno:this.$route.params.articleno,
       comments: [],
       isAuthor: false
@@ -166,6 +168,7 @@ export default {
       }
     },
     modifyAction(){
+      console.log(this.score)
       this.$router.push({name : 'articlemodify'})
     },
     authorCheck: async function() {
