@@ -271,13 +271,15 @@ let longs = ''
         Bucket: this.albumBucketName
       }
     })
-
-      s3.deleteObject({ Key: photoKey }, (err) => {
-      if (err) {
-    
-      }
       
-    });
+      if(photoKey != null){
+        s3.deleteObject({ Key: photoKey }, (err) => {
+        if (err) {
+      
+        }
+        
+      });
+      }
       }
   }
 }
