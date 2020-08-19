@@ -163,7 +163,7 @@ let longs = ''
         formData.append('exifLong', longs)
         console.log(longs)
       axios
-        .put('/api/article/article', formData,
+        .put(`/api/article/${this.form.articleno}`, formData,
         {
           headers: {'Content-Type': 'multipart/form-data'}
         })

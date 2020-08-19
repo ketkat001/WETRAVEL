@@ -28,7 +28,7 @@
              read-only
              :star-size="25">
           </star-rating>
-          <b-button variant="primary"><b-link style="text-decoration:none;" :to="{name:'articlecreate', params:{ bookno: this.$route.params.bookno }}">글 작성</b-link></b-button>
+          <b-button variant="primary" v-show="isAuthor"><b-link style="text-decoration:none;" :to="{name:'articlecreate', params:{ bookno: this.$route.params.bookno }}">글 작성</b-link></b-button>
         </div>
         <div class="book-content">
           <p>{{ book_info.description }}</p>
@@ -130,15 +130,14 @@ export default {
       this.$router.push({name: 'articlepage', params: {province: this.$route.params.province, city: this.$route.params.city, bookno: this.$route.params.bookno, articleno: article.articleno}})
     },
     authorCheck: async function() {
-      if (sessionStorage.getItem('jwt-auth-token') == null)
-        this.isAuthor = false
-      await this.$store.dispatch('checkLogin').then(res => {
-        console.log(res.nickname)
-        if (res.nickname == this.book_info.writer)
-          this.isAuthor = true
-        else
-          this.isAuthor = false
-      })
+      if (sessionStorage.getItem('jwt-auth-token')) {
+        await this.$store.dispatch('checkLogin').then(res => {
+          if (res.nickname == this.book_info.writer)
+            this.isAuthor = true
+          else
+            this.isAuthor = false
+        })
+      }
     }
   }
 }

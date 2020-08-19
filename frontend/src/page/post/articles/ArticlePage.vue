@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="article-footer">
-        <div class="article-btn">
+        <div class="article-btn" v-show="isAuthor">
           <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
           <b-button class="m-3" variant="danger" @click="deleteAction">삭제</b-button>
         </div>
@@ -65,12 +65,14 @@ export default {
     return {
       bookno: this.$route.params.bookno,   //책 번호 url에서 받아서 bookno에 저장
       writedate:'',
+      writer:'',
       title:'',
       day:'',
       traveldate:'',
       text: '',
       articleno:this.$route.params.articleno,
-      comments: []
+      comments: [],
+      isAuthor: false
     }
   },
   async mounted(){
@@ -78,12 +80,14 @@ export default {
       headers: {'Content-Type': 'application/json'}
     }).then(res => {
       this.writedate = res.data.writedate
+      this.writer = res.data.writer
       this.title = res.data.title
       this.day = res.data.day
       this.text = res.data.text
       lats = res.data.exiflat
       longs = res.data.exiflong
     })
+    this.authorCheck()
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods : {
@@ -163,7 +167,21 @@ export default {
     },
     modifyAction(){
       this.$router.push({name : 'articlemodify'})
-    }   
+    },
+    authorCheck: async function() {
+      if (sessionStorage.getItem('jwt-auth-token')) {
+        var nickname
+        await this.$store.dispatch('checkLogin').then(res => {
+          this.$store.dispatch('getBookInfo', this.$route.params.bookno).then(response => {
+            if (res.nickname == response.writer)
+              this.isAuthor = true
+            else
+              this.isAuthor = false
+          })
+        })
+
+      }
+    }
   }
 }
 </script>
