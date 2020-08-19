@@ -83,6 +83,7 @@ export default {
     'this.$route.params.bookno': function(bookno) {
       this.getArticleList()
       this.getBookInfo()
+      this.authorCheck()
     }
   },
   mounted() {

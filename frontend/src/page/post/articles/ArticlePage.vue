@@ -36,14 +36,14 @@
           <div class="comments-header">
             <div class="comments-stats">
               <span class="m-3"><font-awesome-icon icon="thumbs-up" size="lg" class="mx-3"></font-awesome-icon>1</span>
-              <span class="m-3"><font-awesome-icon icon="comment" size="lg" class="mx-3"></font-awesome-icon>2</span>
+              <span class="m-3"><font-awesome-icon icon="comment" size="lg" class="mx-3"></font-awesome-icon>{{numOfComments}}</span>
             </div>
           </div>
           <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
           <comments
             :comments_wrapper_classes="['custom-scrollbar', 'comments-wrapper']"
             :comments="comments"
-            @submit-comment="submitComment">
+            @commentnum="commentNum">
           </comments>
         </div>
       </div>
@@ -72,7 +72,7 @@ export default {
       text: '',
       score: 0,
       articleno:this.$route.params.articleno,
-      comments: [],
+      numOfComments: 0,
       isAuthor: false
     }
   },
@@ -146,12 +146,8 @@ export default {
         script.src = 'http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=06361ba6891dd71194432873935299c9'; 
         document.head.appendChild(script); 
         },
-    submitComment: function(reply) {
-      this.comments.push({
-        id: this.comments.length + 1,
-				user: '',
-        text: reply
-      })
+    commentNum: function(num) {
+      this.numOfComments = num
     },
     deleteAction(){
       let res = confirm("정말로 삭제하시겠습니까?")
