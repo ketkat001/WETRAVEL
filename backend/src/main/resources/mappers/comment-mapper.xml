@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="m_comment">
+	<insert id="registComment">
+		insert into article_comment (commentno, articleno, writer, writedate, text)
+		values (#{commentno}, #{articleno}, #{writer}, now(), #{text});
+	</insert>
+	
+	<select id="getCommentList">
+		select * from article_comment
+		<if test="articleno != null">
+			where articleno = #{articleno};
+		</if>
+	</select>
+	
+	<update id="modifyComment">
+		update article_comment
+		set commentno = #{commentno}, articleno = #{articleno}, writer = #{writer}, text = #{text};
+	</update>
+	
+	<delete id="deleteComment">
+		delete from article_comment
+		<if test="commentno != null">
+			where commentno = #{commentno};
+		</if>
+	</delete>
+</mapper>

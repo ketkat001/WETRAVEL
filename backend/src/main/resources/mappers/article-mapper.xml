@@ -23,7 +23,7 @@
 	<update id="modifyArticle">
 		Update article
 		set title = #{title}, score_count=#{score_count},
-		text=#{text}, traveldate=#{traveldate}, day=#{day}, img=#{img, jdbcType=BLOB}
+		text=#{text}, traveldate=#{traveldate}, day=#{day}, img=#{img, jdbcType=BLOB}, exiflat=#{exiflat}, exiflong=#{exiflong}
 		where articleno = #{articleno}
 	</update>
 

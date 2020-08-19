@@ -66,6 +66,7 @@ import AWS from 'aws-sdk'
 import EXIF from 'exif-js'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
+
 let lat = new Set()
 let long = new Set()
 let lats = ''
@@ -106,6 +107,7 @@ let longs = ''
           text: '',
         },
         editorSettings: {
+
         }
       }
     },
@@ -130,10 +132,10 @@ let longs = ''
         formData.append('traveldate', this.form.traveldate)
         formData.append('text', this.editorContent)
         formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : new File([""], ""))
-        formData.append('exifLat', lats)
-        formData.append('exifLong', longs)
+        formData.append('exiflat', lats)
+        formData.append('exiflong', longs)
       axios
-        .post('http://localhost:8999/travel/api/article/article', formData,
+        .post('/api/article/article', formData,
         {
           headers: {'Content-Type': 'multipart/form-data'}
         })
@@ -143,7 +145,7 @@ let longs = ''
             msg = '등록이 완료되었습니다.';
           }
           alert(msg);
-          //this.moveList();
+          this.$router.go(-1)
         });
     },
     handleImageAdded(file, Editor, cursorLocation) {
@@ -163,12 +165,14 @@ let longs = ''
             var latitude = this.exifLat[0] + (( (this.exifLat[1]*60) + this.exifLat[2] ) / 3600);
           }
             lat.add(latitude)
+            console.log(lat)
           if (this.exifLongRef == "W") {
             var longitude = (this.exifLong[0]*-1) + (( (this.exifLong[1]*-60) + (this.exifLong[2]*-1) ) / 3600);						
           } else {
             var longitude = this.exifLong[0] + (( (this.exifLong[1]*60) + this.exifLong[2] ) / 3600);
           } 
           long.add(longitude)
+           console.log(long)
         }
 
       this.exifLat = lat
@@ -224,7 +228,7 @@ let longs = ''
       const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+'/1/1'
+        Bucket: this.albumBucketName
       }
     })
 

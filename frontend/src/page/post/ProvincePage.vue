@@ -22,7 +22,7 @@
               <div class="col-lg-3 col-md-3 col-sm-12 p-0">
                 <select v-model="searchMonth" class="form-control search-slt" id="monthComboBox" :disabled="searchCity == ''">
                   <option selected value="0">전체</option> 
-                  <option v-for="i in (1, 12)" :key="i" :value="i">{{ i }}</option>
+                  <option v-for="i in (1, 12)" :key="i" :value="i">{{ i }}월</option>
                 </select>
               </div>
               <div class="col-lg-3 col-md-3 col-sm-12 p-0">

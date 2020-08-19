@@ -107,7 +107,8 @@ let longs = ''
           articleno:this.$route.params.articleno
         },
         editorSettings: {
-        }
+        },
+        originalFile: null
       }
     },
     async mounted(){
@@ -119,7 +120,7 @@ let longs = ''
         this.form.title = res.data.title
         this.form.day = res.data.day
         this.editorContent = res.data.text
-        this.thumbnail = this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg')
+        this.originalFile = res.data.img != null ? this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg') : null
     })
     },
     methods: {
@@ -156,14 +157,14 @@ let longs = ''
         formData.append('day', this.form.day)
         formData.append('traveldate', this.form.traveldate)
         formData.append('text', this.editorContent)
-        formData.append('thumbnail', this.thumbnail != null ? this.thumbnail : new File([""], ""))
+        formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : (this.originalFile != null ? this.originalFile : new File([""], "")))
         console.log(this.thumbnail)
         formData.append('exifLat', lats)
         console.log(lats)
         formData.append('exifLong', longs)
         console.log(longs)
       axios
-        .put('http://localhost:8999/travel/api/article/article', formData,
+        .put(`/api/article/${this.form.articleno}`, formData,
         {
           headers: {'Content-Type': 'multipart/form-data'}
         })
@@ -173,7 +174,7 @@ let longs = ''
             msg = '수정이 완료되었습니다.';
           }
           alert(msg);
-          //this.moveList();
+          this.$router.go(-1)
         });
     },
     handleImageAdded(file, Editor, cursorLocation) {
@@ -265,7 +266,7 @@ let longs = ''
       const s3 = new AWS.S3({
       apiVersion: "2006-03-01",
       params: { 
-        Bucket: this.albumBucketName+'/1/1'
+        Bucket: this.albumBucketName
       }
     })
 
