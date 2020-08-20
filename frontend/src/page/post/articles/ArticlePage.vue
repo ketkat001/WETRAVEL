@@ -54,11 +54,6 @@
           <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
           <b-button class="m-3" variant="danger" @click="deleteAction">삭제</b-button>
         </div>
-        <star-rating :increment="0.5"
-          :max-rating="5"
-          active-color="#007bff"
-          :star-size="25" @rating-selected="setRating">
-        </star-rating>
         <div class="article-comment">
           <div class="comments-header">
             <div class="comments-stats">
@@ -119,9 +114,6 @@ export default {
     window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
   },
   methods : {
-    setRating: function(rating) {
-      alert("!!")
-    },
     initMap() { 
       var container = document.getElementById('map');
       
@@ -416,11 +408,6 @@ function changeCategoryClass(el) {
   .article-btn {
     display: flex;
     justify-content: flex-end;
-  }
-  .vue-star-rating {
-    justify-content: center;
-    margin-bottom: 20px;
-    margin-top: 20px;
   }
   .comments-stats { 
     width: 100%;

@@ -74,6 +74,24 @@
             </swiper-slide>
           </swiper>
         </div>
+        <div class="best-content" data-aos="zoom-in" data-aos-duration="1000">
+          <h2 style="margin-bottom: 40px; color: primary;">믿고 보는 베스트 여행기</h2>
+          <div class="content-card row">
+            <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
+              <b-link :to="{name: 'bookpage', params: { province: card.province, city: card.city, bookno: card.bookno }}">
+                <div class="card travel-card">
+                  <img v-if="card.img != null" class="travel-card-image" :src="'data:image/jpg;base64,' + card.img">
+                  <img v-else class="travel-card-image" src="@/assets/img/logo_wetravel.png">
+                  <div class="travel-card-footer">
+                    <p class="travel-card-text">{{ card.city }}</p>
+                    <h3 class="travel-card-title">{{ card.title }}</h3>
+                    <p class="travel-card-text">by <span class="travel-card-author">{{ card.author }}</span></p>
+                  </div>
+                </div>
+              </b-link>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>
@@ -118,6 +136,9 @@ export default {
   watch: {},
   created() {
   },
+  mounted() {
+    this.getBookListByScore()
+  },
   methods: {
     cityList: async function() {
       if (this.searchProvince == '') {
@@ -142,6 +163,13 @@ export default {
         return
       }
       this.$router.push({name: 'citypage', params: {province: this.searchProvince, city: this.searchCity, month: this.searchMonth}})
+    },
+    getBookListByScore: async function() {
+      await this.$axios.get('/api/book/all/score').then(response => {
+        for (var i = 0; i < response.data.length; i++) {
+          this.cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, img: response.data[i].img})
+        }
+      })
     }
   },
   data: function() {
@@ -164,7 +192,8 @@ export default {
         slidesPerView: 4,
         spaceBetween: 10,
         direction: 'horizontal',
-      }
+      },
+      cards: []
     };
   },
 };
@@ -264,14 +293,6 @@ export default {
   .korea-city{
     margin-bottom: 40px;
   }
-  @-webkit-keyframes play-state {
-    from {
-      left: -50px;
-    }
-    to {
-      left: 50px;
-    }
-  }
 
   .swiper-wrapper {
     animation: play-state 2s linear infinite alternate
@@ -361,6 +382,15 @@ export default {
     }
     95% {
       letter-spacing: 3px;
+    }
+  }
+  
+  @-webkit-keyframes play-state {
+    from {
+      left: -50px;
+    }
+    to {
+      left: 50px;
     }
   }
 

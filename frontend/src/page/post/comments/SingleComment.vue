@@ -1,7 +1,9 @@
 <template>
   <div class="comment">
-		<div class="comment-text">
-			<b-link class="username" :to="{name: 'profile'}">{{ comment.writer }}</b-link>
+		<div class="comment-text row">
+			<div class="col-3">
+				<b-link class="username" :to="{name: 'profile'}">{{ comment.writer }}</b-link>
+			</div>
 			<span>{{ comment.text }}</span>
 		</div>
 		<b-button variant="primary" class="mx-1" v-show="username == comment.writer">수정</b-button>
@@ -47,11 +49,12 @@ export default {
 <style scoped>
 	.comment {
 		display: flex;
-		justify-content: center;
+		min-height: 40px;
+		line-height: 40px;
 		margin-bottom: 10px;
 		background-color: rgb(245, 245, 245);
 		width: 100%;
-    border-radius: 30px;
+    	border-radius: 30px;
 		box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
 	}
 	.comment-text {
@@ -67,5 +70,7 @@ export default {
 	}
 	.comment-text .username {
 		font-weight: bold;
+		color: black;
+		text-decoration: none;
 	}
 </style>

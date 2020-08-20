@@ -14,8 +14,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faTwitter, faInstagram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-// vue-star-rating
-import StarRating from 'vue-star-rating'
 
 
 // vue-quill-editor
@@ -65,7 +63,7 @@ Vue.use(IconsPlugin)
 Vue.use(VueQuillEditor)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('star-rating', StarRating)
+
 
 
 // Vee-Validate 사용
