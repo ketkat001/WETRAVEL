@@ -48,4 +48,9 @@ public class BookServiceImpl implements BookService{
 	public List<Book> getBookListByUser(String nickname) {
 		return dao.getBookListByUser(nickname);
 	}
+
+	@Override
+	public int viewIncrement(int bookno, String viewer) {
+		return dao.viewIncrement(bookno, viewer);
+	}
 }

@@ -36,13 +36,19 @@
 				and city like #{city}
 			</if>
 		</if>
-		order by score desc
+		order by score desc limit 8;
 	</select>
 
 	<delete id="deleteBook">
 		delete from book
 		where bookno = #{bookno}
 	</delete>
+	
+	<update id="viewIncrement" parameterType="hashMap">
+		update book
+		set score = if (writer = #{viewer}, score, score + 1)
+		where bookno = #{bookno}
+	</update>
 
 	<update id="modifyBook">
 		Update book

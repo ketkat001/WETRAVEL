@@ -50,6 +50,12 @@ public class BookController {
 		return new ResponseEntity<List<Book>>(bookService.getBookListByScore(province, city), HttpStatus.OK);
 	}
 	
+	@ApiOperation(value = "해당 book의 조회수를 1 증가시킨다. ", response = Integer.class)
+	@PutMapping("score/{bookno}")
+	public ResponseEntity<Integer> viewIncrement(@PathVariable int bookno, @RequestBody String viewer) {
+		return new ResponseEntity<Integer>(bookService.viewIncrement(bookno, viewer), HttpStatus.OK);
+	}
+	
     @ApiOperation(value = "book번호에 해당하는 book의 정보를 반환한다.", response = Book.class)    
 	@GetMapping("{bookno}")
 	public ResponseEntity<Book> getBookDetail(@PathVariable int bookno) {

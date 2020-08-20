@@ -79,6 +79,12 @@ export default {
               this.isAuthor = true
             else
               this.isAuthor = false
+
+            this.$axios.put(`/api/book/score/${this.$route.params.bookno}`, {
+              viewer: res.nickname
+            }, {
+              headers: {'Content-Type': 'application/json'}
+            })
           })
         }
       })

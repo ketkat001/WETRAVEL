@@ -11,6 +11,7 @@ public interface BookDao {
 	public List<Book> getBookListByScore(String province, String city);
 	public int deleteBook(int bookno);
 	public int modifyBook(Book book);
+	public int viewIncrement(int bookno, String viewer);
 	public Book getBookDetail(int bookno);
 	public List<Book> getBookList(String province, String city, int month);
 	public List<Book> getBookListByUser(String nickname);
