@@ -18,7 +18,7 @@
     <div class="container">
       <div class="article-content">
         <div class="article-map">
-          <div id="map" style="width:100%;height:350px;">
+          <div id="map" v-if="flag" style="width:100%;height:350px;">
             <ul id="category">
         <li id="BK9" data-order="0"> 
             <span class="category_bg bank"></span>
@@ -46,7 +46,9 @@
         </li>      
     </ul>
           </div>
-          <p style="width:100%" v-html="text"></p>
+          <div class="article-editor" style="margin-top:30px">
+            <p style="width:100%" v-html="text"></p>
+          </div>
         </div>
       </div>
       <div class="article-footer">
@@ -95,7 +97,9 @@ export default {
       score: 0,
       articleno:this.$route.params.articleno,
       numOfComments: 0,
-      isAuthor: false
+      isAuthor: false,
+      flag : false,
+      one : true
     }
   },
   async mounted(){
@@ -111,13 +115,21 @@ export default {
       longs = res.data.exiflong
     })
     this.authorCheck()
-    window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+    if(lats.length != ""){
+      this.flag = true;
+      window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+    }
+    if(one){
+      this.$router.go(this.$router.currentPage)
+      one = false
+    }
   },
   methods : {
     initMap() { 
       var container = document.getElementById('map');
-      
-      if(lats.length != 0){
+      if(lats.length != ""){
+        console.log("??")
+        // this.flag = true
       var latArr = lats.split(" ")
       var longArr = longs.split(" ")
       var latCen = ''
