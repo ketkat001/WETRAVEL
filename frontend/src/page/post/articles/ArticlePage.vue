@@ -17,8 +17,8 @@
     </div>
     <div class="container">
       <div class="article-content">
-        <div id="map" style="width:600px;height:350px;"></div>
         <div class="article-map">
+          <div id="map" style="width:100%;height:350px;"></div>
           <p style="width:100%" v-html="text"></p>
         </div>
       </div>
