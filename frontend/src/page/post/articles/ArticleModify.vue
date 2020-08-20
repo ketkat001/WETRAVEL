@@ -66,10 +66,18 @@ import AWS from 'aws-sdk'
 import EXIF from 'exif-js'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
+import ImageResize from 'quill-image-resize-module'
+Quill.register('modules/imageResize', ImageResize);
+
 let lat = new Set()
 let long = new Set()
 let lats = ''
 let longs = ''
+let templong = ''
+let templat = ''
+var arr = [];
+var lo = ''
+var la = ''
   export default {
     name : 'vueeditor2',
     components : {
@@ -107,6 +115,9 @@ let longs = ''
           articleno:this.$route.params.articleno
         },
         editorSettings: {
+           modules: {
+            imageResize: {}
+            },
         },
         originalFile: null
       }
@@ -121,7 +132,11 @@ let longs = ''
         this.form.day = res.data.day
         this.editorContent = res.data.text
         this.originalFile = res.data.img != null ? this.dataURLtoFile('data:image/jpg;base64,' + res.data.img, 'original.jpg') : null
-    })
+        this.templat = res.data.exiflat // 받아온 값 저장
+        this.templong = res.data.exiflong // 받아온 값 저장
+      })
+      console.log(this.templat)
+      console.log(this.templong)
     },
     methods: {
       formatNames(files) {
@@ -148,8 +163,8 @@ let longs = ''
         this.createHandler();
       },
       createHandler() {
-        lat.forEach(v => lats += v + " ")
-        long.forEach(v => longs += v + " ")
+        lat.forEach(v => la += v + " ")
+        long.forEach(v => lo += v + " ")
         let formData = new FormData()
         formData.append('bookno', this.form.bookno)
         formData.append('articleno', this.form.articleno)
@@ -159,10 +174,10 @@ let longs = ''
         formData.append('text', this.editorContent)
         formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : (this.originalFile != null ? this.originalFile : new File([""], "")))
         console.log(this.thumbnail)
-        formData.append('exiflat', lats)
-        console.log(lats)
-        formData.append('exiflong', longs)
-        console.log(longs)
+        formData.append('exiflat', la)
+        console.log(la)
+        formData.append('exiflong', lo)
+        console.log(lo)
       axios
         .put(`/api/article/${this.form.articleno}`, formData,
         {
@@ -172,6 +187,8 @@ let longs = ''
           let msg = '등록 처리시 문제가 발생했습니다.';
           if (data === 'success') {
             msg = '수정이 완료되었습니다.';
+            this.exifLat = ''
+            this.exifLong = ''
           }
           alert(msg);
           this.$store.dispatch('getBookInfo', this.$route.params.bookno).then(res => {
@@ -181,7 +198,16 @@ let longs = ''
     },
     handleImageAdded(file, Editor, cursorLocation) {
       this.file = file
-
+        console.log("배열:"+this.templat)
+        console.log("배열:"+this.templong)
+      lats = this.templat.split(" ")
+      longs = this.templong.split(" ")
+      
+      for (let index = 0; index < lats.length-1; index++) {
+        lat.add(lats[index])
+        long.add(longs[index])
+      }
+        
       EXIF.getData(this.file, function() {
         console.log('image info', this)
         console.log('exif data', this.exifdata)
@@ -211,10 +237,7 @@ let longs = ''
         }
 
       this.exifLat = lat
-      console.log(this.exifLat)
       this.exifLong = long
-      console.log(this.exifLong)
-
     })
 
       AWS.config.update({
@@ -243,13 +266,12 @@ let longs = ''
         },(err) => {
           if(err){
             console.log(err)
-            
           }
           var href = "https://s3.amazonaws.com/"; // 기본 주소
           var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
           var photoloc = file.name;
           console.log("사진경로이름:"+photoloc)
-          var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
+          var photoUrl = bucketUrl + decodeURI(photoloc); // 최종 이미지 경로
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
         });
       },

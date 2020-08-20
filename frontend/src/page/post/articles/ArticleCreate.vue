@@ -129,7 +129,9 @@ let longs = ''
       },
       createHandler() {
         lat.forEach(v => lats += v + " ")
+        console.log(lats)
         long.forEach(v => longs += v + " ")
+        console.log(longs)
         let formData = new FormData()
         formData.append('bookno', this.form.bookno)
         formData.append('title', this.form.title)
@@ -148,6 +150,8 @@ let longs = ''
           let msg = '등록 처리시 문제가 발생했습니다.';
           if (data === 'success') {
             msg = '등록이 완료되었습니다.';
+            this.exifLat = ''
+            this.exifLong = ''
           }
           alert(msg);
           this.$store.dispatch('getBookInfo', this.$route.params.bookno).then(res => {
@@ -182,8 +186,8 @@ let longs = ''
            console.log(long)
         }
 
-      this.exifLat = lat
-      this.exifLong = long
+      //this.exifLat = lat
+      //this.exifLong = long
     })
 
       AWS.config.update({
@@ -216,6 +220,7 @@ let longs = ''
           var href = "https://s3.amazonaws.com/"; // 기본 주소
           var bucketUrl = href + this.albumBucketName + '/'; // 기본 주소 + 버킷이름
           var photoloc = file.name;
+          console.log("사진경로이름:"+photoloc)
           var photoUrl = bucketUrl + photoloc; // 최종 이미지 경로
           Editor.insertEmbed(cursorLocation,'image',photoUrl)
         });
