@@ -22,11 +22,8 @@ public class BookDaoImpl implements BookDao{
 	}
 
 	@Override
-	public List<Book> getBookListByScore(String province, String city) {
-		Book b = new Book();
-		b.setProvince(province);
-		b.setCity(city);
-		return sqlSession.selectList("m_book.getBookListByScore", b);
+	public List<Book> getBookListByScore() {
+		return sqlSession.selectList("m_book.getBookListByScore");
 	}
 
 	@Override

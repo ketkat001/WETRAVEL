@@ -165,9 +165,9 @@ export default {
       this.$router.push({name: 'citypage', params: {province: this.searchProvince, city: this.searchCity, month: this.searchMonth}})
     },
     getBookListByScore: async function() {
-      await this.$axios.get('/api/book/all/score').then(res => {
-        for (var i = 0; i < res.data.length; i++) {
-          cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, img: response.data[i].img})
+      await this.$axios.get('/api/book/all/score').then(response => {
+        for (var i = 0; i < response.data.length; i++) {
+          this.cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, img: response.data[i].img})
         }
       })
     }

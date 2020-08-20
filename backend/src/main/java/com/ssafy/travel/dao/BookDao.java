@@ -8,7 +8,7 @@ import com.ssafy.travel.dto.Book;
 
 public interface BookDao {
 	public int registBook(Book book); 
-	public List<Book> getBookListByScore(String province, String city);
+	public List<Book> getBookListByScore();
 	public int deleteBook(int bookno);
 	public int modifyBook(Book book);
 	public int viewIncrement(int bookno, String viewer);

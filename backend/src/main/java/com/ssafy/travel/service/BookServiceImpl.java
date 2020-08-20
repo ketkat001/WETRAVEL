@@ -20,8 +20,8 @@ public class BookServiceImpl implements BookService{
 	}
 
 	@Override
-	public List<Book> getBookListByScore(String province, String city) {
-		return dao.getBookListByScore(province, city);
+	public List<Book> getBookListByScore() {
+		return dao.getBookListByScore();
 	}
 
 	@Override

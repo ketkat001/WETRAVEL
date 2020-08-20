@@ -45,9 +45,9 @@ public class BookController {
 	
 	@ApiOperation(value = "전체 or 특정 province와 city에 관한 모든 book의 정보를 평점순으로 반환한다.", response = List.class)
 	@GetMapping("all/score")
-	public ResponseEntity<List<Book>> getBookListByScore(@RequestParam("province") String province, @RequestParam("city") String city) throws Exception {
+	public ResponseEntity<List<Book>> getBookListByScore() throws Exception {
 		logger.debug("getBookListByScore - 호출");
-		return new ResponseEntity<List<Book>>(bookService.getBookListByScore(province, city), HttpStatus.OK);
+		return new ResponseEntity<List<Book>>(bookService.getBookListByScore(), HttpStatus.OK);
 	}
 	
 	@ApiOperation(value = "해당 book의 조회수를 1 증가시킨다. ", response = Integer.class)

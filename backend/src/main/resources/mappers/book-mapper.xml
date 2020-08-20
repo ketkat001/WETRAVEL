@@ -28,14 +28,6 @@
 	<select id="getBookListByScore" resultType="book">
 		select bookno, title, writer, writedate, province, city, startdate, description, score, img
 		from book
-		where 1=1
-
-		<if test='province != null and !province.equals("")'>
-			and province like #{province}
-			<if test='city != null and !city.equals("")'>
-				and city like #{city}
-			</if>
-		</if>
 		order by score desc limit 8;
 	</select>
 
