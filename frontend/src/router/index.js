@@ -147,7 +147,7 @@ export default new Router({
       path:'/bookcreate',
       name: 'bookcreate',
       component: bookcreate,
-      //beforeEnter: requireAuth()
+      beforeEnter: requireAuth()
     },
 
     {
@@ -159,7 +159,7 @@ export default new Router({
       path: '/posts/bookno/:bookno/bookmodify',
       name: 'bookmodify',
       component: bookmodify,
-      // beforeEnter: requireAuth()
+      beforeEnter: requireAuth()
     },
 
     // Article Page
@@ -196,25 +196,25 @@ export default new Router({
       path: '/profile',
       name: 'profile',
       component: profile,
-      //beforeEnter: requireAuth()
+      beforeEnter: requireAuth()
     },
     {
       path: '/userupdate',
       name: 'userupdate',
       component: userupdate,
-      //beforeEnter: requireAuth()
+      beforeEnter: requireAuth()
     },
     {
       path: '/userdelete',
       name: 'userdelete',
       component: userdelete,
-      // beforeEnter: requireAuth()
+      beforeEnter: requireAuth()
     },
     {
       path: '/aws',
       name: 'aws',
       component: aws,
-      //beforeEnter: requireAuth()
+      beforeEnter: requireAuth()
     },
     {
       path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
