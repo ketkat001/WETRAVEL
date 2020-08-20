@@ -11,6 +11,7 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto" v-else>
           <b-nav-item><b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" :to="{ name: 'profile'}">프로필</router-link></b-button></b-nav-item>
+          <b-nav-item><b-button variant="primary" class="text-white mx-3"><router-link style="text-decoration:none" :to="{ name: 'bookcreate'}">글 작성</router-link></b-button></b-nav-item>
           <b-nav-item><b-button variant="primary" class="text-white mx-3" @click="userLogout()">로그아웃</b-button></b-nav-item>
         </b-navbar-nav>
       </b-collapse>

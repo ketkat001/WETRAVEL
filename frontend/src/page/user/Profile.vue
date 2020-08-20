@@ -44,7 +44,7 @@
       <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
       <h2 class="mb-5 text-center">나의 여행기</h2>
       <div class="content-card row">
-        <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
+        <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-4 col-sm-6">
           <b-link :to="{name: 'bookpage', params: { province: card.province, city: card.city, bookno: card.bookno }}">
             <div class="card travel-card">
               <img v-if="card.img != null" class="travel-card-image" :src="'data:image/jpg;base64,' + card.img">
