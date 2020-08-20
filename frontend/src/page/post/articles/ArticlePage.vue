@@ -116,11 +116,10 @@ export default {
     this.authorCheck()
     if(lats.length != ""){
       this.flag = true;
-      window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
-    }
-    if(one){
-      this.$router.go(this.$router.currentPage)
-      one = false
+      if(flag){
+        this.$router.go(this.$router.currentPage)
+        window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+      }
     }
   },
   methods : {
