@@ -57,7 +57,6 @@
         <div class="article-comment">
           <div class="comments-header">
             <div class="comments-stats">
-              <span class="m-3"><font-awesome-icon icon="thumbs-up" size="lg" class="mx-3"></font-awesome-icon>1</span>
               <span class="m-3"><font-awesome-icon icon="comment" size="lg" class="mx-3"></font-awesome-icon>{{numOfComments}}</span>
             </div>
           </div>
@@ -75,7 +74,7 @@
 
 <script>
 import axios from 'axios'
-import { faThumbsUp as thumbsUp_SolidIcon, faComment } from "@fortawesome/free-solid-svg-icons";
+import { faComment } from "@fortawesome/free-solid-svg-icons";
 import comments from '../comments/Comments.vue'
 let lats = ''
 let longs = ''
