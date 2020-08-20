@@ -74,24 +74,6 @@
             </swiper-slide>
           </swiper>
         </div>
-        
-        <div class="best-article" data-aos="zoom-in" data-aos-duration='1000'>
-          <h2 style="margin-bottom:40px;">믿고 보는 베스트 여행기!</h2>
-          <div class="content-card row">
-            <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-6">
-              <b-link :to="{ name: 'bookpage', params: { province: card.province, city: card.city, bookno: card.bookno }}">
-                <div  class="card travel-card">
-                  <img class="travel-card-image" :src="card.image">
-                  <div class="travel-card-footer">
-                    <p class="travel-card-text">{{ $route.params.city }}</p>
-                    <h3 class="travel-card-title">{{ card.title }}</h3>
-                    <p class="travel-card-text">by <span class="travel-card-author">{{ card.author }}</span></p>
-                  </div>
-                </div>
-              </b-link>
-            </div>
-          </div>
-        </div>
       </div>
     </main>
   </div>
@@ -122,16 +104,6 @@ const province_thumb = [
   {title: '전라', image: require('@/assets/img/city/Jeollado.jpg')}
 ]
 
-const cards = [
-  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature', province: '서울', city: '서울', bookno: '1'},
-  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals', province: '부산', city: '부산', bookno: '1'},
-  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch', province: '제주', city: '제주', bookno: '1'},
-  {title: '서울의 밤은 밝다', author: '서울 야경', image: 'https://placeimg.com/640/480/nature', province: '서울', city: '서울', bookno: '1'},
-  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals', province: '부산', city: '부산', bookno: '1'},
-  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch', province: '제주', city: '제주', bookno: '1'},
-  {title: '부산의 야경을 보다', author: '전국 여행', image: 'https://placeimg.com/640/480/animals', province: '부산', city: '부산', bookno: '1'},
-  {title: '제주도를 가다', author: '한국 여행', image: 'https://placeimg.com/640/480/arch', province: '제주', city: '제주', bookno: '1'},
-]
 export default {
   name: "Post",
   components: {
@@ -183,7 +155,6 @@ export default {
       backImage3: {
         backgroundImage: `url(${require("@/assets/img/14.jpg")})`,
       },
-      cards: cards,
       searchProvince: '',
       searchCity: '',
       searchMonth: 0,

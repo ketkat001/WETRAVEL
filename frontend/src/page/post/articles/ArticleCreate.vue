@@ -69,6 +69,7 @@ import axios from 'axios';
 import ImageResize from 'quill-image-resize-module'
 Quill.register('modules/imageResize', ImageResize);
 
+
 let lat = new Set()
 let long = new Set()
 let lats = ''
