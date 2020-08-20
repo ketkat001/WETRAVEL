@@ -83,18 +83,24 @@ export default {
     'this.$route.params.bookno': function(bookno) {
       this.getArticleList()
       this.getBookInfo()
-      this.authorCheck()
     }
   },
   mounted() {
     this.getBookInfo()
     this.getArticleList()
-    this.authorCheck()
   },
   methods: {
     async getBookInfo() {
       await this.$store.dispatch('getBookInfo', this.$route.params.bookno).then(res => {
         this.book_info = res;
+        if (sessionStorage.getItem('jwt-auth-token')) {
+          this.$store.dispatch('checkLogin').then(res => {
+            if (res.nickname == this.book_info.writer)
+              this.isAuthor = true
+            else
+              this.isAuthor = false
+          })
+        }
       })
     },
     getArticleList: function() {
@@ -130,16 +136,6 @@ export default {
     goToArticlePage: function() {
       this.$router.push({name: 'articlepage', params: {province: this.$route.params.province, city: this.$route.params.city, bookno: this.$route.params.bookno, articleno: article.articleno}})
     },
-    authorCheck: async function() {
-      if (sessionStorage.getItem('jwt-auth-token')) {
-        await this.$store.dispatch('checkLogin').then(res => {
-          if (res.nickname == this.book_info.writer)
-            this.isAuthor = true
-          else
-            this.isAuthor = false
-        })
-      }
-    }
   }
 }
 </script>
