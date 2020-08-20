@@ -50,9 +50,12 @@
         </div>
       </div>
       <div class="article-footer">
-        <div class="article-btn" v-show="isAuthor">
-          <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
-          <b-button class="m-3" variant="danger" @click="deleteAction">삭제</b-button>
+        <div class="article-btn">
+          <b-button class="m-3" variant="primary"><router-link style="text-decoration:none; color:white;" :to="{ name: 'bookpage', params: { province: this.$route.params.province, city: this.$route.params.city, bookno: this.$route.params.bookno }}">글 목록으로</router-link></b-button>
+          <div v-show="isAuthor">
+            <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
+            <b-button class="m-3" variant="danger" @click="deleteAction">삭제</b-button>
+          </div>
         </div>
         <div class="article-comment">
           <div class="comments-header">
