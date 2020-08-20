@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `article` (
   CONSTRAINT `article_ibfk_1` FOREIGN KEY (`bookno`) REFERENCES `book` (`bookno`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 travel.article:~12 rows (대략적) 내보내기
+-- 테이블 데이터 travel.article:~11 rows (대략적) 내보내기
 DELETE FROM `article`;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
 INSERT INTO `article` (`articleno`, `bookno`, `title`, `writedate`, `score`, `score_count`, `text`, `traveldate`, `day`, `img`, `exiflat`, `exiflong`) VALUES
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `article_comment` (
   CONSTRAINT `article_comment_ibfk_2` FOREIGN KEY (`articleno`) REFERENCES `article` (`articleno`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
 
--- 테이블 데이터 travel.article_comment:~0 rows (대략적) 내보내기
+-- 테이블 데이터 travel.article_comment:~2 rows (대략적) 내보내기
 DELETE FROM `article_comment`;
 /*!40000 ALTER TABLE `article_comment` DISABLE KEYS */;
 INSERT INTO `article_comment` (`commentno`, `articleno`, `writer`, `writedate`, `text`) VALUES
