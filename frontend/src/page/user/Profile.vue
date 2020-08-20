@@ -17,9 +17,6 @@
               </a>
             </div>
           </div>
-          <div class="follow-btn">
-            <b-button variant="primary">Follow</b-button>
-          </div>
         </div>
       </div>
       <div class="profile-info row">
@@ -32,8 +29,6 @@
           </div>
         </div>
         <div class="col-6">
-          <div class="follow-info">
-          </div>
         </div>
         <div class="col-2 p-0">
           <div class="user-btn">
@@ -154,11 +149,6 @@ export default {
   position: absolute;
   top: 0;
   background: url("http://placehold.it/100x100")
-}
-.follow-btn {
-  position: relative;
-  top: 60px;
-  left: 560px;
 }
 .user-btn {
   float: right;

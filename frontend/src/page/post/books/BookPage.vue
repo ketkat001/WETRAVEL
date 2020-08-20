@@ -19,15 +19,6 @@
         </div>
         <div class="book-content-inf">
           <p>by {{ book_info.writer }}</p>
-          <star-rating :increment="1"
-             :max-rating="5"
-             :rating="4"
-             :show-rating="false"
-             inactive-color="#fff"
-             active-color="#007bff"
-             read-only
-             :star-size="25">
-          </star-rating>
           <b-button variant="primary" v-show="isAuthor"><b-link style="text-decoration:none;" :to="{name:'articlecreate', params:{ bookno: this.$route.params.bookno }}">글 작성</b-link></b-button>
         </div>
         <div class="book-content">
@@ -46,17 +37,6 @@
           <h5>{{ article.day }}화: {{ article.title }}</h5>
         </div>
         <div class="col-3" style="display: flex;">
-          <h5>평점</h5>
-          <star-rating :increment="0.01"
-             :max-rating="5"
-             :rating="article.score"
-             :show-rating="false"
-             inactive-color="#fff"
-             active-color="#007bff"
-             read-only
-             :star-size="20">
-          </star-rating>
-          <h5>{{ article.score }}</h5>
         </div>
         <div class="col-2">
           <h5>{{ article.writedate }}</h5>
@@ -161,10 +141,6 @@ export default {
   .book-content-inf {
     display: flex;
     justify-content: space-between;
-  }
-  .book-content-inf .vue-star-rating{
-    margin-left: 20px;
-    padding-bottom: 10px;
   }
   .book-article-content {
     margin-bottom: 20px;
