@@ -175,7 +175,7 @@ let longs = ''
           }
           alert(msg);
           this.$store.dispatch('getBookInfo', this.$route.params.bookno).then(res => {
-            this.$router.push({name: 'bookpage', params: {province: res.province, city: res.city, bookno: this.$route.params.bookno}})
+            this.$router.push({name: 'articlepage', params: {province: res.province, city: res.city, bookno: this.$route.params.bookno, articleno: this.$route.params.articleno}})
           })
         });
     },

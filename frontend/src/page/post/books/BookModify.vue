@@ -169,7 +169,7 @@ export default {
           msg = '등록이 완료되었습니다.';
         }
         alert(msg);
-        this.$router.push({name: 'citypage', params: {province: this.form.province, city: this.form.city}})
+        this.$router.push({name: 'bookpage', params: {province: this.form.province, city: this.form.city, bookno: this.$route.params.bookno}})
       });
     }
   }
