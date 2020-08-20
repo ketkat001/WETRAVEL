@@ -52,16 +52,14 @@
         </div>
       </div>
       <div class="article-footer">
-        <div class="article-btn">
-          <b-button class="m-3" variant="primary"><router-link style="text-decoration:none; color:white;" :to="{ name: 'bookpage', params: { province: this.$route.params.province, city: this.$route.params.city, bookno: this.$route.params.bookno }}">글 목록으로</router-link></b-button>
-          <div v-show="isAuthor">
-            <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
-            <b-button class="m-3" variant="danger" @click="deleteAction">삭제</b-button>
-          </div>
+        <div class="article-btn" v-show="isAuthor">
+          <b-button class="m-3" variant="primary" @click="modifyAction">수정</b-button>
+          <b-button class="m-3" variant="danger" @click="deleteAction">삭제</b-button>
         </div>
         <div class="article-comment">
           <div class="comments-header">
             <div class="comments-stats">
+              <span class="m-3"><font-awesome-icon icon="thumbs-up" size="lg" class="mx-3"></font-awesome-icon>1</span>
               <span class="m-3"><font-awesome-icon icon="comment" size="lg" class="mx-3"></font-awesome-icon>{{numOfComments}}</span>
             </div>
           </div>
@@ -79,7 +77,7 @@
 
 <script>
 import axios from 'axios'
-import { faComment } from "@fortawesome/free-solid-svg-icons";
+import { faThumbsUp as thumbsUp_SolidIcon, faComment } from "@fortawesome/free-solid-svg-icons";
 import comments from '../comments/Comments.vue'
 let lats = ''
 let longs = ''
@@ -119,14 +117,15 @@ export default {
     this.authorCheck()
     if(lats.length != ""){
       this.flag = true;
-      if(flag){
-        this.$router.go(this.$router.currentPage)
-        window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
-      }
+      window.kakao && window.kakao.maps ? this.initMap() : this.addScript();
+      this.one = false
     }
   },
   methods : {
-    initMap() { 
+    initMap() {
+      if(this.one){
+        this.$router.go(this.currentpage)
+      }
       var container = document.getElementById('map');
       if(lats.length != ""){
         console.log("??")
