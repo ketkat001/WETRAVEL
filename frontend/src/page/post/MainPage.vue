@@ -167,7 +167,7 @@ export default {
     getBookListByScore: async function() {
       await this.$axios.get('/api/book/all/score').then(response => {
         for (var i = 0; i < response.data.length; i++) {
-          this.cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, img: response.data[i].img})
+          this.cards.push({bookno: response.data[i].bookno, province: response.data[i].province, city: response.data[i].city, title: response.data[i].title, author: response.data[i].writer, img: response.data[i].img})
         }
       })
     }
