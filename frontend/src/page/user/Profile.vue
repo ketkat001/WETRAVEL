@@ -48,13 +48,17 @@
       </div>
       <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
       <h2 class="mb-5 text-center">나의 여행기</h2>
-      <div class="card-deck">
-        <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card border-0">
+      <div class="content-card row">
+        <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
           <b-link :to="{name: 'bookpage', params: { province: card.province, city: card.city, bookno: card.bookno }}">
-            <a href="#"><img class="card-img-top mb-2" :src="card.image" alt=""></a>
-            <div class="card-body">
-              <small class="text-muted">{{ card.city }}</small>
-              <h5 class="card-title my-2"><a href="#">{{ card.title }}</a></h5>
+            <div class="card travel-card">
+              <img v-if="card.img != null" class="travel-card-image" :src="'data:image/jpg;base64,' + card.img">
+              <img v-else class="travel-card-image" src="@/assets/img/logo_wetravel.png">
+              <div class="travel-card-footer">
+                <p class="travel-card-text">{{ card.city }}</p>
+                <h3 class="travel-card-title">{{ card.title }}</h3>
+                <p class="travel-card-text">by <span class="travel-card-author">{{ card.author }}</span></p>
+              </div>
             </div>
           </b-link>
         </div>
