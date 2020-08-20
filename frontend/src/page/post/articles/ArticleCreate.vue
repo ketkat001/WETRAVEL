@@ -66,6 +66,8 @@ import AWS from 'aws-sdk'
 import EXIF from 'exif-js'
 import { VueEditor, Quill } from 'vue2-editor'
 import axios from 'axios';
+import ImageResize from 'quill-image-resize-module'
+Quill.register('modules/imageResize', ImageResize);
 
 let lat = new Set()
 let long = new Set()
@@ -107,7 +109,9 @@ let longs = ''
           text: '',
         },
         editorSettings: {
-
+          modules: {
+            imageResize: {}
+            },
         }
       }
     },
