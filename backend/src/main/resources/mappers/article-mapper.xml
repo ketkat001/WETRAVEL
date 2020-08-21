@@ -2,19 +2,17 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="m_article">
-	<insert id="registArticle">
-		insert into article (bookno, title, writedate, score, score_count, text,
-		traveldate, day)
-		values(#{bookno}, #{title}, now(), #{score}, #{score_count}, #{text}, #{traveldate},
-		#{day})
+	<insert id="registArticle" parameterType="article">
+		insert into article (bookno, title, writedate, text, traveldate, day, img, exiflat, exiflong)
+		values(#{bookno}, #{title}, now(), #{text}, #{traveldate}, #{day}, #{img, jdbcType=BLOB}, #{exiflat}, #{exiflong})
 	</insert>
 
 	<select id="getArticleList" resultType="article">
 		select articleno, bookno, title, writedate, score, score_count, text,
-		traveldate, day
+		traveldate, day, img
 		from article
 		where bookno = #{bookno}
-		order by writedate
+		order by day
 	</select>
 
 	<delete id="deleteArticle">
@@ -24,14 +22,14 @@
 
 	<update id="modifyArticle">
 		Update article
-		set title = #{title}, writedate = #{writedate}, score_count=#{score_count},
-		text=#{text}, traveldate=#{traveldate}, day=#{day}
+		set title = #{title}, score_count=#{score_count},
+		text=#{text}, traveldate=#{traveldate}, day=#{day}, img=#{img, jdbcType=BLOB}, exiflat=#{exiflat}, exiflong=#{exiflong}
 		where articleno = #{articleno}
 	</update>
 
 	<select id="getArticleDetail" resultType="article">
 		select articleno,
-		bookno, title, writedate, score, score_count, text, traveldate, day
+		bookno, title, writedate, score, score_count, text, traveldate, day, img, exiflat, exiflong
 		from article
 		where articleno = #{articleno}
 	</select>

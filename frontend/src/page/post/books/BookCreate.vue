@@ -2,7 +2,7 @@
   <div id="main" class="main">
     <div class="vertical-center">
       <div class="book-create">
-        <h2>user 님의 여행기를 만들어 보세요!</h2>
+        <h2>{{ form.userName }} 님의 여행기를 만들어 보세요!</h2>
         <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
         <b-form>
           <b-form-group
@@ -24,6 +24,7 @@
             description="여행기의 대표 사진을 등록해주세요!">
             <b-form-file 
               multiple :file-name-formatter="formatNames"
+              v-model="thumbnail"
               placeholder="파일 없음"></b-form-file>
           </b-form-group>
           <b-form-group
@@ -35,14 +36,18 @@
               <b-form-select
                 id="select-1"
                 v-model="form.province"
-                :options="provinces"
+                 @change="cityList"
                 required>
+                <option selected value="">지역 선택</option> 
+                <option v-for="(province, index) in this.$store.getters.getProvinceList" :key="index" :value="province">{{ province }}</option>
               </b-form-select>
               <b-form-select
                 id="select-2"
                 v-model="form.city"
-                :options="cities"
+                :disabled="form.province == ''"
                 required>
+                <option selected value="">도시 선택</option> 
+                <option v-for="(city, index) in replaceCityList" :key="index" :value="city">{{ city }}</option>
               </b-form-select>
             </div>
           </b-form-group>
@@ -66,7 +71,7 @@
             </b-form-textarea>
           </b-form-group>
           <div class="text-center">
-            <b-button type="submit" variant="primary">Submit</b-button>
+            <b-button variant="primary" @click="createAction">작성 완료</b-button>
           </div>
         </b-form>
       </div>
@@ -75,21 +80,46 @@
 </template>
 
 <script>
+import AWS from 'aws-sdk'
+
 export default {
   data() {
     return {
+      editorContent: 'Initial Content',
+        albumBucketName : 'article-album',
+        bucketRegion : 'us-east-1',
+        IdentityPoolId : 'us-east-1:c2eab5aa-fd1e-4281-841a-cab3a77056e5',
+        thumbnail: null,
       form: {
         title: "",
-        province: null,
-        city: null,
+        userName: '',
+        province: '',
+        city: '',
         startdate: "",
         description: ""
-      },
-      provinces: [],
-      cities: [],
+      }
     }
   },
+  computed: {
+    replaceCityList() {
+      return this.$store.getters.getCityList
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch('checkLogin').then(res => {
+      this.form.userName = res.nickname
+    })
+  },
   methods: {
+    cityList: async function() {
+      if (this.form.province == '') {
+        this.form.city = ''
+      }
+      else {
+        await this.$store.dispatch('getCityList', this.form.province)
+        this.form.city = ''
+      }
+    },
     formatNames(files) {
       if (files.length === 1) {
         return files[0].name
@@ -97,12 +127,32 @@ export default {
         return `${files.length} files selected`
       }
     },
+    createAction(){
+      let formData = new FormData() 
+      formData.append('title', this.form.title)
+      formData.append('writer', this.form.userName)
+      formData.append('province', this.form.province)
+      formData.append('city', this.form.city)
+      formData.append('startdate', this.form.startdate)
+      formData.append('description', this.form.description)
+      formData.append('thumbnail', this.thumbnail != null ? this.thumbnail[0] : new File([""], ""))
+      this.$axios.post('/api/book', formData, {
+        headers: {'Content-Type': 'multipart/form-data'}
+      })
+      .then(({ data }) => {
+        let msg = '등록 처리시 문제가 발생했습니다.';
+        if (data === 'success') {
+          msg = '등록이 완료되었습니다.';
+        }
+        alert(msg);
+        this.$router.push({name: 'citypage', params: {province: this.form.province, city: this.form.city}})
+      });
+    }
   }
-  
 }
 </script>
 
-<style scoped>
+<style>
   .vertical-center {
     display: flex;
     text-align: left;
@@ -111,7 +161,8 @@ export default {
   }
   .book-create {
     width: 600px;
-    margin: auto;
+    margin: 0 auto;
+    margin-top: 30px;
     margin-bottom: 30px;
     background: #ffffff;
     box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);

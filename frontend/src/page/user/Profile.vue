@@ -3,7 +3,7 @@
     <div class="profile container">
       <div class="user-info">
         <div class="my-back-img">
-          <img src="">
+          <img src="@/assets/img/userback.png">
           <div class="bg-cover">
           </div>
         </div>
@@ -11,14 +11,11 @@
           <div class="col-4">
             <div class="user-img">
               <a>
-                <img src="http://placehold.it/100x100">
+                <img src="@/assets/img/user-img.jpg">
                 <div class="user-img-cover">
                 </div>
               </a>
             </div>
-          </div>
-          <div class="follow-btn">
-            <b-button variant="primary">Follow</b-button>
           </div>
         </div>
       </div>
@@ -32,29 +29,31 @@
           </div>
         </div>
         <div class="col-6">
-          <div class="follow-info">
-          </div>
         </div>
         <div class="col-2 p-0">
           <div class="user-btn">
             <div>
-              <b-button class="my-3" variant="primary"><router-link style="text-decoration:none" to="/join">회원 정보 수정</router-link></b-button>
+              <b-button class="my-3" variant="primary"><router-link style="text-decoration:none" to="/userupdate">회원 정보 수정</router-link></b-button>
             </div>
             <div>
-              <b-button class="my-3" variant="primary" ><router-link style="text-decoration:none" to="/userdelete">회원 탈퇴</router-link></b-button>
+              <b-button class="my-3" variant="primary" style="float:right"><router-link style="text-decoration:none" to="/userdelete">회원 탈퇴</router-link></b-button>
             </div>
           </div>
         </div>
       </div>
       <hr style="border: 1px solid rgb(196, 195, 208); margin-bottom: 30px;">
       <h2 class="mb-5 text-center">나의 여행기</h2>
-      <div class="card-deck">
-        <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card border-0">
+      <div class="content-card row">
+        <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-4 col-sm-6">
           <b-link :to="{name: 'bookpage', params: { province: card.province, city: card.city, bookno: card.bookno }}">
-            <a href="#"><img class="card-img-top mb-2" :src="card.image" alt=""></a>
-            <div class="card-body">
-              <small class="text-muted">{{ card.city }}</small>
-              <h5 class="card-title my-2"><a href="#">{{ card.title }}</a></h5>
+            <div class="card travel-card">
+              <img v-if="card.img != null" class="travel-card-image" :src="'data:image/jpg;base64,' + card.img">
+              <img v-else class="travel-card-image" src="@/assets/img/logo_wetravel.png">
+              <div class="travel-card-footer">
+                <p class="travel-card-text">{{ card.city }}</p>
+                <h3 class="travel-card-title">{{ card.title }}</h3>
+                <p class="travel-card-text">by <span class="travel-card-author">{{ card.author }}</span></p>
+              </div>
             </div>
           </b-link>
         </div>
@@ -75,7 +74,11 @@ export default {
         }
     },
     mounted: function() {
-        this.$store.dispatch('checkLogin').then(res => {
+      this.getUserInfo()
+    },
+    methods: {
+      getUserInfo: async function() {
+        await this.$store.dispatch('checkLogin').then(res => {
             this.email = res.email
             this.nickname = res.nickname
             this.introduce = res.introduce
@@ -87,7 +90,8 @@ export default {
                 }
             })
         })
-    },
+      }
+    }
 }
 </script>
 
@@ -110,14 +114,14 @@ export default {
 .user-info .my-back-img img {
   width: 960px;
   position: absolute;
-  top: -62.5px;
+  left: 0;
+  top: -100%;
 }
 .user-info .bg-cover {
   position: absolute;
   top: 0;
   width: 960px;
   height: 270px;
-  background: url("http://placehold.it/960x270");
 }
 .user-info .u-info {
   width: 100%;
@@ -144,12 +148,6 @@ export default {
   display: block;
   position: absolute;
   top: 0;
-  background: url("http://placehold.it/100x100")
-}
-.follow-btn {
-  position: relative;
-  top: 60px;
-  left: 560px;
 }
 .user-btn {
   float: right;

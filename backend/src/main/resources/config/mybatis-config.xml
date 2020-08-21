@@ -5,6 +5,8 @@
    <typeAliases>
 		<typeAlias alias="user" type="com.ssafy.travel.dto.User"/>
 		<typeAlias alias="book" type="com.ssafy.travel.dto.Book"/>
+		<typeAlias alias="article" type="com.ssafy.travel.dto.Article"/>
+		<typeAlias alias="comment" type="com.ssafy.travel.dto.Comment"/>
        <package name="com.ssafy.travel.dto"/>
     </typeAliases>
 	<mappers>	  
@@ -12,6 +14,7 @@
 		<mapper resource="mappers/article-mapper.xml" />
 		<mapper resource="mappers/user-mapper.xml"/>
 		<mapper resource="mappers/search-mapper.xml"/>
+		<mapper resource="mappers/comment-mapper.xml"/>
 	</mappers>
 </configuration>
 

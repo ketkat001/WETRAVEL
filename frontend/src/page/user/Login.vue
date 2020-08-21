@@ -65,7 +65,6 @@
 </template>
 
 <script>
-import constants from "../../lib/constants";
 
 export default {
   name: "my-modal",
@@ -105,11 +104,13 @@ export default {
         this.handleWrapperClick();
         this.$router.push('/').catch(()=>{});
       }
+      else {
+        this.password = ""
+      }
     },
   },
   data: () => {
     return {
-      constants,
       email: "",
       password: "",
       showAlert: false,

@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
-import VeeValidate from 'vee-validate'
+import VeeValidate, { Validator } from 'vee-validate'
+import ko from 'vee-validate/dist/locale/ko.js'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-import Carousel3d from 'vue-carousel-3d'
 import store from '../vuex/store'
 
 
@@ -14,8 +14,6 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { faFacebook, faTwitter, faInstagram, faPinterest } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-// vue-star-rating
-import StarRating from 'vue-star-rating'
 
 
 // vue-quill-editor
@@ -25,22 +23,31 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 
+
 // 유저
 import join from '../page/user/Join.vue'
 import forgotpassword from '../page/user/ForgotPassword.vue'
 import profile from '../page/user/Profile.vue'
 import userdelete from '../page/user/UserDelete.vue'
+import userupdate from '../page/user/UserUpdate.vue'
 
 // 포스트
 import mainpage from '../page/post/MainPage.vue'
-import bestpage from '../page/post/BestPage.vue'
 import provincepage from '../page/post/ProvincePage.vue'
 import citypage from '../page/post/CityPage.vue'
-import bookpage from '../page/post/BookPage.vue'
-import articlepage from '../page/post/ArticlePage.vue'
-import bookcreate from '../page/post/BookCreate.vue'
-import articlecreate from '../page/post/ArticleCreate.vue'
+import imagetest from '../page/post/ImageTest.vue'
 import aws from '../page/post/Aws.vue'
+
+// Book
+import bookpage from '../page/post/books/BookPage.vue'
+import bookmodify from '../page/post/books/BookModify.vue'
+import bookcreate from '../page/post/books/BookCreate.vue'
+
+// Article
+import articlecreate from '../page/post/articles/ArticleCreate.vue'
+import articlepage from '../page/post/articles/ArticlePage.vue'
+import articlemodify from '../page/post/articles/ArticleModify.vue'
+
 
 
 library.add(fas)
@@ -49,21 +56,54 @@ library.add(faInstagram)
 library.add(faTwitter)
 library.add(faPinterest)
 
+
 Vue.use(Router) 
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
-Vue.use(Carousel3d)
-Vue.use(VeeValidate)
 Vue.use(VueQuillEditor)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-Vue.component('star-rating', StarRating)
+
+
+
+// Vee-Validate 사용
+
+const config = {
+  locale: 'ko',
+  dictionary: {
+    ko
+  }
+}
+ko.messages.required = (field) => {
+  if (field==='nickname') {
+    return "닉네임은 필수 정보입니다"
+}else if (field==='password') {
+    return "비밀번호는 필수 정보입니다"
+}
+return "이메일은 필수 정보입니다"
+}
+ko.messages.min = (field) => {
+  if (field==='nickname') {
+    return "닉네임은 최소 3글자 이상이어야 합니다"
+  }
+  if (field==="password") {
+    return "비밀번호는 최소 8글자 이상이어야 합니다"
+  }
+}
+ko.messages.confirmed = (field) => {
+  return "비밀번호가 일치하지 않습니다."
+}
+ko.messages.email = (field) => {
+  return "유효한 이메일 형식이어야 합니다"
+}
+
+Vue.use(VeeValidate, config)
 
 
 
 VeeValidate.Validator.extend('verify_password', {
-  getMessage: field => `The password must contain at least: 1 uppercase letter, 1 lowercase letter, 1 number`,
-        validate: value => {
+  getMessage: (field) => `비밀번호는 최소 하나의 대문자와 소문자, 숫자를 포함하고 있어야 합니다`,
+        validate: (value) => {
             var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])");
             return strongRegex.test(value);
           }
@@ -88,42 +128,57 @@ export default new Router({
       name: 'mainpage',
       component: mainpage,
     },
-    {
-      path:'/bookcreate',
-      name: 'bookcreate',
-      component: bookcreate,
-      //beforeEnter: requireAuth()
-    },
-    {
-      path:'/:bookno/articlecreate',
-      name: 'articlecreate',
-      component: articlecreate,
-    },
-    {
-      path:'/best/:city',
-      name: 'bestpage',
-      component: bestpage,
-    },
+
     {
       path:'/posts/:province',
       name: 'provincepage',
       component: provincepage,
     },
+
     {
       path: '/posts/:province/:city', 
       name: 'citypage',
       component: citypage,
     },
+    // BookPage
     {
-      path: '/posts/:province/:city/:bookno',
+      path:'/bookcreate',
+      name: 'bookcreate',
+      component: bookcreate,
+      beforeEnter: requireAuth()
+    },
+
+    {
+      path: '/posts/:province/:city/bookno/:bookno',
       name: 'bookpage',
       component: bookpage,
     },
     {
-      path: '/posts/:province/:city/:bookno/:articleno',
+      path: '/posts/bookno/:bookno/bookmodify',
+      name: 'bookmodify',
+      component: bookmodify,
+      beforeEnter: requireAuth()
+    },
+
+    // Article Page
+    {
+      path:'/bookno/:bookno/articlecreate',
+      name: 'articlecreate',
+      component: articlecreate,
+    },
+    
+    {
+      path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno',
       name: 'articlepage',
       component: articlepage,
     },
+
+    {
+      path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
+      name: 'articlemodify',
+      component: articlemodify,
+    },
+
     // 가입
     {
       path: '/join',
@@ -142,6 +197,12 @@ export default new Router({
       beforeEnter: requireAuth()
     },
     {
+      path: '/userupdate',
+      name: 'userupdate',
+      component: userupdate,
+      beforeEnter: requireAuth()
+    },
+    {
       path: '/userdelete',
       name: 'userdelete',
       component: userdelete,
@@ -151,11 +212,27 @@ export default new Router({
       path: '/aws',
       name: 'aws',
       component: aws,
-      //beforeEnter: requireAuth()
+      beforeEnter: requireAuth()
+    },
+    {
+      path: '/posts/:province/:city/bookno/:bookno/articleno/:articleno/articlemodify',
+      name: 'articlemodify',
+      component: articlemodify,
+    },
+    {
+      path: '/imagetest',
+      name: 'imagetest',
+      component: imagetest
     }
   ],
-  // 페이지 이동 시 맨 위로 이동
+
+  // 페이지 이동 시 저장된 위치가 있다면 저장된 위치로 아니면 최상단으로
   scrollBehavior (to, from, savedPosition) {
-    return { x:0, y:0 }
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      
+      return { x:0, y:0 }
+    }
   }
 })

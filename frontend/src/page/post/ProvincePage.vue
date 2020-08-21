@@ -22,7 +22,7 @@
               <div class="col-lg-3 col-md-3 col-sm-12 p-0">
                 <select v-model="searchMonth" class="form-control search-slt" id="monthComboBox" :disabled="searchCity == ''">
                   <option selected value="0">전체</option> 
-                  <option v-for="i in (1, 12)" :key="i" :value="i">{{ i }}</option>
+                  <option v-for="i in (1, 12)" :key="i" :value="i">{{ i }}월</option>
                 </select>
               </div>
               <div class="col-lg-3 col-md-3 col-sm-12 p-0">
@@ -36,7 +36,6 @@
     <div class="main-content container">
       <hr style="border: 1px solid rgb(196, 195, 208); margin:60px;">
       <h2>{{ $route.params.province }}의 여행지 {{ cities.length + cities2.length }}곳</h2>
-      <p>"활력이 넘치는 도시"</p>
       <h4>원하는 여행지를 골라보세요!</h4>
       <hr style="border: 1px solid rgb(196, 195, 208); margin:60px;">
       <div class="map-tab" v-if="backImage3.backgroundImage !== ''">  <!--만약 도가 2개로 나눠진다면 (남, 북) tab을 생성해 나눔-->
@@ -149,6 +148,11 @@ export default {
   },
   mounted() {
     this.getMap(this.$route.params.province)
+    this.searchProvince = this.$route.params.province ? this.$route.params.province : ''
+    this.cityList()
+    this.searchCity = this.$route.params.city ? this.$route.params.city : ''
+    this.cityChange()
+    this.searchMonth = this.$route.params.month ? this.$route.params.month : 0
   },
   methods: {
     getMap: function(province) {
@@ -203,7 +207,7 @@ export default {
     },
     selectcity: function(cityName) {
       if (cityName != null && cityName != '') {
-        this.$router.push({name: 'citypage', params: {province: this.$route.params.province, city: cityName}})
+        this.$router.push({name: 'citypage', params: {province: this.$route.params.province, city: cityName, month: 0}})
       }
     },
     cityList: async function() {

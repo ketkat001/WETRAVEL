@@ -23,7 +23,7 @@
                 <div class="col-lg-3 col-md-3 col-sm-12 p-0">
                   <select v-model="searchMonth" class="form-control search-slt" id="monthComboBox" :disabled="searchCity == ''">
                     <option selected value="0">전체</option> 
-                    <option v-for="i in (1, 12)" :key="i" :value="i">{{ i }}</option>
+                    <option v-for="i in (1, 12)" :key="i" :value="i">{{ i }}월</option>
                   </select>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-12 p-0">
@@ -36,12 +36,13 @@
       </div>
       <div class="main-content container">
         <h2>{{ $route.params.city }}의 새로운 기행문을 확인해보세요</h2>
+        <b-button variant="primary" style="float:right"><b-link style="text-decoration:none;" :to="{name:'bookcreate'}">새 여행기 작성하기</b-link></b-button>
         <div class="content-card row">
-          
           <div v-for="(card, index) in cards" :key="index" :ref="`card_${index}`" class="card-wrap col-lg-3 col-sm-6">
             <b-link :to="{name: 'bookpage', params: { province: $route.params.province, city: $route.params.city, bookno: card.bookno }}">
               <div  class="card travel-card">
-                <img class="travel-card-image" :src="card.image">
+                <img v-if="card.image != null" class="travel-card-image" :src="'data:image/jpg;base64,' + card.image">
+                <img v-else class="travel-card-image" src="@/assets/img/logo_wetravel.png">
                 <div class="travel-card-footer">
                   <p class="travel-card-text">{{ $route.params.city }}</p>
                   <h3 class="travel-card-title">{{ card.title }}</h3>
@@ -82,6 +83,11 @@ export default {
   },
   mounted() {
     this.getBookList()
+    this.searchProvince = this.$route.params.province ? this.$route.params.province : ''
+    this.cityList()
+    this.searchCity = this.$route.params.city ? this.$route.params.city : ''
+    this.cityChange()
+    this.searchMonth = this.$route.params.month ? this.$route.params.month : 0
   },
   methods: {
     getBookList: function() {
@@ -98,7 +104,7 @@ export default {
         headers: {'Content-Type': 'application/json'}
       }).then(response => {
         for (var i = 0; i < response.data.length; i++) {
-          cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, image: 'https://placeimg.com/640/480/arch'})
+          cards.push({bookno: response.data[i].bookno, title: response.data[i].title, author: response.data[i].writer, image: response.data[i].img})
         }
       })
     },
