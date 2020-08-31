@@ -369,6 +369,9 @@ https://cdn.ckeditor.com/
           front    back
              |        |  => 각자 branch 추가할 부분
 
+
+##### * git pull origin (back or front)을 제일 먼저 하고 시작!!!!!!!!!!!!!!!!!!! 
+
 ##### 0.내 로컬의 브랜치 확인하기
 git branch : 현재 로컬에 있는 브랜치 확인하는 명령어
 
@@ -391,28 +394,33 @@ ex) git branch article
 
 ##### 5.4번에서 만든 branch에서 add와 commit을 실시
 
-##### 6.상위 branch로 이동하여(front, back) merge를 실시
-ex) git merge --no-ff article
+##### 6. git push origin (4번에서 만든 bracnh)
 
-##### 7.그 다음 상위 branch인 develop으로 이동하여 merge 실시
-ex) git merge --no-ff front or back(자신의 포지션)
+##### 7. gitlab 페이지에서 왼쪽 메뉴바에 있는 Merge Requests를 누르고 new merge request(초록버튼)을 누르고 source는 하위 브랜치 target은 상위 브랜치 설정
+##### 이후 팀원이나 본인이 merge 버튼을 누르면 merge 성공 
 
-##### 8.develop branch를 remote에 push 하고 싶다면 명령어 실시
-ex) git push origin develop
+~~##### 6.상위 branch로 이동하여(front, back) merge를 실시~~
+~~ex) git merge --no-ff article~~
+
+~~##### 7.그 다음 상위 branch인 develop으로 이동하여 merge 실시~~
+~~ex) git merge --no-ff front or back(자신의 포지션)~~
+
+~~##### 8.develop branch를 remote에 push 하고 싶다면 명령어 실시~~
+~~ex) git push origin develop~~
 
 ![image](https://user-images.githubusercontent.com/22046757/88297804-56212a00-cd3b-11ea-96ef-48ab878bf822.png)
 
-Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
-디폴트 master일텐데 master로 되어 있으면 develop에서 push한 내용이 보이지 않는 듯!!
+~~Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!~~
+~~디폴트 master일텐데 master로 되어 있으면 develop에서 push한 내용이 보이지 않는 듯!!~~
 
-##### 9. 가장 상위 branch인 master에 push하고 싶다면 master로 이동 후 merge -> push 실시
-ex) git checkout master
-ex) git merge --no-ff develop
-ex) git push origin master
+~~##### 9. 가장 상위 branch인 master에 push하고 싶다면 master로 이동 후 merge -> push 실시~~
+~~ex) git checkout master~~
+~~ex) git merge --no-ff develop~~
+~~ex) git push origin master~~
 
 ![image](https://user-images.githubusercontent.com/22046757/88297811-59b4b100-cd3b-11ea-9402-110485796885.png)
 
-Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!
+~~Branch를 바꾸면 해당 branch에서 push한 내용만 확인 가능!!~~
 
 ##### 참고사이트
 - https://mylko72.gitbooks.io/git/content/branch/branch_type.html
