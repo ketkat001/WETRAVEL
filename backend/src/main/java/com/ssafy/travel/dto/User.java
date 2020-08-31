@@ -12,6 +12,7 @@ public class User {
 				+ "]";
 	}
 	public User(String email, String password, String nickname, String introduce) {
+		super();
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;

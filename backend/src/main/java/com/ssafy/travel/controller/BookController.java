@@ -7,8 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,6 +25,7 @@ import com.ssafy.travel.service.BookService;
 import io.swagger.annotations.ApiOperation;
 
 // http://localhost:8999/travel/swagger-ui.html
+@CrossOrigin(origins = {"*"})
 @RestController
 @RequestMapping("/api/book")
 public class BookController {
@@ -42,9 +45,15 @@ public class BookController {
 	
 	@ApiOperation(value = "전체 or 특정 province와 city에 관한 모든 book의 정보를 평점순으로 반환한다.", response = List.class)
 	@GetMapping("all/score")
-	public ResponseEntity<List<Book>> getBookListByScore(@RequestParam("province") String province, @RequestParam("city") String city) throws Exception {
+	public ResponseEntity<List<Book>> getBookListByScore() throws Exception {
 		logger.debug("getBookListByScore - 호출");
-		return new ResponseEntity<List<Book>>(bookService.getBookListByScore(province, city), HttpStatus.OK);
+		return new ResponseEntity<List<Book>>(bookService.getBookListByScore(), HttpStatus.OK);
+	}
+	
+	@ApiOperation(value = "해당 book의 조회수를 1 증가시킨다. ", response = Integer.class)
+	@PutMapping("score/{bookno}")
+	public ResponseEntity<Integer> viewIncrement(@PathVariable int bookno, @RequestBody String viewer) {
+		return new ResponseEntity<Integer>(bookService.viewIncrement(bookno, viewer), HttpStatus.OK);
 	}
 	
     @ApiOperation(value = "book번호에 해당하는 book의 정보를 반환한다.", response = Book.class)    
@@ -56,8 +65,10 @@ public class BookController {
 
     @ApiOperation(value = "새로운 book 정보를 입력한다. 그리고 DB입력 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PostMapping
-	public ResponseEntity<String> registBook(@RequestBody Book book) {
+	public ResponseEntity<String> registBook(@ModelAttribute Book book) {
 		logger.debug("registBook - 호출");
+		book.setImg();
+		book.setImgName();
 		if (bookService.registBook(book)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -66,10 +77,12 @@ public class BookController {
 
     @ApiOperation(value = "book번호에 해당하는 book의 정보를 수정한다. 그리고 DB수정 성공여부에 따라 'success' 또는 'fail' 문자열을 반환한다.", response = String.class)
 	@PutMapping("{bookno}")
-	public ResponseEntity<String> modifyBook(@RequestBody Book book) {
+	public ResponseEntity<String> modifyBook(@ModelAttribute Book book) {
 		logger.debug("modifyBook - 호출");
 		logger.debug("" + book);
-		
+
+		book.setImg();
+		book.setImgName();
 		if (bookService.modifyBook(book)) {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
@@ -84,5 +97,12 @@ public class BookController {
 			return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
 		}
 		return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
+	}
+    
+	@ApiOperation(value = "email에 해당하는 유저의 모든 book정보를 최신순으로 반환한다.", response = List.class)
+	@GetMapping("all/{nickname}")
+	public ResponseEntity<List<Book>> getBookListByUser(@PathVariable String nickname) throws Exception {
+		logger.debug("getBookListByUser - 호출");
+		return new ResponseEntity<List<Book>>(bookService.getBookListByUser(nickname), HttpStatus.OK);
 	}
 }

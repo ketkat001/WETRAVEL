@@ -509,3 +509,40 @@ ex) git branch article
 
 각 지역코드의 앞자리가 위와 같으므로 val.properties.SIG_CD.substring(0,2) == 'CODE' 를 통해 매핑해야 함! => 카드에서 클릭했을 때 넘겨주는 값을 매칭하는 방식으로
 
+# 07/29
+
+## [팀장]윤인하
+- Login 정보 Vuex에 저장 및 초기화 방지 구현: Timeout이 존재하지 않아 완벽하지 않음. JWT 다시 도전
+- 회원가입 기능 연동: 아직 성공 여부에 따라 Redirect나 팝업 띄우는 게 제대로 동작하지 않음. async / await 다시 해 보기
+
+# 08/03
+## 윤인하
+- AWS 내에서 Frontend 및 Backend 각각 구동 성공: 아직 서로 연동되는지는 확인하지 못함
+- DB 살짝 수정: Book과 Article의 Startdate의 유형을 datetime에서 date로 변경
+- DB에 더미데이터 저장 및 Frontend에서 불러오기 기능 구현
+- Jira 4주차 스프린트 제작
+
+## 임진섭
+- 에디터 db와 연동하기 진행중
+- 계속적인 에디터의 기능 실험중
+
+# 08/05
+- 날씨 굳이 필요없다
+- 유저 평점 압력 이슈(중복 관련) => 하나의 게시글에 중복으로 평점 입력할 수 없게!
+- 하나의 게시글에 유저들의 평점 입력 횟수 카운트 해아함!
+- rest-api book-controller img인자 없음!! => img 인자 추가해야함!
+- 게시글 좋아요는 나중에!!
+- 회원정보수정 페이지에서 프로필 이미지 넣는 폼 추가하기
+- 에디터에서 이미지 처리하기
+- 파이어베이스 or aws => 파이어베이스로 진행하기로!
+- book DB에 description 추가!
+
+# 08/06
+- user db에 back-img, profile-img 추가될 것으로 예상
+- article 작성시 day1, day2 보다는 첫번째 여행, 두번째 여행이 보기에 좋을 듯
+- firebase에 이미지 올리는데 cross origin 에러 발생 => 오류 해결 중...
+* input-type = file 형태로 firebase에 올릴 수 있음(썸네일은 충분히 가능할 듯)
+* 하지만 editor 안에서의 img는 위와 같은 방법으로는 해결하기 어려울 듯
+1. 에디터안에서 src 태그(img)만 추출해보기
+2. 추출한 img를 firebase에 올리고 가져오기
+로 접근 해봐야할 듯!

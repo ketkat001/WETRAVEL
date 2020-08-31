@@ -10,22 +10,46 @@
   >
     <div class="user" id="login">
       <div class="inner-block">
-        <form name="frm" @submit.prevent="backsubmit">
+        <form name="frm" @submit.prevent="backsubmit()">
           <h3 style="text-align:center; padding-bottom: 20px; line-height: 1; margin: 0;">로그인</h3>
           <div class="form-group">
               <label>이메일</label>
-              <input v-model="email" id="email" placeholder="이메일을 입력해주세요" type="email" class="form-control form-control-lg"  />
+              <input 
+                v-model="email" 
+                id="email" 
+                placeholder="이메일을 입력해주세요" 
+                type="email" 
+                name="email"
+                class="form-control form-control-lg"  
+                autocomplete="false"
+                v-validate="'required|email'"  
+              />
+            <div class="alert alert-danger" v-if="errors.has('email')">
+              {{ errors.first('email') }}
+            </div>
           </div>
           <div class="form-group">
               <label>비밀번호</label>
-              <input v-model="password" type="password" id="password" placeholder="영문, 숫자 혼용 8자 이상" class="form-control form-control-lg"/>
+              <input 
+                v-model="password" 
+                name="password" 
+                type="password" 
+                id="password" 
+                placeholder="영문, 숫자 혼용 8자 이상" 
+                class="form-control form-control-lg"
+                autocomplete="false"
+                v-validate="'required|min:8|verify_password'"
+              />
+            <div class="alert alert-danger" v-if="errors.has('password')">
+              {{ errors.first('password') }}
+            </div>
           </div>
           <button style="margin-top: 30px; margin-bottom: 30px;" class="btn btn-lg btn-primary btn-block btn--back btn--login">로그인</button>
 
-          <p class="sub-text text-right mt-2 mb-4">
+          <p class="sub-text text-right mt-2 mb-4" @click="handleWrapperClick()">
             <router-link to="/forgotpassword">비밀번호를 잊으셨나요?</router-link>
           </p>
-          <p class="sub-text text-right mt-2 mb-4">
+          <p class="sub-text text-right mt-2 mb-4" @click="handleWrapperClick()">
             <router-link to="/join">아직 회원이 아니신가요?</router-link>
           </p>
           <div class="social-login" style="text-align:center">
@@ -41,7 +65,6 @@
 </template>
 
 <script>
-import constants from "../../lib/constants";
 
 export default {
   name: "my-modal",
@@ -64,34 +87,30 @@ export default {
     handleWrapperClick() {
       this.$emit("update:visible", false);
     },
-    backsubmit() {
+    async backsubmit() {
       if (this.email == "") {
-        this.showAlert = true;
-        this.errMsg = "이메일을 입력해주세요";
+        alert("이메일을 입력해주세요");
         return;
       }
       if (this.password == "") {
-        this.showAlert = true;
-        this.errMsg = "비밀번호를 입력해주세요";
+        alert("비밀번호를 입력해주세요");
         return;
       }
       this.showAlert = false;
-      this.$axios.post("api/user/login",
-        {
-          email: this.email,
-          password: this.password
-        }, {headers: {'Content-Type': 'application/json'}}
-      ).then((response) => {
-        console.log(response);
-        if (response.data.email == "No Match") {
-          
-        }
-      })
+      let loginResult = await this.$store.dispatch('login', {email: this.email, password: this.password})
+      if (loginResult == true) {
+        this.email = ""
+        this.password = ""
+        this.handleWrapperClick();
+        this.$router.push('/').catch(()=>{});
+      }
+      else {
+        this.password = ""
+      }
     },
   },
   data: () => {
     return {
-      constants,
       email: "",
       password: "",
       showAlert: false,

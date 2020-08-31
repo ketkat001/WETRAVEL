@@ -1,5 +1,7 @@
 package com.ssafy.travel.dao;
 
+import java.sql.Blob;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -7,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ssafy.travel.dto.Article;
+import com.ssafy.travel.dto.Score;
 
 @Repository
 public class ArticleDaoImpl implements ArticleDao{
@@ -36,5 +39,10 @@ public class ArticleDaoImpl implements ArticleDao{
 	@Override
 	public Article getArticleDetail(int articleno) {
 		return sqlSession.selectOne("m_article.getArticleDetail", articleno);
+	}
+
+	@Override
+	public int registerScore(Score score) {
+		return sqlSession.insert("m_article.registScore",score);
 	}
 }

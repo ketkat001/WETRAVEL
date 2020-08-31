@@ -1,5 +1,6 @@
 package com.ssafy.travel.service;
 
+import java.sql.Blob;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ssafy.travel.dao.ArticleDao;
 import com.ssafy.travel.dto.Article;
+import com.ssafy.travel.dto.Score;
 
 @Service
 public class ArticleServiceImpl implements ArticleService{
@@ -37,6 +39,11 @@ public class ArticleServiceImpl implements ArticleService{
 	@Override
 	public Article getArticleDetail(int articleno) {
 		return dao.getArticleDetail(articleno);
+	}
+
+	@Override
+	public boolean registScore(Score score) {
+		return dao.registerScore(score) == 1;
 	}
 	
 }

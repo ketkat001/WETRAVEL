@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <Header :isHeader="isHeader"/>
+    <Header/>
     <router-view/>
     <Footer/>
   </div>
@@ -11,7 +11,6 @@
 import './assets/css/style.scss' 
 import Header from './components/common/Header.vue'
 import Footer from './components/common/Footer.vue'
-import constants from './lib/constants' 
 
 export default {
   name: 'App',
@@ -20,49 +19,26 @@ export default {
     Footer
   },
   created() {
-      let url = this.$route.name;
-
-      this.checkUrl(url);
   },
   watch: {
-      $route (to){
-
-          this.checkUrl(to.name);
-      }
   },
-  methods : {
-      checkUrl(url) { 
-
-          let array = [
-              constants.URL_TYPE.USER.LOGIN,
-              constants.URL_TYPE.USER.JOIN,
-          ];
-
-          let isHeader = true;
-          array.map(path => {
-              if (url === path)
-                  isHeader = false;
-          })
-          this.isHeader = isHeader;
-
-      },
-  },
-  data: function () {
-        return {
-            isHeader: true,
-            constants
-        } 
-    }
 }
 </script>
 
 <style>
+@font-face {
+  font-family: 'MaplestoryOTFBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'MaplestoryOTFBold';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; 
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
 }
+
 </style>

@@ -7,15 +7,17 @@ import mutations from './mutations'
 Vue.use(Vuex)
 
 const state = {
-    email: '',
-    nickname: '',
+    token: '',
     errorState: '',
-    isAuth: false
+    isAuth: false,
+    joinSuccess: false,
+    provinceList: ['서울', '제주', '부산', '대구', '광주', '대전', '세종', '울산', '인천', '경기', '강원', '충청', '전라', '경상'],
+    cityList: ['']
 }
 
 export default new Vuex.Store({
     state,
     mutations,
     getters,
-    actions
+    actions,
 })
